@@ -7,7 +7,7 @@ public class Test {
         Map map = new Map();
         map.printMap();
         System.out.println();
-        map.updateMap(4, 'A');
+        map.updateMap(19, 'a');
         map.printMap();
         map.saveMap();
     }

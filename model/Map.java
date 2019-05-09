@@ -17,11 +17,14 @@ public class Map {
     public Map() {
         this.map = FXCollections.observableArrayList();
         try {
-            Scanner sc = new Scanner(new File("src/view/map.csv"));
+            String pathname;
+            File file = new File("src/view/map.csv");
+            Scanner sc = new Scanner(file);
+
             String line = sc.nextLine();
             this.lineLength = line.length();
 
-            sc = new Scanner(new File("src/view/map.csv"));
+            sc = new Scanner(file);
             while(sc.hasNextLine()) {
                 line = sc.nextLine();
                 int i = 0;
