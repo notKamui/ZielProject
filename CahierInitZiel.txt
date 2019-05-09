@@ -1,0 +1,81 @@
+Projet S2 : Terraria like (TEILLARD Jimmy, LEDOUX Nicolas, FERNANDES Damien)
+
+NOM : Ziel (âmes)
+Thème : type Dark Souls ? (dark fantasy ? --> you were slain haha you died git gud scrub)
+
+
+Outils :
+- Pelle
+- Pioche
+- Epee
+- bouclier
+- canne a peche
+- grappin
+
+Types de blocs :
+- terre
+- roche
+- bois (arbre)
+- minerais rares
+
+Interactions :
+- PNJ :
+	> marchands
+		> armes
+		> outils
+		> armures
+		> buffs
+		> ...
+	> ennemis
+		> squelettes
+		> morts-vivants
+		> chevaliers
+		> cavaliers
+		> truc qui rampe
+	> familier (sous condition de 'domptage')
+- Zones de repos : Soul Shrine (Autel d'Âme) (checkpoint + utilisation d'âmes pour level up les stats/skills + recover ses soins + "craft table")
+- Forges ?
+
+Skills :
+- double jump -> wall jump
+- courir -> roll
+- port de bouclier
+- sneak -> backstab
+- elements -> domptage
+- nage -> plongée -> amphibie
+
+Craft/Améliorations :
+- blocs de construction
+- moyens de stockage
+- soins de status
+- bouclier
+- armes/armures
+
+- buffs
+- spells
+- sacoche
+- outils pour avancer :
+	> torches
+	> grappin
+	> barque (pour lacs toxics)
+	> bombes
+	> planeurs
+
+Types de ressources :
+- Delm flasks (fioles de Delm) (soins limités, rechargés à chaque repos aux Soul Shrines)
+- nourriture
+- âmes (argent + experience) --> perdues à la mort
+
+Inventaire :
+- couple équipé/rangé(à débloquer -> sacoche)
+
+-------------------------------------------------------------
+
+Principe/Histoire :
+Nous atterrissons dans l'énorme ville condamnée de Doth'Alm, en tant qu'humain vidé de son âme, et qui ère dans le but de comprendre
+pourquoi il est ici, ce qu'il doit y faire, et "survivre". Pour ca, il doit vaincre des monstres et démons, pour récupérer leurs âmes (ou "Ziel").
+Elles lui serviront de points d'expérience, mais aussi de monnaie, et de points de compétences.
+Cependant tous ces monstres sont bien plus forts que lui, et il se rendra compte qu'a chacune de ses morts, il perdra les Ziel qu'il aura amassés,
+mais se réveillera de nouveau au dernier Autel d'Âme. A ces autels, il pourra y dépenser ses Ziel, mais aussi fabriquer des objets consomables,
+ou permanents qui changeront sa facon d'approcher les choses. Pour cela, il aura besoin de récolter des ressources dans les catacombes de la
+ville, ou en tuant des monstres. Il rencontrera aussi d'autres corps sans âmes qui ont la même quête que lui, des marchands, et des forgerons.
