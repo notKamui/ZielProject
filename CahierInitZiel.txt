@@ -1,4 +1,4 @@
-Projet S2 : Terraria like
+Projet S2 : Terraria like (TEILLARD Jimmy, LEDOUX Nicolas, FERNANDES Damien)
 
 NOM : Ziel (âmes)
 Thème : type Dark Souls ? (dark fantasy ? --> you were slain haha you died git gud scrub)
@@ -68,3 +68,8 @@ Types de ressources :
 
 Inventaire :
 - couple équipé/rangé(à débloquer)
+
+-------------------------------------------------------------
+
+Principe/Histoire :
+Nous atterissons dans le monde de "ONSAITPASENCORE"
