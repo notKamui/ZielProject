@@ -2,6 +2,7 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Map {
-    private ObservableList<Character> map;
+    private ObservableList<Tile> map;
     private int lineLength;
 
     public Map() {
@@ -29,7 +30,7 @@ public class Map {
                 line = sc.nextLine();
                 int i = 0;
                 while (i < this.lineLength) {
-                    this.map.add(line.charAt(i));
+                    this.map.add(new Tile(line.charAt(i)));
                     i++;
                 }
             }
@@ -39,10 +40,10 @@ public class Map {
         }
     }
 
-    public void printMap() {
+    public void printMapConsole() {
         int i = 1;
-        for(char c : map) {
-            System.out.print(c);
+        for(Tile t : map) {
+            System.out.print(t.getCharCode());
             if(i%this.lineLength == 0)
                 System.out.println();
             i++;
@@ -50,8 +51,7 @@ public class Map {
     }
 
     public void updateMap(int index, char c) {
-        Character cc = c;
-        this.map.set(index, cc);
+        this.map.set(index, new Tile(c));
     }
 
     public void saveMap() {
@@ -60,8 +60,8 @@ public class Map {
             FileWriter fileWriter = new FileWriter(file, false);
             String newContent = "";
             int i = 1;
-            for(char c : map) {
-                newContent = newContent + c;
+            for(Tile t : map) {
+                newContent = newContent + t.getCharCode();
                 if (i%this.lineLength == 0)
                     newContent = newContent + "\n";
                 i++;
