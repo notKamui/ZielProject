@@ -7,7 +7,7 @@ public class Test {
         Map map = new Map();
         map.printMapConsole();
         System.out.println();
-        map.updateMap(13, 'Z');
+        map.updateMap(13, 't');
         map.printMapConsole();
         map.saveMap();
     }

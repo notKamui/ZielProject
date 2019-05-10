@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="768" prefWidth="1368" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
@@ -56,13 +57,14 @@
                   <Insets left="19.0" />
                </HBox.margin>
             </ImageView>
+            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
    </bottom>
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="113.0" fitWidth="116.0" layoutX="613.0" layoutY="483.0" pickOnBounds="true" preserveRatio="true" />
+            <TilePane fx:id="tilePaneMap" prefColumns="7" prefHeight="560.0" prefRows="15" prefTileHeight="80.0" prefTileWidth="80.0" prefWidth="1204.0" />
          </children></Pane>
    </center>
    <top>

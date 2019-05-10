@@ -77,4 +77,8 @@ public class Map {
         return this.map;
     }
 
+    public Tile getTileAt(int index) {
+        return this.map.get(index);
+    }
+
 }
