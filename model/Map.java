@@ -1,13 +1,11 @@
 package model;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,27 +15,44 @@ public class Map {
 
     public Map() {
         this.map = FXCollections.observableArrayList();
+
+        String content = readFile("src/view/map.csv");
+        this.lineLength = content.indexOf('\n');
+        String mapString = "";
+        for (int i = 0; i < content.length(); i++) {
+            char c = content.charAt(i);
+            if (c != '\n')
+                mapString = mapString + c;
+        }
+
+        for (int i = 0; i < mapString.length(); i++)
+            this.map.add(new Tile(mapString.charAt(i)));
+
+
+    }
+
+    private String readFile(String fname) {
+        String content = null;
+        File file = new File(fname);
+        FileReader reader = null;
         try {
-            String pathname;
-            File file = new File("src/view/map.csv");
-            Scanner sc = new Scanner(file);
-
-            String line = sc.nextLine();
-            this.lineLength = line.length();
-
-            sc = new Scanner(file);
-            while(sc.hasNextLine()) {
-                line = sc.nextLine();
-                int i = 0;
-                while (i < this.lineLength) {
-                    this.map.add(new Tile(line.charAt(i)));
-                    i++;
+            reader = new FileReader(file);
+            char[] chars = new char[(int)file.length()];
+            reader.read(chars);
+            content = new String(chars);
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
+        return content;
     }
 
     public void printMapConsole() {

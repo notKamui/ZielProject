@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="768" prefWidth="1368" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<BorderPane prefHeight="768" prefWidth="1368" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <bottom>
       <HBox prefHeight="116.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -62,9 +62,9 @@
       </HBox>
    </bottom>
    <center>
-      <Pane BorderPane.alignment="CENTER">
+      <Pane prefHeight="560.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
-            <TilePane fx:id="tilePaneMap" prefColumns="7" prefHeight="560.0" prefRows="15" prefTileHeight="80.0" prefTileWidth="80.0" prefWidth="1204.0" />
+            <TilePane fx:id="tilePaneMap" prefColumns="7" prefHeight="560.0" prefRows="15" prefTileHeight="80.0" prefTileWidth="80.0" prefWidth="1200.0" style="-fx-background-color: white;" />
          </children></Pane>
    </center>
    <top>

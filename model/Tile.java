@@ -14,11 +14,11 @@ public class Tile {
 
         String path = "src/ressources/tiles/";
         switch (c) {
-            case 'a':
+            case 's':
                 path = path + "sky.png";
                 break;
-            case 't':
-                path = path + "groundTop.png";
+            case 'g':
+                path = path + "ground/groundTop.png";
                 break;
             default:
                 path = path + "sky.png";
