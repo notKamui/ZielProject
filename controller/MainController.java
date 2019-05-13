@@ -13,10 +13,14 @@ import model.Joueur;
 
 public class MainController implements Initializable{
 	
-	private Joueur j;
-	
 	@FXML
     private Pane pane;
+	
+//-------------------------------------------------------------------------------
+//------------------Code de mouvement du Joueur par touche du clavier------------
+//-------------------------------------------------------------------------------
+	
+	private Joueur j;
 	
 	@FXML 
     void keyPressed(KeyEvent event) {
@@ -42,6 +46,7 @@ public class MainController implements Initializable{
         }
     }
 	
+	//Methode permettant de recuperer la node du joueur dans le pane a par son nom (Trouver un moyen plus simple)
 	public Node recupPerso(String n) {
 		for(int node=0; node < pane.getChildren().size(); node++) {
 			if(pane.getChildren().get(node).getId().equals(n))
@@ -50,6 +55,7 @@ public class MainController implements Initializable{
 		return null;
 	}
 
+	//Initialize qui va CHANGER quand on aura un personnage 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Rectangle joueur = new Rectangle();
