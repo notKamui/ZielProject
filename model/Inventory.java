@@ -9,27 +9,33 @@ public class Inventory {
 	
 	private ArrayList<Item> inventory;
 	private int capacity;
+	final private Item VOID = new Item("void",0);
 	
 	public Inventory() {
 		this.inventory = new ArrayList<>();
+		this.capacity = 10;
+		for(int i = 0; i < capacity; i++) {
+			inventory.add(VOID);
+		}
 	}
 	
 	public boolean isfull() {
-		if(inventory.size() >= capacity)
-			return true;
-		return false;
+		if(inventory.contains(VOID))
+			return false;
+		return true;
 	}
 	
 	public void addItem(Item i) {
 		if(!this.isfull()) {
-			this.inventory.add(i);
+			int slot = inventory.indexOf(VOID);
+			this.inventory.remove(slot);
+			this.inventory.add(slot, i);
 		}
 	}
 	
-	public void removeItem(Item i) {
-		if(this.inventory.contains(i)) {
-			this.inventory.remove(i);
-		}
+	public void removeItem(int slot) {
+			this.inventory.remove(slot);
+			this.inventory.add(slot, VOID);
 	}
 	
 	public void setCapacity(int c) {
