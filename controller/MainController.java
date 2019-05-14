@@ -71,8 +71,6 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         this.player = new Player(10, 10);
         ImageView playerView = new ImageView("file:src/ressources/sprites/mario.png");
         playerView.translateXProperty().bind(this.player.coordXProperty());
