@@ -3,7 +3,6 @@ package model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-
 public class Player {
 
     private IntegerProperty coordXProperty;
