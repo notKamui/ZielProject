@@ -12,18 +12,20 @@ import model.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.ScrollPane;
-
+import javafx.event.*;
 import model.Map;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -33,7 +35,7 @@ import javax.imageio.ImageIO;
 
 public class MainController implements Initializable {
 	private KeyCode key = KeyCode.UNDEFINED;
-;
+    ArrayList<String> input = new ArrayList<String>();
 	private Timeline gameLoop;
     private Map map;
     private Player player;
@@ -61,8 +63,6 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         this.player = new Player(10, 10);
         ImageView playerView = new ImageView("file:src/ressources/sprites/mario.png");
         playerView.translateXProperty().bind(this.player.coordXProperty());
@@ -83,32 +83,53 @@ public class MainController implements Initializable {
                 e.printStackTrace();
             }
         }
-        initJeu();
+        scrollPaneMap.setOnKeyPressed(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();
+                        if ( !input.contains(code) )
+                            input.add( code );
+                    }
+                });
+
+            scrollPaneMap.setOnKeyReleased(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();
+                        input.remove( code );
+                    }
+                });
+        startGame();
 		gameLoop.play();
+		
     }
-    
-    private void initJeu() {
+    private void startGame() {
 		gameLoop = new Timeline();
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 
 		KeyFrame kf = new KeyFrame(
 				Duration.seconds(0.017), 
 				(ev ->{
-					switch (key) {
-					case Z:
-		                this.player.move(0, -10);
-		                break;
-		            case S:
-		                this.player.move(0, 10);
-		                break;
-		            case D:
-		                this.player.move(10, 0);
-		                break;
-		            case Q:
-		                this.player.move(-10, 0);
-		                break;
-		            default:
-		                break;
+					for(String key : input)
+						switch (key) {
+							case "Z":
+				                this.player.move(0, -10);
+				                break;
+				            case "S":
+				                this.player.move(0, 10);
+				                break;
+				            case "D":
+				                this.player.move(10, 0);
+				                break;
+				            case "Q":
+				                this.player.move(-10, 0);
+				                break;
+				            default:
+				                break;
 		        }
 					key = KeyCode.UNDEFINED;
 				})
