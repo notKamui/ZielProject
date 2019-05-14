@@ -9,7 +9,8 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="768" prefWidth="1368" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+
+<BorderPane onKeyPressed="#keyPressed" prefHeight="768" prefWidth="1368" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <bottom>
       <HBox prefHeight="116.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -63,14 +64,15 @@
       </HBox>
    </bottom>
    <center>
-      <Pane prefHeight="560.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="pane" prefHeight="560.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
             <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" pannable="true" prefHeight="560.0" prefWidth="1200.0" vbarPolicy="NEVER">
                <content>
                   <TilePane fx:id="paneMap" />
                </content>
             </ScrollPane>
-         </children></Pane>
+         </children>
+     </Pane>
    </center>
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />

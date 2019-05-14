@@ -26,6 +26,7 @@ public class Main extends Application {
             primaryStage.setTitle("Ziel");
             primaryStage.setScene(scene);
             primaryStage.show();
+            root.requestFocus();
         } catch (Exception e) {
             e.printStackTrace();
         }
