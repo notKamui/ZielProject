@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -64,7 +65,11 @@
    <center>
       <Pane prefHeight="560.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
-            <TilePane fx:id="tilePaneMap" prefColumns="7" prefHeight="560.0" prefRows="15" prefTileHeight="80.0" prefTileWidth="80.0" prefWidth="1200.0" style="-fx-background-color: white;" />
+            <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" pannable="true" prefHeight="560.0" prefWidth="1200.0" vbarPolicy="NEVER">
+               <content>
+                  <TilePane fx:id="paneMap" />
+               </content>
+            </ScrollPane>
          </children></Pane>
    </center>
    <top>

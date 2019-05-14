@@ -96,4 +96,12 @@ public class Map {
         return this.map.get(index);
     }
 
+    public int getWidth() {
+        return this.lineLength;
+    }
+
+    public int getHeight() {
+        return this.map.size()/this.lineLength;
+    }
+
 }
