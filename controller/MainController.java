@@ -2,12 +2,15 @@ package controller;
 
 
 import javafx.fxml.Initializable;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import model.Player;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -24,13 +27,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 
 
 public class MainController implements Initializable {
-
+	private KeyCode key = KeyCode.UNDEFINED;
+;
+	private Timeline gameLoop;
     private Map map;
     private Player player;
 
@@ -51,23 +55,8 @@ public class MainController implements Initializable {
 
 
     @FXML
-    void keyPressed(@NotNull KeyEvent event) {
-        switch (event.getCode()) {
-            case Z:
-                this.player.move(0, -10);
-                break;
-            case S:
-                this.player.move(0, 10);
-                break;
-            case D:
-                this.player.move(10, 0);
-                break;
-            case Q:
-                this.player.move(-10, 0);
-                break;
-            default:
-                break;
-        }
+    void keyPressed(KeyEvent event) {
+        key = event.getCode();
     }
 
     @Override
@@ -94,5 +83,38 @@ public class MainController implements Initializable {
                 e.printStackTrace();
             }
         }
+        initJeu();
+		gameLoop.play();
     }
+    
+    private void initJeu() {
+		gameLoop = new Timeline();
+		gameLoop.setCycleCount(Timeline.INDEFINITE);
+
+		KeyFrame kf = new KeyFrame(
+				Duration.seconds(0.017), 
+				(ev ->{
+					switch (key) {
+					case Z:
+		                this.player.move(0, -10);
+		                break;
+		            case S:
+		                this.player.move(0, 10);
+		                break;
+		            case D:
+		                this.player.move(10, 0);
+		                break;
+		            case Q:
+		                this.player.move(-10, 0);
+		                break;
+		            default:
+		                break;
+		        }
+					key = KeyCode.UNDEFINED;
+				})
+				);
+		gameLoop.getKeyFrames().add(kf);
+	}
+    
+    
 }

@@ -2,7 +2,7 @@ package model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import org.jetbrains.annotations.Contract;
+
 
 public class Player {
 
@@ -27,12 +27,10 @@ public class Player {
         this.coordYProperty.setValue(y);
     }
 
-    @Contract(pure = true)
     public final IntegerProperty coordXProperty() {
         return this.coordXProperty;
     }
 
-    @Contract(pure = true)
     public final IntegerProperty coordYProperty() {
         return this.coordYProperty;
     }
