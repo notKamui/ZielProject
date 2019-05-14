@@ -37,7 +37,7 @@ public class Map {
         FileReader reader = null;
         try {
             reader = new FileReader(file);
-            char[] chars = new char[(int)file.length()];
+            char[] chars = new char[(int) file.length()];
             reader.read(chars);
             content = new String(chars);
             reader.close();
@@ -57,9 +57,9 @@ public class Map {
 
     public void printMapConsole() {
         int i = 1;
-        for(Tile t : map) {
+        for (Tile t : map) {
             System.out.print(t.getCharCode());
-            if(i%this.lineLength == 0)
+            if (i % this.lineLength == 0)
                 System.out.println();
             i++;
         }
@@ -75,9 +75,9 @@ public class Map {
             FileWriter fileWriter = new FileWriter(file, false);
             String newContent = "";
             int i = 1;
-            for(Tile t : map) {
+            for (Tile t : map) {
                 newContent = newContent + t.getCharCode();
-                if (i%this.lineLength == 0)
+                if (i % this.lineLength == 0)
                     newContent = newContent + "\n";
                 i++;
             }
@@ -101,7 +101,7 @@ public class Map {
     }
 
     public int getHeight() {
-        return this.map.size()/this.lineLength;
+        return this.map.size() / this.lineLength;
     }
 
 }
