@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane onKeyPressed="#keyPressed" prefHeight="768" prefWidth="1368" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+
+<BorderPane onKeyPressed="#keyPressed" prefHeight="768" prefWidth="1368" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <bottom>
       <HBox prefHeight="116.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -57,15 +59,25 @@
                   <Insets left="19.0" />
                </HBox.margin>
             </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
+            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
    </bottom>
    <center>
-      <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane fx:id="pane" prefHeight="560.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" pannable="true" prefHeight="560.0" prefWidth="1200.0" vbarPolicy="NEVER">
+               <content>
+                  <TilePane fx:id="paneMap" />
+               </content>
+            </ScrollPane>
+         </children>
+     </Pane>
    </center>
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>

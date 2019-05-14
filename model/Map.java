@@ -1,48 +1,64 @@
 package model;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Map {
-    private ObservableList<Character> map;
+    private ObservableList<Tile> map;
     private int lineLength;
 
     public Map() {
         this.map = FXCollections.observableArrayList();
-        try {
-            String pathname;
-            File file = new File("src/view/map.csv");
-            Scanner sc = new Scanner(file);
 
-            String line = sc.nextLine();
-            this.lineLength = line.length();
-
-            sc = new Scanner(file);
-            while(sc.hasNextLine()) {
-                line = sc.nextLine();
-                int i = 0;
-                while (i < this.lineLength) {
-                    this.map.add(line.charAt(i));
-                    i++;
-                }
-            }
-            sc.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        String content = readFile("src/view/map.csv");
+        this.lineLength = content.indexOf('\n');
+        String mapString = "";
+        for (int i = 0; i < content.length(); i++) {
+            char c = content.charAt(i);
+            if (c != '\n')
+                mapString = mapString + c;
         }
+
+        for (int i = 0; i < mapString.length(); i++)
+            this.map.add(new Tile(mapString.charAt(i)));
+
+
     }
 
-    public void printMap() {
+    private String readFile(String fname) {
+        String content = null;
+        File file = new File(fname);
+        FileReader reader = null;
+        try {
+            reader = new FileReader(file);
+            char[] chars = new char[(int)file.length()];
+            reader.read(chars);
+            content = new String(chars);
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return content;
+    }
+
+    public void printMapConsole() {
         int i = 1;
-        for(char c : map) {
-            System.out.print(c);
+        for(Tile t : map) {
+            System.out.print(t.getCharCode());
             if(i%this.lineLength == 0)
                 System.out.println();
             i++;
@@ -50,8 +66,7 @@ public class Map {
     }
 
     public void updateMap(int index, char c) {
-        Character cc = c;
-        this.map.set(index, cc);
+        this.map.set(index, new Tile(c));
     }
 
     public void saveMap() {
@@ -60,8 +75,8 @@ public class Map {
             FileWriter fileWriter = new FileWriter(file, false);
             String newContent = "";
             int i = 1;
-            for(char c : map) {
-                newContent = newContent + c;
+            for(Tile t : map) {
+                newContent = newContent + t.getCharCode();
                 if (i%this.lineLength == 0)
                     newContent = newContent + "\n";
                 i++;
@@ -75,6 +90,18 @@ public class Map {
 
     public ObservableList getMap() {
         return this.map;
+    }
+
+    public Tile getTileAt(int index) {
+        return this.map.get(index);
+    }
+
+    public int getWidth() {
+        return this.lineLength;
+    }
+
+    public int getHeight() {
+        return this.map.size()/this.lineLength;
     }
 
 }
