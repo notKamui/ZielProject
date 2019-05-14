@@ -1,21 +1,30 @@
 package controller;
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.TilePane;
-import javafx.scene.control.ScrollPane;
-import model.Map;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.FXML;
+
 import javafx.fxml.Initializable;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Joueur;
+
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.TilePane;
+import javafx.scene.control.ScrollPane;
+import java.awt.*;
+import model.Map;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+
 
 public class MainController implements Initializable{
   
