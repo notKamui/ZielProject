@@ -24,7 +24,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 
@@ -51,7 +50,7 @@ public class MainController implements Initializable {
 
 
     @FXML
-    void keyPressed(@NotNull KeyEvent event) {
+    void keyPressed(KeyEvent event) {
         switch (event.getCode()) {
             case Z:
                 this.player.move(0, -10);
