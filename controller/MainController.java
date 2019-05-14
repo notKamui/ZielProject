@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javax.imageio.ImageIO;
 
 
 public class MainController implements Initializable{
