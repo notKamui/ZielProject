@@ -23,7 +23,7 @@ public class Player {
         this.coordXProperty.setValue(x);
     }
 
-    public void setCoordYProperty(double y) {
+    public void setCoordYProperty(int y) {
         this.coordYProperty.setValue(y);
     }
 

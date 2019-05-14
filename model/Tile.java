@@ -21,7 +21,7 @@ public class Tile {
                 path = path + "ground/groundTop.png";
                 break;
             default:
-                path = path + "sky.png";
+                path = path + "void.png";
                 break;
         }
         this.url = path;

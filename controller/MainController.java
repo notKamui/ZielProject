@@ -70,16 +70,6 @@ public class MainController implements Initializable {
         }
     }
 
-    /*//Methode permettant de recuperer la node du joueur dans le pane a par son nom (Trouver un moyen plus simple)
-    public Node recupPerso(String n) {
-        for (int node = 0; node < pane.getChildren().size(); node++) {
-            if (pane.getChildren().get(node).getId().equals(n))
-                return pane.getChildren().get(node);
-        }
-        return null;
-    }*/
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

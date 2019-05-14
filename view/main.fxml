@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane onKeyPressed="#keyPressed" prefHeight="768" prefWidth="1368" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<BorderPane onKeyPressed="#keyPressed" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <bottom>
-      <HBox prefHeight="116.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="150.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="116.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -64,9 +63,9 @@
       </HBox>
    </bottom>
    <center>
-      <Pane fx:id="pane" prefHeight="560.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="pane" prefHeight="640.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" pannable="true" prefHeight="560.0" prefWidth="1200.0" vbarPolicy="NEVER">
+            <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" pannable="true" prefHeight="640.0" prefWidth="1200.0" vbarPolicy="NEVER">
                <content>
                   <TilePane fx:id="paneMap" />
                </content>
@@ -75,9 +74,9 @@
      </Pane>
    </center>
    <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <HBox prefHeight="100.0" prefWidth="1500.0" BorderPane.alignment="CENTER" />
    </top>
    <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="640.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>
