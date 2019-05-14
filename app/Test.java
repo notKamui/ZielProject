@@ -1,14 +1,10 @@
 package app;
 
-import model.Map;
+import model.Player;
 
 public class Test {
     public static void main(String[] args) {
-        Map map = new Map();
-        map.printMapConsole();
-        System.out.println();
-        //map.updateMap(13, 't');
-        map.printMapConsole();
-        map.saveMap();
+        Player j = new Player(10, 10);
+        System.out.println(j.coordXProperty().get());
     }
 }

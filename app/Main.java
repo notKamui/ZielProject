@@ -20,7 +20,7 @@ public class Main extends Application {
             loader.setLocation(url);
             System.out.println(loader.getLocation());
             BorderPane root = new BorderPane();
-            root=loader.load();
+            root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setResizable(false);
             primaryStage.setTitle("Ziel");
