@@ -2,25 +2,30 @@ package controller;
 
 
 import javafx.fxml.Initializable;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import model.Player;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.ScrollPane;
-
+import javafx.event.*;
 import model.Map;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -29,7 +34,9 @@ import javax.imageio.ImageIO;
 
 
 public class MainController implements Initializable {
-
+	private KeyCode key = KeyCode.UNDEFINED;
+    ArrayList<String> input = new ArrayList<String>();
+	private Timeline gameLoop;
     private Map map;
     private Player player;
 
@@ -51,22 +58,7 @@ public class MainController implements Initializable {
 
     @FXML
     void keyPressed(KeyEvent event) {
-        switch (event.getCode()) {
-            case Z:
-                this.player.move(0, -10);
-                break;
-            case S:
-                this.player.move(0, 10);
-                break;
-            case D:
-                this.player.move(10, 0);
-                break;
-            case Q:
-                this.player.move(-10, 0);
-                break;
-            default:
-                break;
-        }
+        key = event.getCode();
     }
 
     @Override
@@ -91,5 +83,59 @@ public class MainController implements Initializable {
                 e.printStackTrace();
             }
         }
+        scrollPaneMap.setOnKeyPressed(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();
+                        if ( !input.contains(code) )
+                            input.add( code );
+                    }
+                });
+
+            scrollPaneMap.setOnKeyReleased(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();
+                        input.remove( code );
+                    }
+                });
+        startGame();
+		gameLoop.play();
+		
     }
+    private void startGame() {
+		gameLoop = new Timeline();
+		gameLoop.setCycleCount(Timeline.INDEFINITE);
+
+		KeyFrame kf = new KeyFrame(
+				Duration.seconds(0.017), 
+				(ev ->{
+					for(String key : input)
+						switch (key) {
+							case "Z":
+				                this.player.move(0, -10);
+				                break;
+				            case "S":
+				                this.player.move(0, 10);
+				                break;
+				            case "D":
+				                this.player.move(10, 0);
+				                break;
+				            case "Q":
+				                this.player.move(-10, 0);
+				                break;
+				            default:
+				                break;
+		        }
+					key = KeyCode.UNDEFINED;
+				})
+				);
+		gameLoop.getKeyFrames().add(kf);
+	}
+    
+    
 }
