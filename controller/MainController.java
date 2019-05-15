@@ -2,18 +2,16 @@ package controller;
 
 
 import javafx.fxml.Initializable;
+import javafx.geometry.Point3D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.Event;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
@@ -34,11 +32,14 @@ import javax.imageio.ImageIO;
 
 
 public class MainController implements Initializable {
-	private KeyCode key = KeyCode.UNDEFINED;
+    private KeyCode key = KeyCode.UNDEFINED;
     ArrayList<String> input = new ArrayList<String>();
-	private Timeline gameLoop;
+    private Timeline gameLoop;
     private Map map;
     private Player player;
+
+    @FXML
+    private BorderPane root;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -55,6 +56,9 @@ public class MainController implements Initializable {
     @FXML
     private Pane pane;
 
+    @FXML
+    private ImageView playerBox;
+
 
     @FXML
     void keyPressed(KeyEvent event) {
@@ -63,11 +67,12 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.player = new Player(10, 10);
-        ImageView playerView = new ImageView("file:src/ressources/sprites/mario.png");
-        playerView.translateXProperty().bind(this.player.coordXProperty());
-        playerView.translateYProperty().bind(this.player.coordYProperty());
-        pane.getChildren().add(playerView);
+        this.player = new Player(80*2, 80*5);
+        playerBox = new ImageView("file:src/ressources/sprites/mario.png");
+        playerBox.setRotationAxis(new Point3D(0, 1, 0));
+        playerBox.translateXProperty().bind(this.player.coordXProperty());
+        playerBox.translateYProperty().bind(this.player.coordYProperty());
+        pane.getChildren().add(playerBox);
 
         map = new Map();
 
@@ -83,59 +88,58 @@ public class MainController implements Initializable {
                 e.printStackTrace();
             }
         }
-        scrollPaneMap.setOnKeyPressed(
-                new EventHandler<KeyEvent>()
-                {
-                    public void handle(KeyEvent e)
-                    {
+
+        root.setOnKeyPressed(
+                new EventHandler<KeyEvent>() {
+                    public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
-                        if ( !input.contains(code) )
-                            input.add( code );
+                        if (!input.contains(code))
+                            input.add(code);
                     }
                 });
 
-            scrollPaneMap.setOnKeyReleased(
-                new EventHandler<KeyEvent>()
-                {
-                    public void handle(KeyEvent e)
-                    {
+        root.setOnKeyReleased(
+                new EventHandler<KeyEvent>() {
+                    public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
-                        input.remove( code );
+                        input.remove(code);
                     }
                 });
         startGame();
-		gameLoop.play();
-		
+        gameLoop.play();
     }
-    private void startGame() {
-		gameLoop = new Timeline();
-		gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-		KeyFrame kf = new KeyFrame(
-				Duration.seconds(0.017), 
-				(ev ->{
-					for(String key : input)
-						switch (key) {
-							case "Z":
-				                this.player.move(0, -10);
-				                break;
-				            case "S":
-				                this.player.move(0, 10);
-				                break;
-				            case "D":
-				                this.player.move(10, 0);
-				                break;
-				            case "Q":
-				                this.player.move(-10, 0);
-				                break;
-				            default:
-				                break;
-		        }
-					key = KeyCode.UNDEFINED;
-				})
-				);
-		gameLoop.getKeyFrames().add(kf);
-	}
-    
-    
+    private void startGame() {
+        gameLoop = new Timeline();
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
+
+        KeyFrame kf = new KeyFrame(
+                Duration.seconds(0.033),
+                (ev -> {
+                    for (String key : input)
+                        switch (key) {
+                            case "Z":
+                                this.player.move(0, -10);
+                                break;
+                            case "S":
+                                this.player.move(0, 10);
+                                break;
+                            case "D":
+                                this.player.move(10, 0);
+                                playerBox.setRotate(0); // flip right
+                                break;
+                            case "Q":
+                                this.player.move(-10, 0);
+                                playerBox.setRotate(180); // flip left
+                                break;
+                            default:
+                                break;
+                        }
+                    key = KeyCode.UNDEFINED;
+                })
+        );
+        gameLoop.getKeyFrames().add(kf);
+    }
+
+
 }

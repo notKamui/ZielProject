@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane onKeyPressed="#keyPressed" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<BorderPane fx:id="root" onKeyPressed="#keyPressed" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <bottom>
       <HBox prefHeight="150.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
          <children>
