@@ -3,7 +3,6 @@ package controller;
 
 import javafx.fxml.Initializable;
 import javafx.geometry.Point3D;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -62,7 +61,8 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		world = new World(new Player(80*2, 80*5),new Map());
+		this.world = new World(new Player(80*2, 80*5),new Map());
+
 
 		playerBox = new ImageView("file:src/ressources/sprites/mario.png");
 		playerBox.setRotationAxis(new Point3D(0, 1, 0));
