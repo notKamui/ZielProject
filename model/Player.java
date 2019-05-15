@@ -4,7 +4,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Player {
-
+	final private int GRAVITY = 2;
     private IntegerProperty coordXProperty;
     private IntegerProperty coordYProperty;
 
@@ -18,6 +18,9 @@ public class Player {
         this.setCoordYProperty(this.coordYProperty.get() + vectY);
     }
 
+    public void gravity(){
+    	this.move(0, GRAVITY);
+    }
     public void setCoordXProperty(int x) {
         this.coordXProperty.setValue(x);
     }

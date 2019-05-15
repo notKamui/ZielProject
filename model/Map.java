@@ -87,7 +87,7 @@ public class Map {
         }
     }
 
-    public ObservableList getMap() {
+    public ObservableList getTileMap() {
         return this.map;
     }
 
