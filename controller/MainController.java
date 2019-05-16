@@ -59,6 +59,9 @@ public class MainController implements Initializable {
 	@FXML
 	private ImageView playerBox;
 
+	@FXML
+    private Pane paneOverworld;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -68,7 +71,7 @@ public class MainController implements Initializable {
 		playerBox.setRotationAxis(new Point3D(0, 1, 0));
 		playerBox.translateXProperty().bind(this.world.getPlayer().coordXProperty());
 		playerBox.translateYProperty().bind(this.world.getPlayer().coordYProperty());
-		pane.getChildren().add(playerBox);
+		paneOverworld.getChildren().add(playerBox);
 
 
 		paneMap.setPrefWidth(80 * this.world.getMap().getWidth());
