@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Player extends GameObject {
+public class Player extends Charac {
 
 	public Player(int x, int y) {
 		super(x, y, 80, 80);
@@ -12,7 +12,7 @@ public class Player extends GameObject {
 		for (String key : input)
 			switch (key) {
 			case "Z":
-				move(0, -10);
+				move(0, -20);
 				break;
 			case "S":
 				move(0, 10);

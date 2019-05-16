@@ -3,25 +3,32 @@ package model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.util.ArrayList;
+
 public abstract class GameObject {
-    final private int GRAVITY = 10;
+    private static ArrayList<Hitbox> hitboxList = new ArrayList<>();
     private IntegerProperty coordXProperty;
     private IntegerProperty coordYProperty;
-    private Bounds hitbox;
+    private Hitbox hitbox;
+    private CollisionManager collisionManager;
 
     public GameObject(int x, int y, int width, int height) {
         this.coordXProperty = new SimpleIntegerProperty(x);
         this.coordYProperty = new SimpleIntegerProperty(y);
-        this.hitbox = new Bounds(x, y, width, height);
+        this.hitbox = new Hitbox(x, y, width, height);
+        hitboxList.add(this.hitbox);
+        this.collisionManager = new CollisionManager(this);
     }
 
     public void move(int vectX, int vectY) {
-        this.setCoordXProperty(this.coordXProperty.get() + vectX);
-        this.setCoordYProperty(this.coordYProperty.get() + vectY);
-    }
-
-    public void gravity(){
-        this.move(0, GRAVITY);
+        if(!this.collisionManager.collides()) {
+            int newX = this.coordXProperty.get() + vectX;
+            int newY = this.coordYProperty.get() + vectY;
+            this.setCoordXProperty(newX);
+            this.setCoordYProperty(newY);
+            this.hitbox.getBounds().setX(newX);
+            this.hitbox.getBounds().setY(newY);
+        }
     }
 
     public void setCoordXProperty(int x) {
@@ -38,5 +45,13 @@ public abstract class GameObject {
 
     public final IntegerProperty coordYProperty() {
         return this.coordYProperty;
+    }
+
+    public ArrayList<Hitbox> getBoundsList() {
+        return hitboxList;
+    }
+
+    public Hitbox getHitbox() {
+        return this.hitbox;
     }
 }
