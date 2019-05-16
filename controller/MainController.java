@@ -103,6 +103,7 @@ public class MainController implements Initializable {
 						input.remove(code);
 					}
 				});
+		
 		startGame();
 		gameLoop.play();
 	}
@@ -115,27 +116,7 @@ public class MainController implements Initializable {
 				Duration.seconds(0.033),
 				(ev -> {
 					this.world.getPlayer().gravity();
-					for (String key : input)
-						switch (key) {
-						case "Z":
-							this.world.getPlayer().move(0, -10);
-							break;
-						case "S":
-							this.world.getPlayer().move(0, 10);
-							break;
-						case "D":
-							this.world.getPlayer().move(10, 0);
-							playerBox.setRotate(0); // flip right
-							break;
-						case "Q":
-							this.world.getPlayer().move(-10, 0);
-							playerBox.setRotate(180); // flip left
-							break;
-						case "SPACE":
-							break;
-						default:
-							break;
-						}
+					this.world.getPlayer().readInput(input);
 				})
 				);
 		gameLoop.getKeyFrames().add(kf);
