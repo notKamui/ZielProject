@@ -66,13 +66,11 @@ public class MainController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.world = new World(new Player(80*2, 80*5),new Map());
 
-
 		playerBox = new ImageView("file:src/ressources/sprites/mario.png");
 		playerBox.setRotationAxis(new Point3D(0, 1, 0));
 		playerBox.translateXProperty().bind(this.world.getPlayer().coordXProperty());
 		playerBox.translateYProperty().bind(this.world.getPlayer().coordYProperty());
 		paneOverworld.getChildren().add(playerBox);
-
 
 		paneMap.setPrefWidth(80 * this.world.getMap().getWidth());
 		paneMap.setPrefHeight(80 * this.world.getMap().getHeight());
@@ -115,7 +113,7 @@ public class MainController implements Initializable {
 		KeyFrame kf = new KeyFrame(
 				Duration.seconds(0.033),
 				(ev -> {
-					this.world.getPlayer().gravity();
+					//this.world.getPlayer().gravity();
 					this.world.getPlayer().readInput(input);
 				})
 				);

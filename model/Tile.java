@@ -1,15 +1,14 @@
 package model;
 
-public class Tile {
+public class Tile extends GameObject {
 	private final static int DIMENSIONS = 80;
 
 	private String url;
 	private char charCode;
-	private boolean isSolid;
-	private Bounds bounds;
 
 	public Tile(char c, int i, int lineLength) {
-		this.bounds = new Bounds((i%lineLength)*80, (i/lineLength)*80,DIMENSIONS, DIMENSIONS);
+		//this.bounds = new Hitbox((i%lineLength)*80, (i/lineLength)*80,DIMENSIONS, DIMENSIONS);
+        super((i%lineLength)*80, (i/lineLength)*80,DIMENSIONS, DIMENSIONS);
 		this.setTile(c);
 	}
 
@@ -20,15 +19,14 @@ public class Tile {
 		switch (c) {
 		case 's':
 			path = path + "sky.png";
-			this.isSolid = false;
+            super.getHitbox().setToNonSolid();
 			break;
 		case 'g':
 			path = path + "ground/groundTop.png";
-			this.isSolid = true;
 			break;
 		default:
 			path = path + "void.png";
-			this.isSolid = false;
+            super.getHitbox().setToNonSolid();
 			break;
 		}
 		this.url = path;
@@ -40,9 +38,5 @@ public class Tile {
 
 	public char getCharCode() {
 		return this.charCode;
-	}
-	
-	public boolean isSolid() {
-		return this.isSolid;
 	}
 }
