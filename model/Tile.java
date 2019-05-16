@@ -1,15 +1,15 @@
 package model;
 
-public class Tile extends Bounds {
+public class Tile {
 	private final static int DIMENSIONS = 80;
 
 	private String url;
 	private char charCode;
 	private boolean isSolid;
+	private Bounds bounds;
 
 	public Tile(char c, int i, int lineLength) {
-		super((i%lineLength)*80, (i/lineLength)*80,DIMENSIONS, DIMENSIONS);
-
+		this.bounds = new Bounds((i%lineLength)*80, (i/lineLength)*80,DIMENSIONS, DIMENSIONS);
 		this.setTile(c);
 	}
 

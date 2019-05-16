@@ -115,6 +115,7 @@ public class MainController implements Initializable {
 				Duration.seconds(0.033),
 				(ev -> {
 					this.world.getPlayer().gravity();
+					System.out.println(input);
 					for (String key : input)
 						switch (key) {
 						case "Z":

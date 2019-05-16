@@ -3,8 +3,8 @@ package model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class GameObject {
-    final private int GRAVITY = 2;
+public abstract class GameObject {
+    final private int GRAVITY = 10;
     private IntegerProperty coordXProperty;
     private IntegerProperty coordYProperty;
     private Bounds hitbox;

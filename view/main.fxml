@@ -65,7 +65,7 @@
    <center>
       <Pane fx:id="pane" prefHeight="640.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" pannable="true" prefHeight="640.0" prefWidth="1200.0" style="-fx-background-color: grey;" vbarPolicy="NEVER">
+            <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" pannable="false" prefHeight="640.0" prefWidth="1200.0" style="-fx-background-color: grey;" vbarPolicy="NEVER">
                <content>
                   <TilePane fx:id="paneMap" />
                </content>
