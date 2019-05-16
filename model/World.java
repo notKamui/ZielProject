@@ -12,7 +12,10 @@ public class World {
 	public Map getMap() {
 		return this.map;
 	}
+	
 	public Player getPlayer() {
 		return this.player;
 	}
 }
+
+

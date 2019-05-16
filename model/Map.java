@@ -2,11 +2,8 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Map {
     private ObservableList<Tile> map;
@@ -25,9 +22,7 @@ public class Map {
         }
 
         for (int i = 0; i < mapString.length(); i++)
-            this.map.add(new Tile(mapString.charAt(i)));
-
-
+            this.map.add(new Tile(mapString.charAt(i), i, this.lineLength));
     }
 
     private String readFile(String fname) {
@@ -65,7 +60,7 @@ public class Map {
     }
 
     public void updateMap(int index, char c) {
-        this.map.set(index, new Tile(c));
+        this.map.get(index).setTile(c);
     }
 
     public void saveMap() {
@@ -87,7 +82,7 @@ public class Map {
         }
     }
 
-    public ObservableList getTileMap() {
+    public ObservableList<Tile> getTileMap() {
         return this.map;
     }
 

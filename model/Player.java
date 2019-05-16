@@ -3,12 +3,13 @@ package model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Player {
+public class Player extends Bounds {
 	final private int GRAVITY = 2;
     private IntegerProperty coordXProperty;
     private IntegerProperty coordYProperty;
 
     public Player(int x, int y) {
+    	super(x, y, 80, 80);
         this.coordXProperty = new SimpleIntegerProperty(x);
         this.coordYProperty = new SimpleIntegerProperty(y);
     }
@@ -36,4 +37,5 @@ public class Player {
     public final IntegerProperty coordYProperty() {
         return this.coordYProperty;
     }
+    
 }
