@@ -1,13 +1,14 @@
 package model;
 
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Hitbox {
 	private Rectangle bounds;
 	
 	public Hitbox(int coordX, int coordY, int width, int height) {
-		this.setBounds(coordX, coordY, width, height);
+		this.setBounds(coordX+1, coordY+1, width, height);
 	}
 	
 	public Rectangle getBounds() {
@@ -19,6 +20,6 @@ public class Hitbox {
     }
 
     public void setToNonSolid() {
-	    this.setBounds(0, 0, 0 ,0);
+	    this.bounds = null;
     }
 }
