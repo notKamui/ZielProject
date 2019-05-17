@@ -21,12 +21,36 @@ public abstract class GameObject {
     }
 
     public void move(int vectX, int vectY) {
-        if(!this.collisionManager.collides()) {
-            int newX = this.coordXProperty.get() + vectX;
-            int newY = this.coordYProperty.get() + vectY;
+        boolean collides = false;
+        int pixel = 1;
+        if (vectX < 0 || vectY < 0)
+            pixel = -1;
+
+        if (vectX != 0 && vectY == 0) { // Horizontal move
+            int i;
+            for (i = 0; i <= Math.abs(vectX) && !collides; i++) {
+                this.hitbox.getBounds().setX(this.hitbox.getBounds().getX() + pixel);
+                collides = this.collisionManager.collides();
+            }
+            i--;
+            if (vectX < 0)
+                i = -i;
+            int newX = this.coordXProperty.get() + i;
             this.setCoordXProperty(newX);
-            this.setCoordYProperty(newY);
             this.hitbox.getBounds().setX(newX);
+        }
+
+        if(vectX == 0 && vectY != 0) { // Vertical move
+            int j;
+            for (j = 0; j <= Math.abs(vectY) && !collides; j++) {
+                this.hitbox.getBounds().setY(this.hitbox.getBounds().getY() + pixel);
+                collides = this.collisionManager.collides();
+            }
+            j--;
+            if (vectY < 0)
+                j = -j;
+            int newY = this.coordYProperty.get() + j;
+            this.setCoordYProperty(newY);
             this.hitbox.getBounds().setY(newY);
         }
     }
