@@ -21,9 +21,12 @@ public class Player extends Charac {
                 case "LEFT":
                     this.move(-SPEED, 0);
                     break;
+                case "Z":
+                    this.move(0, -40);
+                    break;
                 case "SPACE":
-                    if (!this.getIsJumping())
-                        this.setJumping(true);
+                    if (this.getCollMan().isOnFloor())
+                        this.setIsJumping(true);
                     break;
                 default:
                     break;
