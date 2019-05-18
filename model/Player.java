@@ -14,15 +14,14 @@ public class Player extends Charac {
         for (String key : input)
             switch (key) {
                 case "D":
-                case "RIGHT":
                     this.move(SPEED, 0);
                     break;
                 case "Q":
-                case "LEFT":
                     this.move(-SPEED, 0);
                     break;
-                case "Z":
-                    this.move(0, -40);
+                case "S":
+                    if(this.getJumpForce() < 26) //can fastfall at max height of the jump
+                        this.setIsJumping(false);
                     break;
                 case "SPACE":
                     if (this.getCollMan().isOnFloor())

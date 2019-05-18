@@ -90,7 +90,7 @@ public class MainController implements Initializable {
 					public void handle(KeyEvent e) {
 						String code = e.getCode().toString();
 						if (!input.contains(code))
-							input.add(code);
+						    input.add(code);
 					}
 				});
 
