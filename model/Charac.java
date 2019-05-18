@@ -69,7 +69,10 @@ public abstract class Charac extends GameObject {
     public void setIsJumping(boolean isJumping) {
         this.isJumping = isJumping;
         if(isJumping)
-            this.jumpForce = 45;
+            this.jumpForce = 48;
+    }
+    public int getJumpForce() {
+        return this.jumpForce;
     }
     //-------------------------
 
