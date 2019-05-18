@@ -15,7 +15,7 @@ public class Tile extends GameObject {
 	public void setTile(char c) {
 		this.charCode = c;
 
-		String path = "src/ressources/tiles/";
+		String path = "src/resources/tiles/";
 		switch (c) {
 		case 's':
 			path = path + "sky.png";

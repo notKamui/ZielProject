@@ -11,13 +11,16 @@ public class Player extends Charac {
     }
 
     public void readInput(ArrayList<String> input) {
+        int speed = SPEED;
+        if(!this.getCollMan().isOnFloor())
+            speed /= 1.5;
         for (String key : input)
             switch (key) {
                 case "D":
-                    this.move(SPEED, 0);
+                    this.move(speed, 0);
                     break;
                 case "Q":
-                    this.move(-SPEED, 0);
+                    this.move(-speed, 0);
                     break;
                 case "S":
                     if(this.getJumpForce() < 26) //can fastfall at max height of the jump
