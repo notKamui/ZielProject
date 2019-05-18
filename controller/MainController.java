@@ -113,9 +113,9 @@ public class MainController implements Initializable {
 		KeyFrame kf = new KeyFrame(
 				Duration.seconds(0.033),
 				(ev -> {
+                    this.world.getPlayer().jumpAnim();
 					this.world.getPlayer().gravity();
 					this.world.getPlayer().readInput(input);
-					this.world.getPlayer().jumpAnim();
 				})
 				);
 		gameLoop.getKeyFrames().add(kf);

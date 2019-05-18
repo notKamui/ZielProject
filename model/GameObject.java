@@ -9,50 +9,17 @@ public abstract class GameObject {
     private static ArrayList<Hitbox> hitboxList = new ArrayList<>();
     private IntegerProperty coordXProperty;
     private IntegerProperty coordYProperty;
+    private int width;
+    private int height;
     private Hitbox hitbox;
-    private CollisionManager collisionManager;
 
     public GameObject(int x, int y, int width, int height) {
         this.coordXProperty = new SimpleIntegerProperty(x);
         this.coordYProperty = new SimpleIntegerProperty(y);
-        this.hitbox = new Hitbox(x, y, width, height);
+        this.width = width;
+        this.height = height;
+        this.hitbox = new Hitbox(this.coordXProperty, this.coordYProperty, width, height);
         hitboxList.add(this.hitbox);
-        this.collisionManager = new CollisionManager(this);
-    }
-
-    public void move(int vectX, int vectY) {
-        boolean collides = false;
-        int pixel = 1;
-        if (vectX < 0 || vectY < 0)
-            pixel = -1;
-
-        if (vectX != 0 && vectY == 0) { // Horizontal move
-            int i;
-            for (i = 0; i <= Math.abs(vectX) && !collides; i++) {
-                this.hitbox.getBounds().setX(this.hitbox.getBounds().getX() + pixel);
-                collides = this.collisionManager.collides();
-            }
-            i--;
-            if (vectX < 0)
-                i = -i;
-            int newX = this.coordXProperty.get() + i;
-            this.setCoordXProperty(newX);
-            this.hitbox.getBounds().setX(newX);
-        }
-
-        if(vectX == 0 && vectY != 0) { // Vertical move
-            int j;
-            for (j = 0; j <= Math.abs(vectY) && !collides; j++) {
-                this.hitbox.getBounds().setY(this.hitbox.getBounds().getY() + pixel);
-                collides = this.collisionManager.collides();
-            }
-            j--;
-            if (vectY < 0)
-                j = -j;
-            int newY = this.coordYProperty.get() + j;
-            this.setCoordYProperty(newY);
-            this.hitbox.getBounds().setY(newY);
-        }
     }
 
     public void setCoordXProperty(int x) {
@@ -69,6 +36,14 @@ public abstract class GameObject {
 
     public final IntegerProperty coordYProperty() {
         return this.coordYProperty;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
     }
 
     public ArrayList<Hitbox> getBoundsList() {

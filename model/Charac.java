@@ -1,10 +1,5 @@
 package model;
 
-import javafx.animation.Interpolator;
-import javafx.animation.TranslateTransition;
-
-import javafx.util.Duration;
-
 
 public abstract class Charac extends GameObject {
     final private int GRAVITY = 30;
@@ -15,12 +10,47 @@ public abstract class Charac extends GameObject {
     public Charac(int x, int y, int width, int height) {
         super(x, y, width, height);
         this.jumpForce = 0;
-        this.setJumping(false);
+        this.setIsJumping(false);
         this.collMan = new CollisionManager(this);
     }
 
     public void gravity(){
         this.move(0, GRAVITY);
+    }
+
+    public void move(int vectX, int vectY) {
+        boolean collides = false;
+        int pixel = 1;
+        if (vectX < 0 || vectY < 0)
+            pixel = -1;
+
+        if (vectX != 0 && vectY == 0) { // Horizontal move
+            int i;
+            int oriX = this.coordXProperty().get();
+            for (i = 0; i <= Math.abs(vectX) && !collides; i++) {
+                this.setCoordXProperty(this.coordXProperty().get() + pixel);
+                collides = this.collMan.collides();
+            }
+            i--;
+            if (vectX < 0)
+                i = -i;
+            int newX = oriX + i;
+            this.setCoordXProperty(newX);
+        }
+
+        if(vectX == 0 && vectY != 0) { // Vertical move
+            int j;
+            int oriY = this.coordYProperty().get();
+            for (j = 0; j <= Math.abs(vectY) && !collides; j++) {
+                this.setCoordYProperty(this.coordYProperty().get() + pixel);
+                collides = this.collMan.collides();
+            }
+            j--;
+            if (vectY < 0)
+                j = -j;
+            int newY = oriY + j;
+            this.setCoordYProperty(newY);
+        }
     }
 
     // Jump functions--------
@@ -29,17 +59,21 @@ public abstract class Charac extends GameObject {
             this.move(0, -this.jumpForce);
         }
         this.jumpForce = Math.max(this.jumpForce-1, 0);
-        if (this.jumpForce == 0) {
-            this.setJumping(false);
+        if (this.collMan.isOnFloor()) {
+            this.isJumping = false;
         }
     }
     public boolean getIsJumping() {
         return this.isJumping;
     }
-    public void setJumping(boolean isJumping) {
+    public void setIsJumping(boolean isJumping) {
         this.isJumping = isJumping;
         if(isJumping)
             this.jumpForce = 45;
     }
     //-------------------------
+
+    public CollisionManager getCollMan() {
+        return this.collMan;
+    }
 }
