@@ -116,6 +116,7 @@ public class MainController implements Initializable {
                     this.world.getPlayer().jumpAnim();
 					this.world.getPlayer().gravity();
 					this.world.getPlayer().readInput(input);
+					playerBox.setRotate(this.world.getPlayer().getDirection());
 				})
 				);
 		gameLoop.getKeyFrames().add(kf);
