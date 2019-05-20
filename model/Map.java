@@ -2,6 +2,9 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.TileType.Ground;
+import model.TileType.Sky;
+import model.TileType.Void;
 
 import java.io.*;
 
@@ -21,8 +24,9 @@ public class Map {
                 mapString = mapString + c;
         }
 
-        for (int i = 0; i < mapString.length(); i++)
-            this.map.add(new Tile(mapString.charAt(i), i, this.lineLength));
+        for (int i = 0; i < mapString.length(); i++) {
+            this.map.add(makeTile(i, mapString.charAt(i)));
+        }
     }
 
     private String readFile(String fname) {
@@ -59,8 +63,8 @@ public class Map {
         }
     }
 
-    public void updateMap(int index, char c) {
-        this.map.get(index).setTile(c);
+    public void updateMap(int i, char c) {
+        this.map.set(i, makeTile(i, c));
     }
 
     public void saveMap() {
@@ -82,6 +86,22 @@ public class Map {
         }
     }
 
+    private Tile makeTile(int i, char c) {
+        Tile tile;
+        switch (c) {
+            case 'g':
+                tile = new Ground(i, this.lineLength);
+                break;
+            case 's':
+                tile = new Sky(i, this.lineLength);
+                break;
+            default:
+                tile = new Void(i, this.lineLength);
+                break;
+        }
+        return tile;
+    }
+
     public ObservableList<Tile> getTileMap() {
         return this.map;
     }
@@ -97,5 +117,4 @@ public class Map {
     public int getHeight() {
         return this.map.size() / this.lineLength;
     }
-
 }
