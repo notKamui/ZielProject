@@ -64,6 +64,7 @@ public class Map {
     }
 
     public void updateMap(int i, char c) {
+    	this.map.get(i).removeHitbox();
         this.map.set(i, makeTile(i, c));
     }
 
