@@ -18,9 +18,11 @@ public class Player extends Charac {
             switch (key) {
                 case "D":
                     this.move(speed, 0);
+                    this.setDirection(false);
                     break;
                 case "Q":
                     this.move(-speed, 0);
+                    this.setDirection(true);
                     break;
                 case "S":
                     if(this.getJumpForce() < 26) //can fastfall at max height of the jump

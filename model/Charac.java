@@ -3,12 +3,14 @@ package model;
 
 public abstract class Charac extends GameObject {
     final private int GRAVITY = 30;
+    private int direction;
     private int jumpForce;
     private boolean isJumping;
     private CollisionManager collMan;
 
     public Charac(int x, int y, int width, int height) {
         super(x, y, width, height);
+        this.direction = 0;
         this.jumpForce = 0;
         this.setIsJumping(false);
         this.collMan = new CollisionManager(this);
@@ -78,5 +80,16 @@ public abstract class Charac extends GameObject {
 
     public CollisionManager getCollMan() {
         return this.collMan;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(boolean flipped) {
+        if (flipped)
+            this.direction = 180;
+        else
+            this.direction = 0;
     }
 }
