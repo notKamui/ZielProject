@@ -49,7 +49,9 @@ public abstract class GameObject {
     public ArrayList<Hitbox> getBoundsList() {
         return hitboxList;
     }
-
+    public void removeHitbox() {
+    	hitboxList.remove(this.hitbox);
+    }
     public Hitbox getHitbox() {
         return this.hitbox;
     }
