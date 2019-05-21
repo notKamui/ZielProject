@@ -1,7 +1,4 @@
 package model;
-
-import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,7 +9,7 @@ public class Inventory {
 	
 	private ObservableList<Item> inventory;
 	private int capacity;
-	final private Item VOID = new Item("void",0);
+	final private Item VOID = new ItemOther("void",0);
 	
 	public Inventory() {
 		this.inventory = FXCollections.observableArrayList();
