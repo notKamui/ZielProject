@@ -10,7 +10,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="model.CollisionManager" project="ZielProject" file="/ZielProject/src/model/Collider.java"
+  <class id="2" language="java" name="model.Collider" project="ZielProject" file="/ZielProject/src/model/Collider.java"
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="804" y="113"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
