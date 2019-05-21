@@ -3,11 +3,14 @@ package model;
 import java.util.ArrayList;
 
 public class Player extends Charac {
+	
+	private Inventory inventory;
 
     final private int SPEED = 10;
 
     public Player(int x, int y) {
         super(x, y, 80, 80);
+        this.inventory = new Inventory();
     }
 
     public void readInput(ArrayList<String> input) {
@@ -35,6 +38,10 @@ public class Player extends Charac {
                 default:
                     break;
             }
+    }
+    
+    public Inventory getInventory() {
+    	return this.inventory;
     }
 
 }
