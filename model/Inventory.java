@@ -1,18 +1,18 @@
 package model;
-
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 //La classe Inventory va permettre de s'occuper de l'inventaire du perso, en attribut, une liste d'Item et
 // la capacite max de l'inventaire
 // /!\ voir si tableau pas mieux (même si une ArrayList empêche le risque d'erreur)
 public class Inventory {
 	
-	private ArrayList<Item> inventory;
+	private ObservableList<Item> inventory;
 	private int capacity;
-	final private Item VOID = new Item("void",0);
+	final private Item VOID = new ItemOther("void",0);
 	
 	public Inventory() {
-		this.inventory = new ArrayList<>();
+		this.inventory = FXCollections.observableArrayList();
 		this.capacity = 10;
 		for(int i = 0; i < capacity; i++) {
 			inventory.add(VOID);
@@ -47,8 +47,12 @@ public class Inventory {
 		}
 	}
 	
+	public ObservableList<Item> returnInventory() {
+		return this.inventory;
+	}
+	
 	public void clearInventory() {
-		this.inventory = new ArrayList<>();
+		this.inventory = FXCollections.observableArrayList();
 	}
 	
 

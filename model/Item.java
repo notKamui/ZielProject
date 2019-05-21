@@ -1,7 +1,7 @@
 package model;
 
 //Peut devenir une superclasse par rapport aux outils, armes, ect...
-public class Item {
+public abstract class Item {
 
 	private String name;
 	private int id;

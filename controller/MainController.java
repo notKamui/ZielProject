@@ -18,12 +18,15 @@ import model.World;
 import model.TileType.Sky;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.ScrollPane;
 import javafx.event.*;
+import model.Item;
 import model.Map;
 
 import java.awt.image.BufferedImage;
@@ -70,6 +73,37 @@ public class MainController implements Initializable {
 
     @FXML
     private Pane paneOverworld;
+	
+	//Slot d'inventaire
+	@FXML
+    private ImageView slot0;
+	
+	@FXML
+    private ImageView slot1;
+
+    @FXML
+    private ImageView slot2;
+
+    @FXML
+    private ImageView slot3;
+
+    @FXML
+    private ImageView slot4;
+
+    @FXML
+    private ImageView slot5;
+
+    @FXML
+    private ImageView slot6;
+
+    @FXML
+    private ImageView slot7;
+
+    @FXML
+    private ImageView slot8;
+
+    @FXML
+    private ImageView slot9;
 
 
     @Override
@@ -153,6 +187,26 @@ public class MainController implements Initializable {
                         input.remove(code);
                     }
                 });
+  
+  //-----Gestion de L'inventaire-------
+        this.world.getPlayer().getInventory().returnInventory().addListener(new ListChangeListener<Item>() {
+			  @Override
+			  public void onChanged(ListChangeListener.Change<? extends Item> change) {
+				  while(change.next()) {
+				  	if(change.wasRemoved()) {
+						
+				   	}
+					
+				  	if(change.wasAdded()) {
+						
+				  	}
+					
+					if(change.wasReplaced()) {
+						
+					}
+				}
+			}
+		});
         startGame();
         gameLoop.play();
     }
