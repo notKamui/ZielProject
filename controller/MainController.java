@@ -3,12 +3,19 @@ package controller;
 
 import javafx.fxml.Initializable;
 import javafx.geometry.Point3D;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import model.Player;
 import model.World;
+import model.TileType.Sky;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.embed.swing.SwingFXUtils;
@@ -31,12 +38,15 @@ import javafx.fxml.FXML;
 import javax.imageio.ImageIO;
 
 
+ 
 public class MainController implements Initializable {
     ArrayList<String> input = new ArrayList<String>();
     private Timeline gameLoop;
     private World world;
-
-
+    private int newId=-1;
+   	private int oldId=-2;
+    private int digTimer = 0;
+    
     @FXML
     private BorderPane root;
 
@@ -91,29 +101,58 @@ public class MainController implements Initializable {
                 }
                 BufferedImage buffImg = ImageIO.read(new File(url));
                 Image img = SwingFXUtils.toFXImage(buffImg, null);
-                paneMap.getChildren().add(new ImageView(img));
+                ImageView tile = new ImageView(img);
+                
+                tile.setOnMousePressed(
+						new EventHandler<MouseEvent>() {
+							public void handle(MouseEvent e) {
+								newId = paneMap.getChildrenUnmodifiable().indexOf(tile);
+								oldId = newId;
+							}
+						});
+                
+                tile.setOnMouseDragEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+						newId = paneMap.getChildrenUnmodifiable().indexOf(tile);
+						oldId = newId;
+                    } 
+                });
+                
+                tile.setOnMouseReleased(
+						new EventHandler<MouseEvent>() {
+							public void handle(MouseEvent e) {
+								newId = -1;
+								
+							}
+						});
+                
+                paneMap.getChildren().add(tile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        scrollPaneMap.addEventFilter(MouseEvent.DRAG_DETECTED , new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                scrollPaneMap.startFullDrag();
+            }
+        });
+        
+        scrollPaneMap.addEventFilter(KeyEvent.KEY_PRESSED,  event -> {
+                     String code = event.getCode().toString();
+                            if (!input.contains(code))
+                                input.add(code);
+                            event.consume();
+                        });
 
-        root.setOnKeyPressed(
-                new EventHandler<KeyEvent>() {
-                    public void handle(KeyEvent e) {
-                        String code = e.getCode().toString();
-                        if (!input.contains(code))
-                            input.add(code);
-                    }
-                });
-
-        root.setOnKeyReleased(
+        scrollPaneMap.setOnKeyReleased(
                 new EventHandler<KeyEvent>() {
                     public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
                         input.remove(code);
                     }
                 });
-
         startGame();
         gameLoop.play();
     }
@@ -121,10 +160,20 @@ public class MainController implements Initializable {
     private void startGame() {
         gameLoop = new Timeline();
         gameLoop.setCycleCount(Timeline.INDEFINITE);
-
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.033),
                 (ev -> {
+                	if(newId!= oldId || newId == -1) {
+                		digTimer= 0;
+                	}
+                	else {
+                		digTimer++;
+                		if(digTimer==60) { //depend de la case ?
+                    		this.world.getMap().updateMap(newId, 's');
+                			digTimer = 0;
+                    	}
+                	}
+                	
                     this.world.getPlayer().jumpAnim();
                     this.world.getPlayer().gravity();
                     this.world.getPlayer().readInput(input);

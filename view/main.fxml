@@ -67,10 +67,13 @@
          <children>
             <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" pannable="false" prefHeight="640.0" prefWidth="1200.0" style="-fx-background-color: grey;" vbarPolicy="NEVER">
                <content>
-                  <TilePane fx:id="paneMap" />
+                  <Pane fx:id="paneOverworld" prefHeight="640.0" prefWidth="1200.0">
+                     <children>
+                        <TilePane fx:id="paneMap" />
+                     </children>
+                  </Pane>
                </content>
             </ScrollPane>
-            <Pane fx:id="paneOverworld" prefHeight="640.0" prefWidth="1200.0" />
          </children>
       </Pane>
    </center>
