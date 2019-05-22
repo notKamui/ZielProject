@@ -7,14 +7,14 @@ public abstract class Charac extends GameObject {
     private int direction;
     private int jumpForce;
     private boolean isJumping;
-    private CollisionManager collMan;
+    private Collider collMan;
 
     public Charac(int x, int y, int width, int height) {
         super(x, y, width, height);
         this.direction = 0;
         this.jumpForce = 0;
         this.setIsJumping(false);
-        this.collMan = new CollisionManager(this);
+        this.collMan = new Collider(this);
     }
 
     public void gravity(){
@@ -79,7 +79,7 @@ public abstract class Charac extends GameObject {
     }
     //-------------------------
 
-    public CollisionManager getCollMan() {
+    public Collider getCollMan() {
         return this.collMan;
     }
 
@@ -90,6 +90,7 @@ public abstract class Charac extends GameObject {
     public int getRange() {
     	return range;
     }
+
 
     public void setDirection(boolean flipped) {
         if (flipped)

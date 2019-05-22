@@ -2,9 +2,7 @@ package controller;
 
 import javafx.fxml.Initializable;
 import javafx.geometry.Point3D;
-
 import javafx.scene.input.KeyEvent;
-
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -12,16 +10,15 @@ import javafx.util.Duration;
 import model.Player;
 import model.Tile;
 import model.World;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.ScrollPane;
 import javafx.event.*;
+import model.Item;
 import model.Map;
 
 
@@ -33,6 +30,7 @@ import javafx.fxml.FXML;
 
 
 public class MainController implements Initializable {
+
 	ArrayList<String> input = new ArrayList<String>();
 	private Timeline gameLoop;
 	private World world;
@@ -119,6 +117,7 @@ public class MainController implements Initializable {
 
 			paneMap.getChildren().add(tile);
 		}
+    
 		scrollPaneMap.addEventFilter(MouseEvent.DRAG_DETECTED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
@@ -166,13 +165,33 @@ public class MainController implements Initializable {
 						ImageView img = (ImageView) paneMap.getChildren().get(change.getFrom());
 						img.setImage(getImage(change.getFrom()));
 
+   
+  //-----Gestion de L'inventaire-------
+        this.world.getPlayer().getInventory().returnInventory().addListener(new ListChangeListener<Item>() {
+			  @Override
+			  public void onChanged(ListChangeListener.Change<? extends Item> change) {
+				  while(change.next()) {
+				  	if(change.wasRemoved()) {
+						
+				   	}
+					
+				  	if(change.wasAdded()) {
+						
+				  	}
+					
+					if(change.wasReplaced()) {
+
 					}
 				}
 			}
 		});
-	};
 
-	private void startGame() {
+        startGame();
+        gameLoop.play();
+    }
+
+        
+        private void startGame() {
 		gameLoop = new Timeline();
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.033), (ev -> {

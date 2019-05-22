@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
@@ -9,78 +16,212 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="root" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
-   <bottom>
-      <HBox prefHeight="150.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="116.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="19.0" />
-               </HBox.margin>
-            </ImageView>
-            <ImageView fitHeight="113.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </HBox>
-   </bottom>
-   <center>
-      <Pane fx:id="pane" prefHeight="640.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
-         <children>
+<BorderPane fx:id="root" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<center>
+    <Pane fx:id="pane" prefHeight="640.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+        <children>
             <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" pannable="false" prefHeight="640.0" prefWidth="1200.0" style="-fx-background-color: grey;" vbarPolicy="NEVER">
-               <content>
-                  <Pane fx:id="paneOverworld" prefHeight="640.0" prefWidth="1200.0">
-                     <children>
-                        <TilePane fx:id="paneMap" />
-                     </children>
-                  </Pane>
-               </content>
+                <content>
+                    <Pane fx:id="paneOverworld" prefHeight="640.0" prefWidth="1200.0">
+                        <children>
+                            <TilePane fx:id="paneMap" />
+                        </children>
+                    </Pane>
+                </content>
             </ScrollPane>
-         </children>
-      </Pane>
-   </center>
+        </children>
+    </Pane>
+</center>
    <top>
       <HBox prefHeight="100.0" prefWidth="1500.0" BorderPane.alignment="CENTER" />
    </top>
    <right>
       <VBox prefHeight="640.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
    </right>
+   <bottom>
+      <HBox prefHeight="122.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fx:id="slot0" fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane prefHeight="122.0" prefWidth="122.0">
+               <children>
+                  <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                     <fill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                           <stops>
+                              <Stop color="WHITE" />
+                              <Stop color="#3b3b3bf4" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Circle>
+                  <ImageView fitHeight="61.0" fitWidth="61.0" layoutX="31.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <HBox.margin>
+                  <Insets left="19.0" />
+               </HBox.margin>
+            </Pane>
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>
