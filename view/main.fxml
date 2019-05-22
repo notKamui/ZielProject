@@ -39,7 +39,7 @@
       <VBox prefHeight="640.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <HBox prefHeight="122.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="quickInventory" prefHeight="122.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="122.0" prefWidth="122.0">
                <children>

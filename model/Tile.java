@@ -1,7 +1,5 @@
 package model;
 
-import model.TileType.Ground;
-
 public abstract class Tile extends GameObject {
     private final static int DIMENSIONS = 80;
     private char charCode;

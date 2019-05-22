@@ -1,7 +1,6 @@
 package model;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class Collider {

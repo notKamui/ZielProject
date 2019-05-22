@@ -28,14 +28,14 @@ public class Inventory {
 	public void addItem(Item i) {
 		if(!this.isfull()) {
 			int slot = inventory.indexOf(VOID);
-			this.inventory.remove(slot);
 			this.inventory.add(slot, i);
 		}
 	}
 	
-	public void removeItem(int slot) {
+	public int removeItem(int slot) {
 			this.inventory.remove(slot);
 			this.inventory.add(slot, VOID);
+			return slot;
 	}
 	
 	public void setCapacity(int c) {
@@ -49,6 +49,10 @@ public class Inventory {
 	
 	public ObservableList<Item> returnInventory() {
 		return this.inventory;
+	}
+	
+	public int getCapacity() {
+		return this.capacity;
 	}
 	
 	public void clearInventory() {
