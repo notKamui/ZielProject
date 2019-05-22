@@ -18,6 +18,7 @@ public class Player extends Charac {
             speed /= 1.5;
         for (String key : input)
             switch (key) {
+            
                 case "D":
                     this.move(speed, 0);
                     this.setDirection(false);

@@ -2,7 +2,6 @@ package model;
 
 
 import javafx.beans.property.IntegerProperty;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Hitbox {

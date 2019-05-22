@@ -5,6 +5,7 @@ import javafx.geometry.Point3D;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import model.Player;
@@ -30,38 +31,43 @@ import javafx.fxml.FXML;
 
 
 public class MainController implements Initializable {
+	ArrayList<String> input = new ArrayList<String>();
+	private Timeline gameLoop;
+	private World world;
+	private int newId=-1;
+	private int oldId=-2;
+	private int digTimer = 0;
 
-    ArrayList<String> input = new ArrayList<String>();
-    private Timeline gameLoop;
-    private World world;
-    private int newId = -1;
-    private int oldId = -2;
-    private int digTimer = 0;
+	@FXML
+	private BorderPane root;
 
-    @FXML
-    private BorderPane root;
+	@FXML // ResourceBundle that was given to the FXMLLoader
+	private ResourceBundle resources;
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+	@FXML // URL location of the FXML file that was given to the FXMLLoader
+	private URL location;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
+	@FXML // fx:id="scrollPaneMap"
+	private ScrollPane scrollPaneMap; // Value injected by FXMLLoader
 
-    @FXML // fx:id="scrollPaneMap"
-    private ScrollPane scrollPaneMap; // Value injected by FXMLLoader
+	@FXML // fx:id="paneMap"
+	private TilePane paneMap; // Value injected by FXMLLoader
 
-    @FXML // fx:id="paneMap"
-    private TilePane paneMap; // Value injected by FXMLLoader
+	@FXML
+	private Pane pane;
 
-    @FXML
-    private Pane pane;
 
-    @FXML
-    private ImageView playerBox;
+	@FXML
+	private ImageView playerBox;
 
-    @FXML
-    private Pane paneOverworld;
+	@FXML
+	private Pane paneOverworld;
 
+	//Slot d'inventaire
+	@FXML
+    private HBox quickInventory;
+
+ 
     private boolean isInRange(int cursorX, int cursorY) {
         int playerX = world.getPlayer().coordXProperty().get() + 40;
         int playerY = world.getPlayer().coordYProperty().get() + 40;
@@ -176,25 +182,43 @@ public class MainController implements Initializable {
         });
 
 
-        //-----Gestion de L'inventaire-------
         this.world.getPlayer().getInventory().returnInventory().addListener(new ListChangeListener<Item>() {
-            @Override
-            public void onChanged(ListChangeListener.Change<? extends Item> change) {
-                while (change.next()) {
-                    if (change.wasRemoved()) {
+			@Override
+			public void onChanged(ListChangeListener.Change<? extends Item> change) {
+				while(change.next()) {
+					
+					int id = 0;
+					int id2 = 0;
+					if (change.getAddedSubList().size() != 0)
+						id = change.getAddedSubList().get(0).getId();
+					if(change.getRemoved().size() != 0)
+						id2 = change.getRemoved().get(0).getId();
+					
+					if(change.wasRemoved()) {
+						if(id2 != 0) {
+							Pane pane = (Pane)quickInventory.getChildren().get(change.getFrom());
+							ImageView img = (ImageView)pane.getChildren().get(1);
+							img.setImage(null);
+						}
+					}
 
-                    }
-
-                    if (change.wasAdded()) {
-
-                    }
-
-                    if (change.wasReplaced()) {
-
-                    }
-                }
-            }
-        });
+					if(change.wasAdded()) {
+						if(id != 0) {
+							boolean isAdded = false;
+							for(int slot = 0; !isAdded && slot < quickInventory.getChildren().size(); slot++) {
+								Pane pane = (Pane)quickInventory.getChildren().get(slot);
+								ImageView img = (ImageView)pane.getChildren().get(1);
+								if(null == img.getImage()) {
+									img.setImage(new Image("file:src/resources/sprites/mario.png"));
+									//img.setImage(new Image("file:src/resources/item/"+id+".png"));
+									isAdded = true;
+								}
+							}
+						}
+					}
+				}
+			}
+		});
         startGame();
         gameLoop.play();
     }
