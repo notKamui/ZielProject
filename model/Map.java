@@ -2,8 +2,7 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.TileType.Ground;
-import model.TileType.Sky;
+import model.TileType.*;
 import model.TileType.Void;
 
 import java.io.*;
@@ -91,13 +90,13 @@ public class Map {
         Tile tile;
         switch (c) {
             case 'g':
-                tile = new Ground(i, this.lineLength);
+            	tile = new Ground(i, this.lineLength);
                 break;
             case 's':
-                tile = new Sky(i, this.lineLength);
+            	tile = new Sky(i, this.lineLength);
                 break;
             default:
-                tile = new Void(i, this.lineLength);
+            	tile = new Void(i, this.lineLength);
                 break;
         }
         return tile;

@@ -3,9 +3,8 @@ package model;
 import java.util.ArrayList;
 
 public class Player extends Charac {
-	
-	private Inventory inventory;
 
+    private Inventory inventory;
     final private int SPEED = 10;
 
     public Player(int x, int y) {
@@ -15,7 +14,7 @@ public class Player extends Charac {
 
     public void readInput(ArrayList<String> input) {
         int speed = SPEED;
-        if(!this.getCollMan().isOnFloor())
+        if (!this.getCollMan().isOnFloor())
             speed /= 1.5;
         for (String key : input)
             switch (key) {
@@ -29,7 +28,7 @@ public class Player extends Charac {
                     this.setDirection(true);
                     break;
                 case "S":
-                    if(this.getJumpForce() < 26) //can fastfall at max height of the jump
+                    if (this.getJumpForce() < 26) //can fastfall at max height of the jump
                         this.setIsJumping(false);
                     break;
                 case "SPACE":
@@ -40,9 +39,9 @@ public class Player extends Charac {
                     break;
             }
     }
-    
+
     public Inventory getInventory() {
-    	return this.inventory;
+        return this.inventory;
     }
 
 }

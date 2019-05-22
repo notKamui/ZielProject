@@ -1,6 +1,5 @@
 package controller;
 
-
 import javafx.fxml.Initializable;
 import javafx.geometry.Point3D;
 import javafx.scene.input.KeyEvent;
@@ -10,11 +9,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import model.Player;
+import model.Tile;
 import model.World;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
@@ -23,17 +22,12 @@ import javafx.event.*;
 import model.Item;
 import model.Map;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-
-import javax.imageio.ImageIO;
-
 
 
 public class MainController implements Initializable {
@@ -62,6 +56,7 @@ public class MainController implements Initializable {
 	@FXML
 	private Pane pane;
 
+
 	@FXML
 	private ImageView playerBox;
 
@@ -72,93 +67,122 @@ public class MainController implements Initializable {
 	@FXML
     private HBox quickInventory;
 
+ 
+    private boolean isInRange(int cursorX, int cursorY) {
+        int playerX = world.getPlayer().coordXProperty().get() + 40;
+        int playerY = world.getPlayer().coordYProperty().get() + 40;
+        if (playerX - world.getPlayer().getRange() <= cursorX && cursorX <= playerX + world.getPlayer().getRange()
+                && playerY - world.getPlayer().getRange() <= cursorY
+                && cursorY <= playerY + world.getPlayer().getRange()) {
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		this.world = new World(new Player(80 * 2, 80 * 5), new Map());
+    private Image getImage(int i) {
+        String url = "src/resources/tiles/";
+        switch (this.world.getMap().getTileAt(i).getCharCode()) {
+            case 'g':
+                url += "ground/groundTop.png";
+                break;
+            case 's':
+                url += "sky.png";
+                break;
+            default:
+                url += "void.png";
+                break;
+        }
+        return new Image("file:" + url);
+    }
 
-		playerBox = new ImageView("file:src/resources/sprites/mario.png");
-		playerBox.setRotationAxis(new Point3D(0, 1, 0));
-		playerBox.translateXProperty().bind(this.world.getPlayer().coordXProperty());
-		playerBox.translateYProperty().bind(this.world.getPlayer().coordYProperty());
-		paneOverworld.getChildren().add(playerBox);
+    private void startGame() {
+        gameLoop = new Timeline();
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
+        KeyFrame kf = new KeyFrame(Duration.seconds(0.033), (ev -> {
+            scrollPaneMap.requestFocus();
 
-		paneMap.setPrefWidth(80 * this.world.getMap().getWidth());
-		paneMap.setPrefHeight(80 * this.world.getMap().getHeight());
-		int i;
-		for (i = 0; i < this.world.getMap().getTileMap().size(); i++) {
-			try {
-				String url = "src/resources/tiles/";
-				switch (this.world.getMap().getTileAt(i).getCharCode()) {
-				case 'g':
-					url += "ground/groundTop.png";
-					break;
-				case 's':
-					url += "sky.png";
-					break;
-				default:
-					url += "void.png";
-					break;
-				}
-				BufferedImage buffImg = ImageIO.read(new File(url));
-				Image img = SwingFXUtils.toFXImage(buffImg, null);
-				ImageView tile = new ImageView(img);
+            if (newId != oldId || newId == -1) {
+                digTimer = 0;
+            } else {
+                digTimer++;
+                if (digTimer == this.world.getMap().getTileAt(newId).getDurability()) {
+                    this.world.getMap().updateMap(newId, 's');
+                    digTimer = 0;
+                }
+            }
+            this.world.getPlayer().jumpAnim();
+            this.world.getPlayer().gravity();
+            this.world.getPlayer().readInput(input);
+            playerBox.setRotate(this.world.getPlayer().getDirection());
+        }));
+        gameLoop.getKeyFrames().add(kf);
+    }
 
-				tile.setOnMousePressed(
-						new EventHandler<MouseEvent>() {
-							public void handle(MouseEvent e) {
-								newId = paneMap.getChildrenUnmodifiable().indexOf(tile);
-								oldId = newId;
-							}
-						});
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-				tile.setOnMouseDragEntered(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-						newId = paneMap.getChildrenUnmodifiable().indexOf(tile);
-						oldId = newId;
-					} 
-				});
+        this.world = new World(new Player(80 * 2, 80 * 5), new Map());
 
-				tile.setOnMouseReleased(
-						new EventHandler<MouseEvent>() {
-							public void handle(MouseEvent e) {
-								newId = -1;
+        playerBox = new ImageView("file:src/resources/sprites/mario.png");
+        playerBox.setRotationAxis(new Point3D(0, 1, 0));
+        playerBox.translateXProperty().bind(this.world.getPlayer().coordXProperty());
+        playerBox.translateYProperty().bind(this.world.getPlayer().coordYProperty());
+        paneOverworld.getChildren().add(playerBox);
 
-							}
-						});
+        paneMap.setPrefWidth(80 * this.world.getMap().getWidth());
+        paneMap.setPrefHeight(80 * this.world.getMap().getHeight());
+        int i;
+        for (i = 0; i < this.world.getMap().getTileMap().size(); i++) {
+            ImageView tile = new ImageView(this.getImage(i));
 
-				paneMap.getChildren().add(tile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		scrollPaneMap.addEventFilter(MouseEvent.DRAG_DETECTED , new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent mouseEvent) {
-				scrollPaneMap.startFullDrag();
-			}
-		});
+            tile.setOnMousePressed(e -> handlePressed(e));
+            tile.setOnMouseDragEntered(e -> handlePressed(e));
+            tile.setOnMouseReleased(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent e) {
+                    newId = -1;
 
-		scrollPaneMap.addEventFilter(KeyEvent.KEY_PRESSED,  event -> {
-			String code = event.getCode().toString();
-			if (!input.contains(code))
-				input.add(code);
-			event.consume();
-		});
+                }
+            });
 
-		scrollPaneMap.setOnKeyReleased(
-				new EventHandler<KeyEvent>() {
-					public void handle(KeyEvent e) {
-						String code = e.getCode().toString();
-						input.remove(code);
-					}
-				});
+            paneMap.getChildren().add(tile);
+        }
 
-		//-----Gestion de L'inventaire-------
-		
-		
-		this.world.getPlayer().getInventory().returnInventory().addListener(new ListChangeListener<Item>() {
+        scrollPaneMap.addEventFilter(MouseEvent.DRAG_DETECTED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                scrollPaneMap.startFullDrag();
+            }
+        });
+
+        scrollPaneMap.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            String code = event.getCode().toString();
+            if (!input.contains(code))
+                input.add(code);
+            event.consume();
+        });
+
+        scrollPaneMap.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent e) {
+                String code = e.getCode().toString();
+                input.remove(code);
+            }
+        });
+
+        // graphical changes on map
+        this.world.getMap().getTileMap().addListener(new ListChangeListener<Tile>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Tile> change) {
+                while (change.next()) {
+                    if (change.wasReplaced()) {
+                        ImageView img = (ImageView) paneMap.getChildren().get(change.getFrom());
+                        img.setImage(getImage(change.getFrom()));
+                    }
+                }
+            }
+        });
+
+
+        this.world.getPlayer().getInventory().returnInventory().addListener(new ListChangeListener<Item>() {
 			@Override
 			public void onChanged(ListChangeListener.Change<? extends Item> change) {
 				while(change.next()) {
@@ -195,35 +219,25 @@ public class MainController implements Initializable {
 				}
 			}
 		});
-		startGame();
-		gameLoop.play();
-	}
+        startGame();
+        gameLoop.play();
+    }
 
-	private void startGame() {
-		gameLoop = new Timeline();
-		gameLoop.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame kf = new KeyFrame(
-				Duration.seconds(0.033),
-				(ev -> {
-					if(newId!= oldId || newId == -1) {
-						digTimer= 0;
-					}
-					else {
-						digTimer++;
-						if(digTimer==60) { //depend de la case ?
-							this.world.getMap().updateMap(newId, 's');
-							digTimer = 0;
-						}
-					}
+    public void handlePressed(MouseEvent e) {
 
-					this.world.getPlayer().jumpAnim();
-					this.world.getPlayer().gravity();
-					this.world.getPlayer().readInput(input);
-					playerBox.setRotate(this.world.getPlayer().getDirection());
-				})
-				);
-		gameLoop.getKeyFrames().add(kf);
-	}
+        int cursorX = (int) e.getSceneX();
+        int cursorY = (int) e.getSceneY() - 100;
+        if (isInRange(cursorX, cursorY)) {
+            if (e.isPrimaryButtonDown()) {
+                newId = paneMap.getChildrenUnmodifiable().indexOf(e.getSource());
+                oldId = newId;
+            } else if (e.isSecondaryButtonDown()) {
+                if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+
+                }
+            }
+        }
+    }
 
 
 }
