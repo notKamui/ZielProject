@@ -3,6 +3,7 @@ package model;
 
 public abstract class Charac extends GameObject {
     final private int GRAVITY = 30;
+    private int range = 160;
     private int direction;
     private int jumpForce;
     private boolean isJumping;
@@ -84,6 +85,10 @@ public abstract class Charac extends GameObject {
 
     public int getDirection() {
         return direction;
+    }
+    
+    public int getRange() {
+    	return range;
     }
 
     public void setDirection(boolean flipped) {

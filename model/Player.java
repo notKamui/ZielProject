@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 
 public class Player extends Charac {
-
     final private int SPEED = 10;
 
     public Player(int x, int y) {
