@@ -18,7 +18,6 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             URL url = new File("src/view/main.fxml").toURI().toURL();
             loader.setLocation(url);
-            System.out.println(loader.getLocation());
             BorderPane root = new BorderPane();
             root = loader.load();
             Scene scene = new Scene(root);
