@@ -13,17 +13,14 @@ public class Player extends Charac {
     }
 
     public void readInput(ArrayList<String> input) {
-        int speed = SPEED;
-        if (!this.getCollMan().isOnFloor())
-            speed /= 1.5;
         for (String key : input)
             switch (key) {
                 case "D":
-                    this.move(speed, 0);
+                    this.setVectX(SPEED);
                     this.setDirection(false);
                     break;
                 case "Q":
-                    this.move(-speed, 0);
+                    this.setVectX(-SPEED);
                     this.setDirection(true);
                     break;
                 case "S":

@@ -104,8 +104,9 @@ public class MainController implements Initializable {
                     digTimer = 0;
                 }
             }
+
+            this.world.getPlayer().move();
             this.world.getPlayer().jumpAnim();
-            this.world.getPlayer().gravity();
             this.world.getPlayer().readInput(input);
             playerBox.setRotate(this.world.getPlayer().getDirection());
         }));

@@ -2,9 +2,9 @@ package model.ItemPlaceableType;
 
 import model.ItemPlaceable;
 
-public class BlockGroung extends ItemPlaceable{
+public class BlockGround extends ItemPlaceable{
 
-	public BlockGroung(String n, int id) {
+	public BlockGround(String n, int id) {
 		super(n, id);
 	}
 

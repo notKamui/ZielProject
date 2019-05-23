@@ -3,11 +3,13 @@ package model;
 
 public abstract class Charac extends GameObject {
     final private int GRAVITY = 30;
-    private int range = 160;
-    private int direction;
+    private int range = 160; // range to enable interactions with other objects
+    private int direction; // 0 = facing left // 180 = facing right
     private int jumpForce;
     private boolean isJumping;
     private Collider collMan;
+    private int vectX;
+    private int vectY;
 
     public Charac(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -17,63 +19,74 @@ public abstract class Charac extends GameObject {
         this.collMan = new Collider(this);
     }
 
-    public void gravity(){
-        this.move(0, GRAVITY);
-    }
+    public void move() {
+        this.vectY += GRAVITY; // add gravity to vectY
 
-    public void move(int vectX, int vectY) {
-        boolean collides = false;
-        int pixel = 1;
-        if (vectX < 0 || vectY < 0)
+        boolean collides;
+        int pixel;
+        int i;
+
+        // apply vectX
+        collides = false;
+        pixel = 1;
+        if (this.vectX < 0)
             pixel = -1;
-
-        if (vectX != 0 && vectY == 0) { // Horizontal move
-            int i;
-            int oriX = this.coordXProperty().get();
-            for (i = 0; i <= Math.abs(vectX) && !collides; i++) {
-                this.setCoordXProperty(this.coordXProperty().get() + pixel);
-                collides = this.collMan.collides();
-            }
-            i--;
-            if (vectX < 0)
-                i = -i;
-            int newX = oriX + i;
-            this.setCoordXProperty(newX);
+        int oriX = this.coordXProperty().get();
+        for (i = 0; i <= Math.abs(this.vectX) && !collides; i++) {
+            this.setCoordXProperty(this.coordXProperty().get() + pixel);
+            collides = this.collMan.collides();
         }
+        i--;
+        if (this.vectX < 0)
+            i = -i;
+        int newX = oriX + i;
+        this.setCoordXProperty(newX);
 
-        if(vectX == 0 && vectY != 0) { // Vertical move
-            int j;
-            int oriY = this.coordYProperty().get();
-            for (j = 0; j <= Math.abs(vectY) && !collides; j++) {
-                this.setCoordYProperty(this.coordYProperty().get() + pixel);
-                collides = this.collMan.collides();
-            }
-            j--;
-            if (vectY < 0)
-                j = -j;
-            int newY = oriY + j;
-            this.setCoordYProperty(newY);
+
+        // apply vectY
+        collides = false;
+        pixel = 1;
+        if (this.vectY < 0)
+            pixel = -1;
+        int oriY = this.coordYProperty().get();
+        for (i = 0; i <= Math.abs(this.vectY) && !collides; i++) {
+            this.setCoordYProperty(this.coordYProperty().get() + pixel);
+            collides = this.collMan.collides();
         }
+        i--;
+        if (this.vectY < 0)
+            i = -i;
+        int newY = oriY + i;
+        this.setCoordYProperty(newY);
+
+
+        // reset vectors every frame
+        this.vectX = 0;
+        this.vectY = 0;
+
     }
 
     // Jump functions--------
     public void jumpAnim() {
-        if(this.isJumping) {
-            this.move(0, -this.jumpForce);
+        if (this.isJumping) {
+            this.vectY = -this.jumpForce;
         }
-        this.jumpForce = Math.max(this.jumpForce-1, 0);
+        this.jumpForce = Math.max(this.jumpForce - 2, 0);
         if (this.collMan.isOnFloor()) {
             this.isJumping = false;
         }
     }
+
     public boolean getIsJumping() {
         return this.isJumping;
     }
+
     public void setIsJumping(boolean isJumping) {
         this.isJumping = isJumping;
-        if(isJumping)
+        if (isJumping)
             this.jumpForce = 48;
     }
+
     public int getJumpForce() {
         return this.jumpForce;
     }
@@ -86,9 +99,9 @@ public abstract class Charac extends GameObject {
     public int getDirection() {
         return direction;
     }
-    
+
     public int getRange() {
-    	return range;
+        return range;
     }
 
 
@@ -97,5 +110,13 @@ public abstract class Charac extends GameObject {
             this.direction = 180;
         else
             this.direction = 0;
+    }
+
+    public void setVectX(int vectX) {
+        this.vectX = vectX;
+    }
+
+    public void setVectY(int vectY) {
+        this.vectY = vectY;
     }
 }
