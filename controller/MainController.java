@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.Initializable;
 import javafx.geometry.Point3D;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -13,10 +14,16 @@ import model.Tile;
 import model.World;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.shape.Circle;
 import javafx.scene.control.ScrollPane;
 import javafx.event.*;
 import model.Item;
@@ -168,6 +175,8 @@ public class MainController implements Initializable {
             }
         });
 
+        
+        
         // graphical changes on map
         this.world.getMap().getTileMap().addListener(new ListChangeListener<Tile>() {
             @Override
@@ -181,6 +190,33 @@ public class MainController implements Initializable {
             }
         });
 
+        for (int slot = 0; slot < this.quickInventory.getChildren().size(); slot++) {
+        	Pane pane = (Pane)quickInventory.getChildren().get(slot);
+
+            pane.setOnMousePressed(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent e) {
+                	  world.getPlayer().getInventory().setIndexProperty(quickInventory.getChildrenUnmodifiable().indexOf(e.getSource()));
+                }
+            });
+        }
+        
+        this.world.getPlayer().getInventory().getIndexProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+					Number newValue) {
+					Pane p = (Pane)quickInventory.getChildren().get((int) oldValue);
+					Circle c = (Circle)p.getChildren().get(0);
+					c.setFill(RadialGradient.valueOf("focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 69.04761904761905%, 0xffffffff 0.0%, 0x3b3b3bf4 100.0%"));
+
+					p = (Pane)quickInventory.getChildren().get((int) newValue);
+					c = (Circle)p.getChildren().get(0);
+					c.setFill(RadialGradient.valueOf("focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 50%, 0xffffffff 0.0%, 0x322e2e 100.0%"));
+
+					
+				
+			}
+		});
 
         this.world.getPlayer().getInventory().returnInventory().addListener(new ListChangeListener<Item>() {
 			@Override
