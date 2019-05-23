@@ -6,5 +6,5 @@ public abstract class ItemPlaceable extends Item{
 		super(n, id);
 	}
 
-	public abstract void placeBlock();
+	public abstract void placeBlock(int i, int linelength);
 }

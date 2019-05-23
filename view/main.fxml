@@ -39,16 +39,16 @@
       <VBox prefHeight="640.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <HBox prefHeight="122.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="quickInventory" prefHeight="122.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="122.0" prefWidth="122.0">
                <children>
                   <Circle layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
                      <fill>
-                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.6904761904761905">
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                            <stops>
                               <Stop color="WHITE" />
-                              <Stop color="#3b3b3bf4" offset="1.0" />
+                              <Stop color="#322e2ef5" offset="1.0" />
                            </stops>
                         </RadialGradient>
                      </fill>

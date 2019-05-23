@@ -2,15 +2,17 @@ package model.ItemPlaceableType;
 
 import model.ItemPlaceable;
 
-public class BlockGround extends ItemPlaceable{
+import model.TileType.Ground;
 
-	public BlockGround(String n, int id) {
-		super(n, id);
+public class BlockGround extends ItemPlaceable{
+	public BlockGround() {
+		super("Dirt", 1);
 	}
 
 	@Override
-	public void placeBlock() {
-		
+	public void placeBlock(int i, int lineLength) {
+		Ground ground = new Ground(i, lineLength);
+
 	}
 	
 	
