@@ -5,6 +5,8 @@ public abstract class Item {
 
 	private String name;
 	private int id;
+	private int quantity;
+	private int quantityMax;
 	
 	public Item(String n, int id) {
 		this.name = n;
@@ -13,5 +15,13 @@ public abstract class Item {
 	
 	public int getId() {
 		return id;
+	}
+	
+	public int getQuantity() {
+		return this.quantity;
+	}
+	
+	public int getQuantityMax() {
+		return this.quantityMax;
 	}
 }

@@ -3,9 +3,9 @@ package model.ItemPlaceableType;
 import model.ItemPlaceable;
 import model.TileType.Ground;
 
-public class BlockGroung extends ItemPlaceable{
+public class BlockGround extends ItemPlaceable{
 
-	public BlockGroung() {
+	public BlockGround() {
 		super("Dirt", 1);
 	}
 
