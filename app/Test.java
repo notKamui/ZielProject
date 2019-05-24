@@ -5,7 +5,6 @@ import model.Player;
 
 public class Test {
     public static void main(String[] args) {
-        Map map = new Map();
-        map.printMapConsole();
+
     }
 }

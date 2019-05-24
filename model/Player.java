@@ -7,8 +7,8 @@ public class Player extends Charac {
     private Inventory inventory;
     final private int SPEED = 10;
 
-    public Player(int x, int y) {
-        super(x, y, 80, 80);
+    public Player(int x, int y, World world) {
+        super(x, y, 80, 80, world);
         this.inventory = new Inventory();
     }
 

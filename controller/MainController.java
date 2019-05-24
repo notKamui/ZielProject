@@ -129,12 +129,9 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        this.world = new World(new Player(80 * 2, 80 * 5), new Map());
+        this.world = Factory.initWorld();
 
-        playerBox = new ImageView("file:src/resources/sprites/mario.png");
-        playerBox.setRotationAxis(new Point3D(0, 1, 0));
-        playerBox.translateXProperty().bind(this.world.getPlayer().coordXProperty());
-        playerBox.translateYProperty().bind(this.world.getPlayer().coordYProperty());
+        this.playerBox = Factory.initPlayerView(this.world.getPlayer().coordXProperty(), this.world.getPlayer().coordYProperty());
         paneOverworld.getChildren().add(playerBox);
 
         paneMap.setPrefWidth(80 * this.world.getMap().getWidth());
@@ -148,7 +145,6 @@ public class MainController implements Initializable {
             tile.setOnMouseReleased(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent e) {
                     newId = -1;
-
                 }
             });
 

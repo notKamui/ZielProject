@@ -8,10 +8,13 @@ import model.TileType.Void;
 import java.io.*;
 
 public class Map {
+    private World world;
     private ObservableList<Tile> map;
     private int lineLength;
 
-    public Map() {
+    public Map(World world) {
+        this.world = world;
+
         this.map = FXCollections.observableArrayList();
 
         String content = readFile("src/view/map.csv");
