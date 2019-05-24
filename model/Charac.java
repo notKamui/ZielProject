@@ -3,6 +3,7 @@ package model;
 
 public abstract class Charac extends GameObject {
     final private int GRAVITY = 30;
+    private World world;
     private int range = 160; // range to enable interactions with other objects
     private int direction; // 0 = facing left // 180 = facing right
     private int jumpForce;
@@ -11,8 +12,9 @@ public abstract class Charac extends GameObject {
     private int vectX;
     private int vectY;
 
-    public Charac(int x, int y, int width, int height) {
+    public Charac(int x, int y, int width, int height, World world) {
         super(x, y, width, height);
+        this.world = world;
         this.direction = 0;
         this.jumpForce = 0;
         this.setIsJumping(false);
