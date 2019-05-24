@@ -55,4 +55,6 @@ public abstract class GameObject {
     public Hitbox getHitbox() {
         return this.hitbox;
     }
+    
+    
 }

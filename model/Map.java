@@ -10,15 +10,14 @@ import java.io.*;
 public class Map {
     private World world;
     private ObservableList<Tile> map;
-    private int lineLength;
+    private int lineLength = Operations.LINELENGTH;
 
     public Map(World world) {
         this.world = world;
 
         this.map = FXCollections.observableArrayList();
 
-        String content = readFile("src/view/map.csv");
-        this.lineLength = content.indexOf('\n');
+        String content = Operations.readFile("src/view/map.csv");
         String mapString = "";
         for (int i = 0; i < content.length(); i++) {
             char c = content.charAt(i);
@@ -31,29 +30,7 @@ public class Map {
         }
     }
 
-    private String readFile(String fname) {
-        String content = null;
-        File file = new File(fname);
-        FileReader reader = null;
-        try {
-            reader = new FileReader(file);
-            char[] chars = new char[(int) file.length()];
-            reader.read(chars);
-            content = new String(chars);
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return content;
-    }
+
 
     public void printMapConsole() {
         int i = 1;
@@ -93,13 +70,13 @@ public class Map {
         Tile tile;
         switch (c) {
             case 'g':
-            	tile = new Ground(i, this.lineLength);
+            	tile = new Ground(i);
                 break;
             case 's':
-            	tile = new Sky(i, this.lineLength);
+            	tile = new Sky(i);
                 break;
             default:
-            	tile = new Void(i, this.lineLength);
+            	tile = new Void(i);
                 break;
         }
         return tile;

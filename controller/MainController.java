@@ -41,10 +41,8 @@ public class MainController implements Initializable {
 	ArrayList<String> input = new ArrayList<String>();
 	private Timeline gameLoop;
 	private World world;
-	private int newId=-1;
-	private int oldId=-2;
-	private int digTimer = 0;
 
+	private MouseEvent lastEvent = null;
 	@FXML
 	private BorderPane root;
 
@@ -74,17 +72,6 @@ public class MainController implements Initializable {
 	@FXML
     private HBox quickInventory;
 
- 
-    private boolean isInRange(int cursorX, int cursorY) {
-        int playerX = world.getPlayer().coordXProperty().get() + 40;
-        int playerY = world.getPlayer().coordYProperty().get() + 40;
-        if (playerX - world.getPlayer().getRange() <= cursorX && cursorX <= playerX + world.getPlayer().getRange()
-                && playerY - world.getPlayer().getRange() <= cursorY
-                && cursorY <= playerY + world.getPlayer().getRange()) {
-            return true;
-        }
-        return false;
-    }
 
     private Image getImage(int i) {
         String url = "src/resources/tiles/";
@@ -107,17 +94,9 @@ public class MainController implements Initializable {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         KeyFrame kf = new KeyFrame(Duration.seconds(0.033), (ev -> {
             scrollPaneMap.requestFocus();
-
-            if (newId != oldId || newId == -1) {
-                digTimer = 0;
-            } else {
-                digTimer++;
-                if (digTimer == this.world.getMap().getTileAt(newId).getDurability()) {
-                    this.world.getMap().updateMap(newId, 's');
-                    digTimer = 0;
-                }
+            if(lastEvent != null && lastEvent.isPrimaryButtonDown()) {
+            	this.world.getPlayer().getInventory().returnInventory().get(this.world.getPlayer().getInventory().getIndex()).action((int)lastEvent.getSceneX(), (int)lastEvent.getSceneY());
             }
-
             this.world.getPlayer().move();
             this.world.getPlayer().jumpAnim();
             this.world.getPlayer().readInput(input);
@@ -142,12 +121,7 @@ public class MainController implements Initializable {
 
             tile.setOnMousePressed(e -> handlePressed(e));
             tile.setOnMouseDragEntered(e -> handlePressed(e));
-            tile.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent e) {
-                    newId = -1;
-                }
-            });
-
+            tile.setOnMouseReleased(e -> handlePressed(e));
             paneMap.getChildren().add(tile);
         }
 
@@ -257,19 +231,8 @@ public class MainController implements Initializable {
     }
 
     public void handlePressed(MouseEvent e) {
-
-        int cursorX = (int) e.getSceneX();
-        int cursorY = (int) e.getSceneY() - 100;
-        if (isInRange(cursorX, cursorY)) {
-            if (e.isPrimaryButtonDown()) {
-                newId = paneMap.getChildrenUnmodifiable().indexOf(e.getSource());
-                oldId = newId;
-            } else if (e.isSecondaryButtonDown()) {
-                if (e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-
-                }
-            }
-        }
+    	lastEvent = e;
+    
     }
 
 
