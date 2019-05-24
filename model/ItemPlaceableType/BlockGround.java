@@ -10,9 +10,14 @@ public class BlockGround extends ItemPlaceable{
 	}
 
 	@Override
-	public void placeBlock(int i, int lineLength) {
-		Ground ground = new Ground(i, lineLength);
+	public void placeBlock(int i) {
+		Ground ground = new Ground(i);
 
+	}
+
+	@Override
+	public void action(int x, int y) {
+		
 	}
 	
 	

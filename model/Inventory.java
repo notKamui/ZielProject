@@ -10,7 +10,7 @@ public class Inventory {
 	
 	private ObservableList<Item> inventory;
 	private int capacity;
-	final private Item VOID = new ItemOther("void",0);
+	final private Item VOID = new model.ItemOtherType.Void();
 	private IntegerProperty indexProperty;
 	
 	public Inventory() {

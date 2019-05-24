@@ -6,8 +6,5 @@ public abstract class ItemUseable extends Item{
 		super(n, id);
 	}
 	
-	public void isUse() {
-		
-	}
 
 }

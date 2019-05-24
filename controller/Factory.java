@@ -13,12 +13,12 @@ public class Factory {
     public static World initWorld() {
         World world = new World();
 
-        Player player = new Player(80 * 2, 80 * 5, world);
+        Player player = new Player(80 * 2, 80 * 5);
         Map map = new Map(world);
 
         world.setPlayer(player);
         world.setMap(map);
-
+        
         return world;
     }
 
