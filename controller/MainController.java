@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.geometry.Point3D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -12,6 +13,7 @@ import javafx.util.Duration;
 import model.Player;
 import model.Tile;
 import model.World;
+import model.ItemUseableType.Shovel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
@@ -95,8 +97,11 @@ public class MainController implements Initializable {
         KeyFrame kf = new KeyFrame(Duration.seconds(0.033), (ev -> {
             scrollPaneMap.requestFocus();
             if(lastEvent != null && lastEvent.isPrimaryButtonDown()) {
-            	this.world.getPlayer().getInventory().returnInventory().get(this.world.getPlayer().getInventory().getIndex()).action((int)lastEvent.getSceneX(), (int)lastEvent.getSceneY());
+            	ImageView test = (ImageView) lastEvent.getSource();
+            	Point2D coords = test.localToParent(lastEvent.getX(), lastEvent.getY());
+            	this.world.getPlayer().getInventory().returnInventory().get(this.world.getPlayer().getInventory().getIndex()).action((int)coords.getX(), (int)coords.getY());
             }
+
             this.world.getPlayer().move();
             this.world.getPlayer().jumpAnim();
             this.world.getPlayer().readInput(input);
@@ -112,13 +117,12 @@ public class MainController implements Initializable {
 
         this.playerBox = Factory.initPlayerView(this.world.getPlayer().coordXProperty(), this.world.getPlayer().coordYProperty());
         paneOverworld.getChildren().add(playerBox);
-
         paneMap.setPrefWidth(80 * this.world.getMap().getWidth());
         paneMap.setPrefHeight(80 * this.world.getMap().getHeight());
         int i;
         for (i = 0; i < this.world.getMap().getTileMap().size(); i++) {
             ImageView tile = new ImageView(this.getImage(i));
-
+            tile.setPickOnBounds(true);
             tile.setOnMousePressed(e -> handlePressed(e));
             tile.setOnMouseDragEntered(e -> handlePressed(e));
             tile.setOnMouseReleased(e -> handlePressed(e));
@@ -169,6 +173,7 @@ public class MainController implements Initializable {
                 	  world.getPlayer().getInventory().setIndexProperty(quickInventory.getChildrenUnmodifiable().indexOf(e.getSource()));
                 }
             });
+            this.world.getPlayer().getInventory().addItem(new Shovel(1));
         }
         
         this.world.getPlayer().getInventory().getIndexProperty().addListener(new ChangeListener<Number>() {
@@ -232,7 +237,7 @@ public class MainController implements Initializable {
 
     public void handlePressed(MouseEvent e) {
     	lastEvent = e;
-    
+       
     }
 
 
