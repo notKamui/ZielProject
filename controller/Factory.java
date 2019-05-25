@@ -4,6 +4,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import model.Charac;
+import model.Item;
 import model.Map;
 import model.Player;
 import model.World;
@@ -18,7 +20,8 @@ public class Factory {
 
         world.setPlayer(player);
         world.setMap(map);
-        
+        Item.setWorld(world);
+        Charac.setWorld(world);
         return world;
     }
 

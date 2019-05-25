@@ -4,7 +4,6 @@ package model;
 public abstract class Charac extends GameObject {
     final private int GRAVITY = 30;
     private static World world;
-    private int range = 160; // range to enable interactions with other objects
     private int direction; // 0 = facing left // 180 = facing right
     private int jumpForce;
     private boolean isJumping;
@@ -100,10 +99,6 @@ public abstract class Charac extends GameObject {
 
     public int getDirection() {
         return direction;
-    }
-
-    public int getRange() {
-        return range;
     }
 
 
