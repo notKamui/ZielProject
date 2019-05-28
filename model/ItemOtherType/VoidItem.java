@@ -2,9 +2,9 @@ package model.ItemOtherType;
 
 import model.ItemOther;
 
-public class Void extends ItemOther{
-	public Void() {
-		super("Void", 0);
+public class VoidItem extends ItemOther{
+	public VoidItem() {
+		super("VoidItem", 0);
 	}
 
 	@Override

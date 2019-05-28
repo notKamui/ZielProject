@@ -1,8 +1,8 @@
 package model;
 
 public abstract class Tile extends GameObject {
-    private final static int TILESIZE = Operations.TILESIZE;
-    private final static int LINELENGTH = Operations.LINELENGTH;
+    private final static int TILESIZE = MathDataBuilder.TILESIZE;
+    private final static int LINELENGTH = MathDataBuilder.LINELENGTH;
     private char charCode;
     private int state; 
     private int durability;// durability/framerate = digging time in seconds, non diggable if negative

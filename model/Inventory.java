@@ -3,14 +3,15 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.ItemOtherType.VoidItem;
 
 //La classe Inventory va permettre de s'occuper de l'inventaire du perso, en attribut, une liste d'Item et
 // la capacite max de l'inventaire
 public class Inventory {
-	
+
+    final private static Item VOID = new VoidItem();
 	private ObservableList<Item> inventory;
 	private int capacity;
-	final private Item VOID = new model.ItemOtherType.Void();
 	private IntegerProperty indexProperty;
 	
 	public Inventory() {
@@ -36,8 +37,7 @@ public class Inventory {
 	}
 	
 	public int removeItem(int slot) {
-			this.inventory.remove(slot);
-			this.inventory.add(slot, VOID);
+			this.inventory.set(slot, VOID);
 			return slot;
 	}
 	
@@ -50,7 +50,7 @@ public class Inventory {
 		}
 	}
 	
-	public ObservableList<Item> returnInventory() {
+	public ObservableList<Item> getInventoryContent() {
 		return this.inventory;
 	}
 	
