@@ -27,7 +27,11 @@ public class MathDataBuilder {
 	
 	private static int getLineLength() {
 		String content = readFile("src/view/map.txt");
-        return content.indexOf('\r');
+		int i;
+		if (content.contains("\r"))
+            return content.indexOf('\r');
+		else
+		    return content.indexOf('\n');
 
 		
 	}

@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import model.Tile;
 import model.World;
-import model.ItemUseableType.Shovel;
+import model.ItemUsableType.Shovel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
