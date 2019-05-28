@@ -1,4 +1,4 @@
-package model.ItemUseableType;
+package model.ItemUsableType;
 
 import model.ItemUsable;
 import model.MathDataBuilder;
