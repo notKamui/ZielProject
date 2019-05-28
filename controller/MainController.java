@@ -2,34 +2,28 @@ package controller;
 
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
-import javafx.geometry.Point3D;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import model.Player;
 import model.Tile;
 import model.World;
 import model.ItemUseableType.Shovel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
 import javafx.scene.control.ScrollPane;
 import javafx.event.*;
 import model.Item;
-import model.Map;
 
 
 import java.net.URL;
@@ -99,12 +93,12 @@ public class MainController implements Initializable {
             if(lastEvent != null && lastEvent.isPrimaryButtonDown()) {
             	ImageView test = (ImageView) lastEvent.getSource();
             	Point2D coords = test.localToParent(lastEvent.getX(), lastEvent.getY());
-            	this.world.getPlayer().getInventory().returnInventory().get(this.world.getPlayer().getInventory().getIndex()).action((int)coords.getX(), (int)coords.getY());
+            	this.world.getPlayer().getInventory().getInventoryContent().get(this.world.getPlayer().getInventory().getIndex()).action((int)coords.getX(), (int)coords.getY());
             }
 
+            this.world.getPlayer().readInput(input);
             this.world.getPlayer().move();
             this.world.getPlayer().jumpAnim();
-            this.world.getPlayer().readInput(input);
             playerBox.setRotate(this.world.getPlayer().getDirection());
         }));
         gameLoop.getKeyFrames().add(kf);
@@ -165,6 +159,7 @@ public class MainController implements Initializable {
             }
         });
 
+        // inventory slot selection
         for (int slot = 0; slot < this.quickInventory.getChildren().size(); slot++) {
         	Pane pane = (Pane)quickInventory.getChildren().get(slot);
 
@@ -173,11 +168,8 @@ public class MainController implements Initializable {
                 	  world.getPlayer().getInventory().setIndexProperty(quickInventory.getChildrenUnmodifiable().indexOf(e.getSource()));
                 }
             });
-            this.world.getPlayer().getInventory().addItem(new Shovel(1));
         }
-        
         this.world.getPlayer().getInventory().getIndexProperty().addListener(new ChangeListener<Number>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue,
 					Number newValue) {
@@ -188,13 +180,11 @@ public class MainController implements Initializable {
 					p = (Pane)quickInventory.getChildren().get((int) newValue);
 					c = (Circle)p.getChildren().get(0);
 					c.setFill(RadialGradient.valueOf("focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 50%, 0xffffffff 0.0%, 0x322e2e 100.0%"));
-
-					
-				
 			}
 		});
 
-        this.world.getPlayer().getInventory().returnInventory().addListener(new ListChangeListener<Item>() {
+        // inventory listener
+        this.world.getPlayer().getInventory().getInventoryContent().addListener(new ListChangeListener<Item>() {
 			@Override
 			public void onChanged(ListChangeListener.Change<? extends Item> change) {
 				while(change.next()) {
@@ -231,6 +221,9 @@ public class MainController implements Initializable {
 				}
 			}
 		});
+
+        this.world.getPlayer().getInventory().addItem(new Shovel(1));
+
         startGame();
         gameLoop.play();
     }

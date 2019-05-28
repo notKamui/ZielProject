@@ -1,26 +1,25 @@
 package model.ItemUseableType;
 
-import model.ItemUseable;
-import model.Operations;
+import model.ItemUsable;
+import model.MathDataBuilder;
 import model.Tile;
-import model.TileType.Sky;
 
-public class Shovel extends ItemUseable{
-	private int power;
+public class Shovel extends ItemUsable {
+	private int efficiency;
 	
-	public Shovel(int power) {
-		super("Pelle", 2, (int) (Operations.TILESIZE*2.5));
-		this.power = power;
+	public Shovel(int efficiency) {
+		super("Shovel", 2, (int) (MathDataBuilder.TILESIZE*2.5));
+		this.efficiency = efficiency;
 	}
 
 	@Override
 	public void action(int x, int y) {
-		int i = Operations.coordsToIndex(x, y);
+		int i = MathDataBuilder.coordsToIndex(x, y);
 		if(this.isInRange(x, y)) {
 			Tile target = this.getWorld().getMap().getTileAt(i);
-			target.setState(target.getState()-power);
+			target.setState(target.getState()- efficiency);
 			if(target.getState()<0) {
-				this.getWorld().getMap().updateMap(i, 's');;
+				this.getWorld().getMap().updateMap(i, 's');
 			}
 		}
 	}

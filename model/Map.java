@@ -2,41 +2,30 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.TileType.*;
-import model.TileType.Void;
 
 import java.io.*;
 
 public class Map {
     private World world;
     private ObservableList<Tile> map;
-    private int lineLength = Operations.LINELENGTH;
 
     public Map(World world) {
         this.world = world;
 
         this.map = FXCollections.observableArrayList();
-
-        String content = Operations.readFile("src/view/map.csv");
-        String mapString = "";
-        for (int i = 0; i < content.length(); i++) {
-            char c = content.charAt(i);
-            if (c != '\n')
-                mapString = mapString + c;
-        }
-
-        for (int i = 0; i < mapString.length(); i++) {
-            this.map.add(makeTile(i, mapString.charAt(i)));
+        String content = MathDataBuilder.readFile("src/view/map.txt");
+        content = content.replaceAll("\\s+", "");
+        int i = 0;
+        for (char c : content.toCharArray()) {
+            this.map.add(MathDataBuilder.makeTile(i++, c));
         }
     }
-
-
 
     public void printMapConsole() {
         int i = 1;
         for (Tile t : map) {
             System.out.print(t.getCharCode());
-            if (i % this.lineLength == 0)
+            if (i % MathDataBuilder.LINELENGTH == 0)
                 System.out.println();
             i++;
         }
@@ -44,42 +33,11 @@ public class Map {
 
     public void updateMap(int i, char c) {
     	this.map.get(i).removeHitbox();
-        this.map.set(i, makeTile(i, c));
+        this.map.set(i, MathDataBuilder.makeTile(i, c));
     }
 
     public void saveMap() {
-        try {
-            File file = new File("src/view/map.csv");
-            FileWriter fileWriter = new FileWriter(file, false);
-            String newContent = "";
-            int i = 1;
-            for (Tile t : map) {
-                newContent = newContent + t.getCharCode();
-                if (i % this.lineLength == 0)
-                    newContent = newContent + "\n";
-                i++;
-            }
-            fileWriter.write(newContent);
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Tile makeTile(int i, char c) {
-        Tile tile;
-        switch (c) {
-            case 'g':
-            	tile = new Ground(i);
-                break;
-            case 's':
-            	tile = new Sky(i);
-                break;
-            default:
-            	tile = new Void(i);
-                break;
-        }
-        return tile;
+        MathDataBuilder.saveMap(this.map);
     }
 
     public ObservableList<Tile> getTileMap() {
@@ -91,10 +49,10 @@ public class Map {
     }
 
     public int getWidth() {
-        return this.lineLength;
+        return MathDataBuilder.LINELENGTH;
     }
 
     public int getHeight() {
-        return this.map.size() / this.lineLength;
+        return this.map.size() / MathDataBuilder.LINELENGTH;
     }
 }
