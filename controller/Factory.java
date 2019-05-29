@@ -3,7 +3,6 @@ package controller;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import model.Charac;
 import model.Item;
 import model.Map;
@@ -15,7 +14,7 @@ import model.World;
      static World initWorld() {
         World world = new World();
 
-        Player player = new Player(80 * 2, 80 * 5);
+        Player player = new Player(80 * 2, 80 * 3);
         Map map = new Map(world);
 
         world.setPlayer(player);
