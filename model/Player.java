@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import model.ItemPlaceableType.BlockGround;
+
 public class Player extends Charac {
 
     private Inventory inventory;
@@ -15,7 +17,7 @@ public class Player extends Charac {
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
-            	
+            
                 case "D":
                     this.setVectX(SPEED);
                     this.setDirection(false);

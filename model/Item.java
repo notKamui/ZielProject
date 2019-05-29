@@ -9,10 +9,12 @@ public abstract class Item {
 	private int quantityMax;
     private int range; // range to enable interactions with other objects
 
-	public Item(String n, int id, int range) {
+	public Item(String n, int id, int range, int q, int qMax) {
 		this.name = n;
 		this.id = id;
 		this.range = range;
+		this.quantity = q;
+		this.quantityMax = qMax;
 	}
 	
 	public int getId() {
