@@ -3,8 +3,6 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.*;
-
 public class Map {
     private World world;
     private ObservableList<Tile> map;
@@ -32,7 +30,7 @@ public class Map {
     }
 
     public void updateMap(int i, char c) {
-    	this.map.get(i).removeHitbox();
+        this.map.get(i).removeHitbox();
         this.map.set(i, MathDataBuilder.makeTile(i, c));
     }
 

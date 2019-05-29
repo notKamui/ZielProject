@@ -11,32 +11,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class MathDataBuilder {
-	public static final int TILESIZE = 80;
-	public static final int LINELENGTH = getLineLength();
+    public static final int TILESIZE = 80;
+    static final int LINELENGTH = getLineLength();
 
-	public static int coordsToIndex(int x, int y) {
-		 return (int) (Math.floor(y/TILESIZE)*LINELENGTH + Math.floor(x/TILESIZE));
-	}
-	
-	public static int[] indexToCoord(int i) {
-		 int y = (i/LINELENGTH)*TILESIZE; 
-		 int x = (i%LINELENGTH)*TILESIZE; 
-		 int[] coords = {x,y};
-		 return coords;
-	}
-	
-	private static int getLineLength() {
-		String content = readFile("src/view/map.txt");
-		int i;
-		if (content.contains("\r"))
+    public static int coordsToIndex(int x, int y) {
+        return (int) (Math.floor(y / TILESIZE) * LINELENGTH + Math.floor(x / TILESIZE));
+    }
+
+    public static int[] indexToCoord(int i) {
+        int y = (i / LINELENGTH) * TILESIZE;
+        int x = (i % LINELENGTH) * TILESIZE;
+        return new int[]{x, y};
+    }
+
+    private static int getLineLength() {
+        String content = readFile("src/view/map.txt");
+        if (content.contains("\r"))
             return content.indexOf('\r');
-		else
-		    return content.indexOf('\n');
+        else
+            return content.indexOf('\n');
 
-		
-	}
 
-    public static String readFile(String fname) {
+    }
+
+    static String readFile(String fname) {
         String content = null;
         File file = new File(fname);
         FileReader reader = null;
@@ -60,7 +58,7 @@ public class MathDataBuilder {
         return content;
     }
 
-    public static void saveMap(ObservableList<Tile> map) {
+    static void saveMap(ObservableList<Tile> map) {
         try {
             File file = new File("src/view/map.txt");
             FileWriter fileWriter = new FileWriter(file, false);
@@ -79,7 +77,7 @@ public class MathDataBuilder {
         }
     }
 
-    public static Tile makeTile(int i, char c) {
+    static Tile makeTile(int i, char c) {
         Tile tile;
         switch (c) {
             case 'g':

@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyEvent;
@@ -34,40 +36,47 @@ import javafx.fxml.FXML;
 
 
 public class MainController implements Initializable {
-	ArrayList<String> input = new ArrayList<String>();
-	private Timeline gameLoop;
-	private World world;
+    ArrayList<String> input = new ArrayList<>();
+    private Timeline gameLoop;
+    private World world;
 
-	private MouseEvent lastEvent = null;
-	@FXML
-	private BorderPane root;
+    private MouseEvent lastEvent = null;
 
-	@FXML // ResourceBundle that was given to the FXMLLoader
-	private ResourceBundle resources;
+    @FXML
+    private BorderPane root;
 
-	@FXML // URL location of the FXML file that was given to the FXMLLoader
-	private URL location;
+    @FXML // ResourceBundle that was given to the FXMLLoader
+    private ResourceBundle resources;
 
-	@FXML // fx:id="scrollPaneMap"
-	private ScrollPane scrollPaneMap; // Value injected by FXMLLoader
+    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    private URL location;
 
-	@FXML // fx:id="paneMap"
-	private TilePane paneMap; // Value injected by FXMLLoader
+    @FXML // fx:id="scrollPaneMap"
+    private ScrollPane scrollPaneMap; // Value injected by FXMLLoader
 
-	@FXML
-	private Pane pane;
+    @FXML // fx:id="paneMap"
+    private TilePane paneMap; // Value injected by FXMLLoader
 
+    @FXML
+    private Pane pane;
 
-	@FXML
-	private ImageView playerBox;
+    @FXML
+    private ImageView playerBox;
 
-	@FXML
-	private Pane paneOverworld;
+    @FXML
+    private Pane paneOverworld;
 
-	//Slot d'inventaire
-	@FXML
+    //Slot d'inventaire
+    @FXML
     private HBox quickInventory;
 
+    private void cameraUpdate() {
+        int width = (int)scrollPaneMap.getWidth();
+        int height = (int)scrollPaneMap.getHeight();
+
+        paneOverworld.setTranslateX(width/2 - this.world.getPlayer().coordXProperty().get() - 40);
+        paneOverworld.setTranslateY(height/2 - this.world.getPlayer().coordYProperty().get() - 40);
+    }
 
     private Image getImage(int i) {
         String url = "src/resources/tiles/";
@@ -90,16 +99,17 @@ public class MainController implements Initializable {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         KeyFrame kf = new KeyFrame(Duration.seconds(0.033), (ev -> {
             scrollPaneMap.requestFocus();
-            if(lastEvent != null && lastEvent.isPrimaryButtonDown()) {
-            	ImageView test = (ImageView) lastEvent.getSource();
-            	Point2D coords = test.localToParent(lastEvent.getX(), lastEvent.getY());
-            	this.world.getPlayer().getInventory().getInventoryContent().get(this.world.getPlayer().getInventory().getIndex()).action((int)coords.getX(), (int)coords.getY());
+            if (lastEvent != null && lastEvent.isPrimaryButtonDown()) {
+                ImageView test = (ImageView) lastEvent.getSource();
+                Point2D coords = test.localToParent(lastEvent.getX(), lastEvent.getY());
+                this.world.getPlayer().getInventory().getInventoryContent().get(this.world.getPlayer().getInventory().getIndex()).action((int) coords.getX(), (int) coords.getY());
             }
 
             this.world.getPlayer().readInput(input);
             this.world.getPlayer().move();
             this.world.getPlayer().jumpAnim();
             playerBox.setRotate(this.world.getPlayer().getDirection());
+            this.cameraUpdate();
         }));
         gameLoop.getKeyFrames().add(kf);
     }
@@ -144,8 +154,6 @@ public class MainController implements Initializable {
             }
         });
 
-        
-        
         // graphical changes on map
         this.world.getMap().getTileMap().addListener(new ListChangeListener<Tile>() {
             @Override
@@ -161,66 +169,66 @@ public class MainController implements Initializable {
 
         // inventory slot selection
         for (int slot = 0; slot < this.quickInventory.getChildren().size(); slot++) {
-        	Pane pane = (Pane)quickInventory.getChildren().get(slot);
+            Pane pane = (Pane) quickInventory.getChildren().get(slot);
 
             pane.setOnMousePressed(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent e) {
-                	  world.getPlayer().getInventory().setIndexProperty(quickInventory.getChildrenUnmodifiable().indexOf(e.getSource()));
+                    world.getPlayer().getInventory().setIndexProperty(quickInventory.getChildrenUnmodifiable().indexOf(e.getSource()));
                 }
             });
         }
         this.world.getPlayer().getInventory().getIndexProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue,
-					Number newValue) {
-					Pane p = (Pane)quickInventory.getChildren().get((int) oldValue);
-					Circle c = (Circle)p.getChildren().get(0);
-					c.setFill(RadialGradient.valueOf("focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 69.04761904761905%, 0xffffffff 0.0%, 0x3b3b3bf4 100.0%"));
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+                                Number newValue) {
+                Pane p = (Pane) quickInventory.getChildren().get((int) oldValue);
+                Circle c = (Circle) p.getChildren().get(0);
+                c.setFill(RadialGradient.valueOf("focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 69.04761904761905%, 0xffffffff 0.0%, 0x3b3b3bf4 100.0%"));
 
-					p = (Pane)quickInventory.getChildren().get((int) newValue);
-					c = (Circle)p.getChildren().get(0);
-					c.setFill(RadialGradient.valueOf("focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 50%, 0xffffffff 0.0%, 0x322e2e 100.0%"));
-			}
-		});
+                p = (Pane) quickInventory.getChildren().get((int) newValue);
+                c = (Circle) p.getChildren().get(0);
+                c.setFill(RadialGradient.valueOf("focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 50%, 0xffffffff 0.0%, 0x322e2e 100.0%"));
+            }
+        });
 
         // inventory listener
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new ListChangeListener<Item>() {
-			@Override
-			public void onChanged(ListChangeListener.Change<? extends Item> change) {
-				while(change.next()) {
-					
-					int id = 0;
-					int id2 = 0;
-					if (change.getAddedSubList().size() != 0)
-						id = change.getAddedSubList().get(0).getId();
-					if(change.getRemoved().size() != 0)
-						id2 = change.getRemoved().get(0).getId();
-					
-					if(change.wasRemoved()) {
-						if(id2 != 0) {
-							Pane pane = (Pane)quickInventory.getChildren().get(change.getFrom());
-							ImageView img = (ImageView)pane.getChildren().get(1);
-							img.setImage(null);
-						}
-					}
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Item> change) {
+                while (change.next()) {
 
-					if(change.wasAdded()) {
-						if(id != 0) {
-							boolean isAdded = false;
-							for(int slot = 0; !isAdded && slot < quickInventory.getChildren().size(); slot++) {
-								Pane pane = (Pane)quickInventory.getChildren().get(slot);
-								ImageView img = (ImageView)pane.getChildren().get(1);
-								if(null == img.getImage()) {
-									img.setImage(new Image("file:src/resources/sprites/mario.png"));
-									//img.setImage(new Image("file:src/resources/item/"+id+".png"));
-									isAdded = true;
-								}
-							}
-						}
-					}
-				}
-			}
-		});
+                    int id = 0;
+                    int id2 = 0;
+                    if (change.getAddedSubList().size() != 0)
+                        id = change.getAddedSubList().get(0).getId();
+                    if (change.getRemoved().size() != 0)
+                        id2 = change.getRemoved().get(0).getId();
+
+                    if (change.wasRemoved()) {
+                        if (id2 != 0) {
+                            Pane pane = (Pane) quickInventory.getChildren().get(change.getFrom());
+                            ImageView img = (ImageView) pane.getChildren().get(1);
+                            img.setImage(null);
+                        }
+                    }
+
+                    if (change.wasAdded()) {
+                        if (id != 0) {
+                            boolean isAdded = false;
+                            for (int slot = 0; !isAdded && slot < quickInventory.getChildren().size(); slot++) {
+                                Pane pane = (Pane) quickInventory.getChildren().get(slot);
+                                ImageView img = (ImageView) pane.getChildren().get(1);
+                                if (null == img.getImage()) {
+                                    img.setImage(new Image("file:src/resources/sprites/mario.png"));
+                                    //img.setImage(new Image("file:src/resources/item/"+id+".png"));
+                                    isAdded = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
         this.world.getPlayer().getInventory().addItem(new Shovel(1));
 
@@ -229,8 +237,8 @@ public class MainController implements Initializable {
     }
 
     public void handlePressed(MouseEvent e) {
-    	lastEvent = e;
-       
+        lastEvent = e;
+
     }
 
 
