@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import model.Tile;
 import model.World;
+import model.ItemPlaceableType.BlockGround;
 import model.ItemUsableType.Shovel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -159,7 +160,9 @@ public class MainController implements Initializable {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Tile> change) {
                 while (change.next()) {
+                	System.out.println("test");
                     if (change.wasReplaced()) {
+                    	System.out.println("test2");
                         ImageView img = (ImageView) paneMap.getChildren().get(change.getFrom());
                         img.setImage(getImage(change.getFrom()));
                     }
@@ -192,46 +195,10 @@ public class MainController implements Initializable {
         });
 
         // inventory listener
-        this.world.getPlayer().getInventory().getInventoryContent().addListener(new ListChangeListener<Item>() {
-            @Override
-            public void onChanged(ListChangeListener.Change<? extends Item> change) {
-                while (change.next()) {
-
-                    int id = 0;
-                    int id2 = 0;
-                    if (change.getAddedSubList().size() != 0)
-                        id = change.getAddedSubList().get(0).getId();
-                    if (change.getRemoved().size() != 0)
-                        id2 = change.getRemoved().get(0).getId();
-
-                    if (change.wasRemoved()) {
-                        if (id2 != 0) {
-                            Pane pane = (Pane) quickInventory.getChildren().get(change.getFrom());
-                            ImageView img = (ImageView) pane.getChildren().get(1);
-                            img.setImage(null);
-                        }
-                    }
-
-                    if (change.wasAdded()) {
-                        if (id != 0) {
-                            boolean isAdded = false;
-                            for (int slot = 0; !isAdded && slot < quickInventory.getChildren().size(); slot++) {
-                                Pane pane = (Pane) quickInventory.getChildren().get(slot);
-                                ImageView img = (ImageView) pane.getChildren().get(1);
-                                if (null == img.getImage()) {
-                                    img.setImage(new Image("file:src/resources/sprites/mario.png"));
-                                    //img.setImage(new Image("file:src/resources/item/"+id+".png"));
-                                    isAdded = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
+        this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
 
         this.world.getPlayer().getInventory().addItem(new Shovel(1));
-
+        this.world.getPlayer().getInventory().addItem(new BlockGround());
         startGame();
         gameLoop.play();
     }
