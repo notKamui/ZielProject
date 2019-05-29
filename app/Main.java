@@ -1,6 +1,7 @@
 package app;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javafx.application.Application;
@@ -16,7 +17,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            URL url = new File("src/view/main.fxml").toURI().toURL();
+            URL url = new File("src/view/MainMenu.fxml").toURI().toURL();
             loader.setLocation(url);
             BorderPane root = new BorderPane();
             root = loader.load();
@@ -32,6 +33,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+    	launch(args);
     }
 }
