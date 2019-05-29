@@ -117,7 +117,7 @@ public abstract class Charac extends GameObject {
         this.vectY = vectY;
     }
     
-	public static void setWorld(World monde) {
-		world = monde;
+	public static void setWorld(World w) {
+		world = w;
 	}
 }

@@ -26,13 +26,18 @@ public abstract class Item {
 	public int getQuantityMax() {
 		return this.quantityMax;
 	}
+	public void setQuantity(int quantity) {
+		this.quantity =quantity;
+	}
 	
 	public World getWorld() {
 		return world;
 	}
-	public static void setWorld(World monde) {
-		world = monde;
+	public static void setWorld(World w) {
+		world = w;
 	}
+	
+
 	public boolean isInRange(int x, int y) {
 		  int playerX = world.getPlayer().coordXProperty().get() + 40;
 		  int playerY = world.getPlayer().coordYProperty().get() + 40;

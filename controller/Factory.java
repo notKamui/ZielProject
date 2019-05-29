@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import model.Charac;
 import model.Item;
 import model.Map;
+import model.MathDataBuilder;
 import model.Player;
 import model.World;
 
@@ -22,6 +23,7 @@ import model.World;
         world.setMap(map);
         Item.setWorld(world);
         Charac.setWorld(world);
+        MathDataBuilder.setWorld(world);
         return world;
     }
 

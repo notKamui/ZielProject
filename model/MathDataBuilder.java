@@ -9,10 +9,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import model.Tile;
 public class MathDataBuilder {
 	public static final int TILESIZE = 80;
 	public static final int LINELENGTH = getLineLength();
+	private static World world;
 
 	public static int coordsToIndex(int x, int y) {
 		 return (int) (Math.floor(y/TILESIZE)*LINELENGTH + Math.floor(x/TILESIZE));
@@ -23,6 +24,31 @@ public class MathDataBuilder {
 		 int x = (i%LINELENGTH)*TILESIZE; 
 		 int[] coords = {x,y};
 		 return coords;
+	}
+	
+	public static boolean isNextToSolid(int id) {
+		boolean isNextToSolid=false;
+		if(id-1>0) {
+			if (world.getMap().getTileAt(id-1).getHitbox().getBounds()!=null) {
+				isNextToSolid=true;
+			}
+		}
+		if(id-LINELENGTH>0) {
+			if (world.getMap().getTileAt(id-LINELENGTH).getHitbox().getBounds()!=null) {
+				isNextToSolid=true;
+			}
+		}
+		if(id+1<=world.getMap().getTileMap().size()) {
+			if (world.getMap().getTileAt(id+1).getHitbox().getBounds()!=null) {
+				isNextToSolid=true;
+			}
+		}
+		if(id+LINELENGTH<=world.getMap().getTileMap().size()) {
+			if (world.getMap().getTileAt(id+LINELENGTH).getHitbox().getBounds()!=null) {
+				isNextToSolid=true;
+			}
+		}
+		return isNextToSolid;
 	}
 	
 	private static int getLineLength() {
@@ -93,6 +119,9 @@ public class MathDataBuilder {
                 break;
         }
         return tile;
+    }
+    public static void setWorld(World w) {
+    	world = w;
     }
 }
 
