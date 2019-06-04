@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" style="-fx-background-image: url(&quot;src/resources/other/background.jpg&quot;);" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controller.GameController">
+
+<BorderPane fx:id="root" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
     <center>
         <Pane fx:id="pane" prefHeight="640.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
             <ScrollPane fx:id="scrollPaneMap" hbarPolicy="NEVER" prefHeight="640.0" prefWidth="1200.0" style="-fx-background-color: grey;" vbarPolicy="NEVER">
                 <Pane fx:id="paneOverworld">
-                    <TilePane fx:id="paneMap" style="-fx-background-image: url(&quot;src/resources/other/background.jpg&quot;);" />
+                    <TilePane fx:id="paneMap" />
                 </Pane>
             </ScrollPane>
+         <Pane fx:id="pauseMenu" opacity="0.7" prefHeight="865.0" prefWidth="1300.0">
+            <children>
+               <Rectangle arcHeight="5.0" arcWidth="5.0" height="963.0" layoutY="-100.0" stroke="BLACK" strokeType="INSIDE" width="1300.0" />
+               <Button layoutX="548.0" layoutY="465.0" mnemonicParsing="false" onAction="#quitPauseMenu" prefHeight="40.0" prefWidth="204.0" style="-fx-background-color: white;" text="Quit ?" />
+               <Text fill="WHITE" layoutX="487.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Pause -">
+                  <font>
+                     <Font name="OpenSymbol" size="70.0" />
+                  </font>
+               </Text>
+            </children>
+         </Pane>
         </Pane>
     </center>
     <top>
