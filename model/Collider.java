@@ -20,34 +20,42 @@ public class Collider {
         return collisionManager(1);
     }
 
-    //0 : collides()
+    //default : collides()
     //1 : isOnFloor()
     private boolean collisionManager(int type) {
-        boolean coll = false;
-
         for (Hitbox hitbox : hitboxesArround()) {
-            Hitbox tempHB = this.self.getHitbox();
-            if (type == 1) {
-                tempHB = new Hitbox(
-                        this.self.coordXProperty(),
-                        new SimpleIntegerProperty(this.self.coordYProperty().get() + 1),
-                        this.self.getWidth(),
-                        this.self.getHeight());
+            Hitbox selfHB;
+            switch (type) {
+                case 1:
+                    selfHB = new Hitbox(
+                            this.self.coordXProperty(),
+                            new SimpleIntegerProperty(this.self.coordYProperty().get() + 1),
+                            this.self.getWidth(),
+                            this.self.getHeight());
+                    break;
+                default:
+                    selfHB = this.self.getHitbox();
+                    break;
             }
-            Shape intersect = Shape.intersect(tempHB.getBounds(), hitbox.getBounds());
+            Shape intersect = Shape.intersect(selfHB.getBounds(), hitbox.getBounds());
             if (intersect.getBoundsInParent().getWidth() != -1) {
-                coll = true;
+                return true;
             }
         }
-
-        return coll;
+        return false;
     }
 
     private ArrayList<Hitbox> hitboxesArround() {
         ArrayList<Hitbox> hitboxesAround = new ArrayList<>();
+
+        // gets the center of the DynamicObject
         int x = this.self.coordXProperty().get() + this.self.getWidth() / 2;
         int y = this.self.coordYProperty().get() + this.self.getHeight() / 2;
+
+        // gets the radius around the DynamicObject
         double radius = Math.max(this.self.getHeight(), this.self.getWidth()) + this.self.getSpeed() + MathDataBuilder.TILESIZE / 2;
+
+        // gets the hitboxes between the object and the radius
         for (Hitbox hitbox : this.self.getBoundsList()) {
             if (hitbox.getBounds() != null && hitbox != this.self.getHitbox()) {
                 int xb = (int) hitbox.getBounds().getX() + MathDataBuilder.TILESIZE / 2;
