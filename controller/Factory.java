@@ -3,14 +3,9 @@ package controller;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
-import model.Charac;
-import model.Item;
-import model.Map;
-import model.MathDataBuilder;
-import model.Player;
-import model.World;
+import model.*;
 
- class Factory {
+class Factory {
 
      static World initWorld() {
         World world = new World();
@@ -21,8 +16,9 @@ import model.World;
         world.setPlayer(player);
         world.setMap(map);
         Item.setWorld(world);
-        Charac.setWorld(world);
+        GameObject.setWorld(world);
         MathDataBuilder.setWorld(world);
+        Collider.setWorld(world);
         return world;
     }
 

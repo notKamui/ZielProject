@@ -1,9 +1,5 @@
 package controller;
 
-import java.io.File;
-import java.net.URL;
-
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.net.URL;
 
 public class MenuController {
 
@@ -26,7 +25,7 @@ public class MenuController {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 	        URL url;
-			url = new File("src/view/main.fxml").toURI().toURL();
+			url = new File("src/view/Game.fxml").toURI().toURL();
 			loader.setLocation(url);
 	        BorderPane root = new BorderPane();
 	        root = loader.load();

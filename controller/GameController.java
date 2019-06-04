@@ -1,42 +1,37 @@
 package controller;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.util.Duration;
-import model.Tile;
-import model.World;
-import model.ItemPlaceableType.BlockGround;
-import model.ItemUsableType.Shovel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
-import javafx.scene.control.ScrollPane;
-import javafx.event.*;
-import model.Item;
-
+import javafx.util.Duration;
+import model.ItemPlaceableType.BlockGround;
+import model.ItemUsableType.Shovel;
+import model.Tile;
+import model.World;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.fxml.FXML;
 
-
-public class MainController implements Initializable {
+public class GameController implements Initializable {
     ArrayList<String> input = new ArrayList<>();
     private Timeline gameLoop;
     private World world;
@@ -72,11 +67,11 @@ public class MainController implements Initializable {
     private HBox quickInventory;
 
     private void cameraUpdate() {
-        int width = (int)scrollPaneMap.getWidth();
-        int height = (int)scrollPaneMap.getHeight();
+        int width = (int) scrollPaneMap.getWidth();
+        int height = (int) scrollPaneMap.getHeight();
 
-        paneOverworld.setTranslateX(width/2 - this.world.getPlayer().coordXProperty().get() - 40);
-        paneOverworld.setTranslateY(height/2 - this.world.getPlayer().coordYProperty().get() - 40);
+        paneOverworld.setTranslateX(width / 2 - this.world.getPlayer().coordXProperty().get() - 40);
+        paneOverworld.setTranslateY(height / 2 - this.world.getPlayer().coordYProperty().get() - 40);
     }
 
     private Image getImage(int i) {
@@ -107,7 +102,7 @@ public class MainController implements Initializable {
             }
 
             this.world.getPlayer().readInput(input);
-            this.world.getPlayer().move();
+            this.world.getPlayer().setPosition();
             this.world.getPlayer().jumpAnim();
             playerBox.setRotate(this.world.getPlayer().getDirection());
             this.cameraUpdate();
@@ -160,9 +155,7 @@ public class MainController implements Initializable {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Tile> change) {
                 while (change.next()) {
-                	System.out.println("test");
                     if (change.wasReplaced()) {
-                    	System.out.println("test2");
                         ImageView img = (ImageView) paneMap.getChildren().get(change.getFrom());
                         img.setImage(getImage(change.getFrom()));
                     }
@@ -205,7 +198,6 @@ public class MainController implements Initializable {
 
     public void handlePressed(MouseEvent e) {
         lastEvent = e;
-
     }
 
 

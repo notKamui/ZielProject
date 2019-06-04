@@ -3,8 +3,11 @@ package model;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.shape.Shape;
 
+import java.util.ArrayList;
+
 public class Collider {
-    GameObject self;
+    private static World world;
+    private GameObject self;
 
     public Collider(GameObject self) {
         this.self = self;
@@ -18,10 +21,19 @@ public class Collider {
         return collisionManager(1);
     }
 
+    public static void setWorld(World w) {
+        world = w;
+    }
+
     //0 : collides()
     //1 : isOnFloor()
     private boolean collisionManager(int type) {
         boolean coll = false;
+
+        ArrayList<Tile> tileList = new ArrayList<>(world.getMap().getTileMap());
+        int x = this.self.coordXProperty().get();
+        int y = this.self.coordYProperty().get();
+        int i = MathDataBuilder.coordsToIndex(x+this.self.getWidth()/2, y+this.self.getHeight()/2);
 
         for (Hitbox hitbox : this.self.getBoundsList()) {
             if (hitbox.getBounds() != null && hitbox != this.self.getHitbox()) {
