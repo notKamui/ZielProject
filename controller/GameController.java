@@ -34,6 +34,7 @@ import java.util.ResourceBundle;
 public class GameController implements Initializable {
     ArrayList<String> input = new ArrayList<>();
     private Timeline gameLoop;
+    private boolean gameLoopIsPause = false;
     private World world;
 
     private MouseEvent lastEvent = null;
@@ -140,6 +141,16 @@ public class GameController implements Initializable {
             String code = event.getCode().toString();
             if (!input.contains(code))
                 input.add(code);
+            	if(code.equals("ESCAPE")) {
+            		if(!gameLoopIsPause) {
+            			gameLoop.pause();
+            			gameLoopIsPause = true;
+            		}
+            		else {
+            			gameLoop.play();
+            			gameLoopIsPause = false;
+            		}
+            	}
             event.consume();
         });
 
