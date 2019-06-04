@@ -7,7 +7,6 @@ import model.ItemPlaceableType.BlockGround;
 public class Player extends Charac {
 
     private Inventory inventory;
-    final private int SPEED = 10;
 
     public Player(int x, int y) {
         super(x, y, 80, 80);
@@ -17,20 +16,23 @@ public class Player extends Charac {
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
-            
+                case "RIGHT":
                 case "D":
-                    this.setVectX(SPEED);
+                    this.setVectX(this.getSpeed());
                     this.setDirection(false);
                     break;
+                case "LEFT":
                 case "Q":
-                    this.setVectX(-SPEED);
+                    this.setVectX(-this.getSpeed());
                     this.setDirection(true);
                     break;
+                case "DOWN":
                 case "S":
                     if (this.getJumpForce() < 26) //can fastfall at max height of the jump
                         this.setIsJumping(false);
                     break;
-                case "SPACE":
+                case "UP":
+                case "Z":
                     if (this.getCollMan().isOnFloor())
                         this.setIsJumping(true);
                     break;

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public abstract class GameObject {
     private static ArrayList<Hitbox> hitboxList = new ArrayList<>();
+    private static World world;
     private IntegerProperty coordXProperty;
     private IntegerProperty coordYProperty;
     private int width;
@@ -49,12 +50,22 @@ public abstract class GameObject {
     public ArrayList<Hitbox> getBoundsList() {
         return hitboxList;
     }
+
     public void removeHitbox() {
-    	hitboxList.remove(this.hitbox);
+        hitboxList.remove(this.hitbox);
     }
+
     public Hitbox getHitbox() {
         return this.hitbox;
     }
-    
-    
+
+    public World getWorld() {
+        return world;
+    }
+
+    public static void setWorld(World w) {
+        world = w;
+    }
+
+
 }
