@@ -50,18 +50,22 @@ public abstract class GameObject {
     public ArrayList<Hitbox> getBoundsList() {
         return hitboxList;
     }
+
     public void removeHitbox() {
-    	hitboxList.remove(this.hitbox);
+        hitboxList.remove(this.hitbox);
     }
+
     public Hitbox getHitbox() {
         return this.hitbox;
     }
+
     public World getWorld() {
         return world;
     }
+
     public static void setWorld(World w) {
         world = w;
     }
-    
-    
+
+
 }

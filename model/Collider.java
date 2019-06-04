@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class Collider {
     private static World world;
-    private GameObject self;
+    private DynamicObject self;
 
-    public Collider(GameObject self) {
+    public Collider(DynamicObject self) {
         this.self = self;
     }
 
@@ -33,12 +33,13 @@ public class Collider {
         ArrayList<Tile> tileList = new ArrayList<>(world.getMap().getTileMap());
         int x = this.self.coordXProperty().get();
         int y = this.self.coordYProperty().get();
-        int i = MathDataBuilder.coordsToIndex(x+this.self.getWidth()/2, y+this.self.getHeight()/2);
+        int i = MathDataBuilder.coordsToIndex(x + this.self.getWidth() / 2, y + this.self.getHeight() / 2);
+        int radius = Math.max(this.self.getHeight(), this.self.getWidth()) + this.self.getSpeed();
 
         for (Hitbox hitbox : this.self.getBoundsList()) {
             if (hitbox.getBounds() != null && hitbox != this.self.getHitbox()) {
                 Hitbox tempHB = this.self.getHitbox();
-                if(type == 1) {
+                if (type == 1) {
                     tempHB = new Hitbox(
                             this.self.coordXProperty(),
                             new SimpleIntegerProperty(this.self.coordYProperty().get() + 1),

@@ -1,15 +1,13 @@
 package app;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Map;
+
+import java.io.File;
+import java.net.URL;
 
 public class Main extends Application {
 
@@ -33,6 +31,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-    	launch(args);
+        launch(args);
     }
 }

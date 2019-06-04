@@ -7,7 +7,7 @@ import model.*;
 
 class Factory {
 
-     static World initWorld() {
+    static World initWorld() {
         World world = new World();
 
         Player player = new Player(80 * 2, 80 * 3);
@@ -22,7 +22,7 @@ class Factory {
         return world;
     }
 
-     static ImageView initPlayerView(IntegerProperty coordXProperty, IntegerProperty coordYProperty) {
+    static ImageView initPlayerView(IntegerProperty coordXProperty, IntegerProperty coordYProperty) {
         ImageView playerBox = new ImageView("file:src/resources/sprites/mario.png");
         playerBox.setRotationAxis(new Point3D(0, 1, 0));
         playerBox.translateXProperty().bind(coordXProperty);
