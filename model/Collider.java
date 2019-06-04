@@ -6,7 +6,6 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 
 public class Collider {
-    private static World world;
     private DynamicObject self;
 
     public Collider(DynamicObject self) {
@@ -21,38 +20,43 @@ public class Collider {
         return collisionManager(1);
     }
 
-    public static void setWorld(World w) {
-        world = w;
-    }
-
     //0 : collides()
     //1 : isOnFloor()
     private boolean collisionManager(int type) {
         boolean coll = false;
 
-        ArrayList<Tile> tileList = new ArrayList<>(world.getMap().getTileMap());
-        int x = this.self.coordXProperty().get();
-        int y = this.self.coordYProperty().get();
-        int i = MathDataBuilder.coordsToIndex(x + this.self.getWidth() / 2, y + this.self.getHeight() / 2);
-        int radius = Math.max(this.self.getHeight(), this.self.getWidth()) / 2 + this.self.getSpeed();
-
-        for (Hitbox hitbox : this.self.getBoundsList()) {
-            if (hitbox.getBounds() != null && hitbox != this.self.getHitbox()) {
-                Hitbox tempHB = this.self.getHitbox();
-                if (type == 1) {
-                    tempHB = new Hitbox(
-                            this.self.coordXProperty(),
-                            new SimpleIntegerProperty(this.self.coordYProperty().get() + 1),
-                            this.self.getWidth(),
-                            this.self.getHeight());
-                }
-                Shape intersect = Shape.intersect(tempHB.getBounds(), hitbox.getBounds());
-                if (intersect.getBoundsInParent().getWidth() != -1) {
-                    coll = true;
-                }
+        for (Hitbox hitbox : hitboxesArround()) {
+            Hitbox tempHB = this.self.getHitbox();
+            if (type == 1) {
+                tempHB = new Hitbox(
+                        this.self.coordXProperty(),
+                        new SimpleIntegerProperty(this.self.coordYProperty().get() + 1),
+                        this.self.getWidth(),
+                        this.self.getHeight());
+            }
+            Shape intersect = Shape.intersect(tempHB.getBounds(), hitbox.getBounds());
+            if (intersect.getBoundsInParent().getWidth() != -1) {
+                coll = true;
             }
         }
 
         return coll;
+    }
+
+    private ArrayList<Hitbox> hitboxesArround() {
+        ArrayList<Hitbox> hitboxesAround = new ArrayList<>();
+        int x = this.self.coordXProperty().get() + this.self.getWidth() / 2;
+        int y = this.self.coordYProperty().get() + this.self.getHeight() / 2;
+        double radius = Math.max(this.self.getHeight(), this.self.getWidth()) + this.self.getSpeed() + MathDataBuilder.TILESIZE / 2;
+        for (Hitbox hitbox : this.self.getBoundsList()) {
+            if (hitbox.getBounds() != null && hitbox != this.self.getHitbox()) {
+                int xb = (int) hitbox.getBounds().getX() + MathDataBuilder.TILESIZE / 2;
+                int yb = (int) hitbox.getBounds().getY() + MathDataBuilder.TILESIZE / 2;
+                if (Math.sqrt(Math.pow((x - xb), 2) + Math.pow((y - yb), 2)) <= radius) { // distance calculus
+                    hitboxesAround.add(hitbox);
+                }
+            }
+        }
+        return hitboxesAround;
     }
 }
