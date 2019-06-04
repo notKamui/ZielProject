@@ -17,6 +17,7 @@ public class InventoryListener implements ListChangeListener<Item> {
     @Override
     public void onChanged(ListChangeListener.Change<? extends Item> change) {
         while (change.next()) {
+            // TODO optimiser tout ca oulah
 
             int id = 0;
             int id2 = 0;
