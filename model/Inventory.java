@@ -30,12 +30,13 @@ public class Inventory {
 	}
 	
 	public void addItem(Item i) {
-		if(indexOfSlotByQuantity(i) != -1) {
-			this.inventory.add(indexOfSlotByQuantity(i), i);
+		int s = indexOfSlotByQuantity(i);
+		if(s != -1) {
+			this.inventory.set(s, i);
 		}
 		else if(!this.isfull()) {
 			int slot = inventory.indexOf(VOID);
-			this.inventory.add(slot, i);
+			this.inventory.set(slot, i);
 		}
 	}
 	
@@ -54,6 +55,10 @@ public class Inventory {
 	public int removeItem(int slot) {
 			this.inventory.set(slot, VOID);
 			return slot;
+	}
+	
+	public Item getItemByIndex(int i) {
+		return this.inventory.get(i);
 	}
 	
 	public void setCapacity(int c) {
