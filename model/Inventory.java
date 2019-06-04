@@ -30,15 +30,35 @@ public class Inventory {
 	}
 	
 	public void addItem(Item i) {
-		if(!this.isfull()) {
-			int slot = inventory.indexOf(VOID);
-			this.inventory.add(slot, i);
+		int s = indexOfSlotByQuantity(i);
+		if(s != -1) {
+			this.inventory.set(s, i);
 		}
+		else if(!this.isfull()) {
+			int slot = inventory.indexOf(VOID);
+			this.inventory.set(slot, i);
+		}
+	}
+	
+	private int indexOfSlotByQuantity(Item i) {
+		for(int slot = 0; slot < this.capacity; slot++) {
+			if(i.getId() == inventory.get(slot).getId()) {
+				if(i.getQuantity() + inventory.get(slot).getQuantity() <= inventory.get(slot).getQuantityMax()) {
+					i.setQuantity(i.getQuantity() + inventory.get(slot).getQuantity());
+					return slot;
+				}
+			}
+		}
+		return -1;
 	}
 	
 	public int removeItem(int slot) {
 			this.inventory.set(slot, VOID);
 			return slot;
+	}
+	
+	public Item getItemByIndex(int i) {
+		return this.inventory.get(i);
 	}
 	
 	public void setCapacity(int c) {

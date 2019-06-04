@@ -5,7 +5,7 @@ import model.TileType.Ground;
 
 public class BlockGround extends ItemPlaceable{
 	public BlockGround() {
-		super("Dirt", 1);
+		super("Dirt", 1, 1, 64);
 	}
 
 	@Override
