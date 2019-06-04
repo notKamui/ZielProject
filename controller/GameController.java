@@ -2,9 +2,11 @@ package controller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -66,6 +68,14 @@ public class GameController implements Initializable {
     //Slot d'inventaire
     @FXML
     private HBox quickInventory;
+    
+    @FXML
+    private Pane pauseMenu;
+    
+    @FXML
+    void quitPauseMenu(ActionEvent event) {
+    	Platform.exit();
+    }
 
     private void cameraUpdate() {
         int width = (int) scrollPaneMap.getWidth();
@@ -113,6 +123,7 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    	pauseMenu.setVisible(false);
 
         this.world = Factory.initWorld();
 
@@ -145,10 +156,14 @@ public class GameController implements Initializable {
             		if(!gameLoopIsPause) {
             			gameLoop.pause();
             			gameLoopIsPause = true;
+            			quickInventory.setVisible(false);
+            			pauseMenu.setVisible(true);
             		}
             		else {
             			gameLoop.play();
             			gameLoopIsPause = false;
+            			quickInventory.setVisible(true);
+            			pauseMenu.setVisible(false);
             		}
             	}
             event.consume();
