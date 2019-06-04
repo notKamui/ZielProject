@@ -34,7 +34,7 @@ public class Collider {
         int x = this.self.coordXProperty().get();
         int y = this.self.coordYProperty().get();
         int i = MathDataBuilder.coordsToIndex(x + this.self.getWidth() / 2, y + this.self.getHeight() / 2);
-        int radius = Math.max(this.self.getHeight(), this.self.getWidth()) + this.self.getSpeed();
+        int radius = Math.max(this.self.getHeight(), this.self.getWidth()) / 2 + this.self.getSpeed();
 
         for (Hitbox hitbox : this.self.getBoundsList()) {
             if (hitbox.getBounds() != null && hitbox != this.self.getHitbox()) {
