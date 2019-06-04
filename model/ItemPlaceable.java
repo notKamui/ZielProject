@@ -12,7 +12,6 @@ public abstract class ItemPlaceable extends Item{
 @Override
 public void action(int x, int y) {
 	int id = MathDataBuilder.coordsToIndex(x, y);
-	System.out.println(id);
 	if(MathDataBuilder.isNextToSolid(id) && this.isInRange(x, y) && this.getWorld().getMap().getTileAt(id).getHitbox().getBounds()==null){//add a collision detector
 		placeBlock(id);
 		this.setQuantity(this.getQuantity()-1);

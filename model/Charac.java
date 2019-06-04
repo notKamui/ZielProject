@@ -3,7 +3,7 @@ package model;
 
 public abstract class Charac extends GameObject {
     final private int GRAVITY = 30;
-    private static World world;
+    final private int SPEED = 10;
     private int direction; // 0 = facing left // 180 = facing right
     private int jumpForce;
     private boolean isJumping;
@@ -13,14 +13,13 @@ public abstract class Charac extends GameObject {
 
     public Charac(int x, int y, int width, int height) {
         super(x, y, width, height);
-        this.world = world;
         this.direction = 0;
         this.jumpForce = 0;
         this.setIsJumping(false);
         this.collMan = new Collider(this);
     }
 
-    public void move() {
+    public void setPosition() {
         this.vectY += GRAVITY; // add gravity to vectY
 
         boolean collides;
@@ -116,8 +115,8 @@ public abstract class Charac extends GameObject {
     public void setVectY(int vectY) {
         this.vectY = vectY;
     }
-    
-	public static void setWorld(World w) {
-		world = w;
-	}
+
+    public final int SPEED() {
+        return SPEED;
+    }
 }

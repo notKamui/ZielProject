@@ -9,47 +9,30 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import model.Tile;
+
 public class MathDataBuilder {
-  
-	public static final int TILESIZE = 80;
-	public static final int LINELENGTH = getLineLength();
-	private static World world;
-	
-	public static boolean isNextToSolid(int id) {
-		boolean isNextToSolid=false;
-		if(id-1>0) {
-			if (world.getMap().getTileAt(id-1).getHitbox().getBounds()!=null) {
-				isNextToSolid=true;
-			}
-		}
-		if(id-LINELENGTH>0) {
-			if (world.getMap().getTileAt(id-LINELENGTH).getHitbox().getBounds()!=null) {
-				isNextToSolid=true;
-			}
-		}
-		if(id+1<=world.getMap().getTileMap().size()) {
-			if (world.getMap().getTileAt(id+1).getHitbox().getBounds()!=null) {
-				isNextToSolid=true;
-			}
-		}
-		if(id+LINELENGTH<=world.getMap().getTileMap().size()) {
-			if (world.getMap().getTileAt(id+LINELENGTH).getHitbox().getBounds()!=null) {
-				isNextToSolid=true;
-			}
-		}
-		return isNextToSolid;
-	}
-	
+
+    public static final int TILESIZE = 80;
+    public static final int LINELENGTH = getLineLength();
+    private static World world;
+
+    public static boolean isNextToSolid(int id) {
+        if (id - 1 > 0 && world.getMap().getTileAt(id - 1).getHitbox().getBounds() != null
+                || id - LINELENGTH > 0 && world.getMap().getTileAt(id - LINELENGTH).getHitbox().getBounds() != null
+                || id + 1 <= world.getMap().getTileMap().size() && world.getMap().getTileAt(id + 1).getHitbox().getBounds() != null
+                || id + LINELENGTH <= world.getMap().getTileMap().size() && world.getMap().getTileAt(id + LINELENGTH).getHitbox().getBounds() != null)
+            return true;
+        else
+            return false;
+    }
+
 
     public static int coordsToIndex(int x, int y) {
         return (int) (Math.floor(y / TILESIZE) * LINELENGTH + Math.floor(x / TILESIZE));
     }
 
     public static int[] indexToCoord(int i) {
-        int y = (i / LINELENGTH) * TILESIZE;
-        int x = (i % LINELENGTH) * TILESIZE;
-        return new int[]{x, y};
+        return new int[]{(i % LINELENGTH) * TILESIZE, (i / LINELENGTH) * TILESIZE};
     }
 
     private static int getLineLength() {
@@ -58,8 +41,6 @@ public class MathDataBuilder {
             return content.indexOf('\r');
         else
             return content.indexOf('\n');
-
-
     }
 
     static String readFile(String fname) {
@@ -120,8 +101,9 @@ public class MathDataBuilder {
         }
         return tile;
     }
+
     public static void setWorld(World w) {
-    	world = w;
+        world = w;
     }
 }
 
