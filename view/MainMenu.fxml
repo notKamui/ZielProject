@@ -6,20 +6,25 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="865.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.201" fx:controller="controller.MenuController">
-   <center>
-      <Pane prefHeight="865.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
-            <Button layoutX="488.0" layoutY="400.0" mnemonicParsing="false" onAction="#playButton" prefHeight="50.0" prefWidth="350.0" style="-fx-background-color: gray;" text="Play">
-               <font>
-                  <Font name="Bitstream Vera Serif Bold" size="35.0" />
-               </font>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="865.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.201"
+            fx:controller="controller.MenuController">
+    <center>
+        <Pane prefHeight="865.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+            <Button layoutX="488.0" layoutY="400.0" mnemonicParsing="false" onAction="#playButton" prefHeight="50.0"
+                    prefWidth="350.0" style="-fx-background-color: gray;" text="Play">
+                <font>
+                    <Font name="Bitstream Vera Serif Bold" size="35.0"/>
+                </font>
             </Button>
-            <Button layoutX="484.0" layoutY="570.0" mnemonicParsing="false" onAction="#exitButton" prefHeight="50.0" prefWidth="350.0" style="-fx-background-color: black;" text="Exit">
-               <font>
-                  <Font name="Bitstream Vera Serif Bold" size="30.0" />
-               </font>
+            <Button layoutX="484.0" layoutY="570.0" mnemonicParsing="false" onAction="#exitButton" prefHeight="50.0"
+                    prefWidth="350.0" style="-fx-background-color: black;" text="Exit">
+                <font>
+                    <Font name="Bitstream Vera Serif Bold" size="30.0"/>
+                </font>
             </Button>
-            <ImageView fx:id="logo" fitHeight="200.0" fitWidth="550.0" layoutX="374.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" />
-      </Pane>
-   </center>
+            <ImageView fx:id="logo" fitHeight="200.0" fitWidth="550.0" layoutX="374.0" layoutY="113.0"
+                       pickOnBounds="true" preserveRatio="true"/>
+        </Pane>
+    </center>
 </BorderPane>

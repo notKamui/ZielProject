@@ -16,12 +16,12 @@ public class Player extends Charac {
             switch (key) {
                 case "RIGHT":
                 case "D":
-                    this.setVectX(this.SPEED());
+                    this.setVectX(this.getSpeed());
                     this.setDirection(false);
                     break;
                 case "LEFT":
                 case "Q":
-                    this.setVectX(-this.SPEED());
+                    this.setVectX(-this.getSpeed());
                     this.setDirection(true);
                     break;
                 case "DOWN":
