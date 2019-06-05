@@ -13,6 +13,7 @@ import java.io.IOException;
 public class MathDataBuilder {
 
     public static final int TILESIZE = 80;
+    public static final int ITEMSIZE = 20;
     public static final int LINELENGTH = getLineLength();
     private static World world;
 
