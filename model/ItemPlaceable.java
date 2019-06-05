@@ -2,8 +2,8 @@ package model;
 
 public abstract class ItemPlaceable extends Item{
 	
-	public ItemPlaceable(String n, int id, int q, int qMax) {
-		super(n, id, (int) (MathDataBuilder.TILESIZE*2.5), q, qMax);
+	public ItemPlaceable(int x, int y, String n, int id, int q, int qMax) {
+		super(x, y, n, id, (int) (MathDataBuilder.TILESIZE*2.5), q, qMax);
 	}
 
 	public abstract void placeBlock(int i);

@@ -1,7 +1,7 @@
 package model;
 
 //Peut devenir une superclasse par rapport aux outils, armes, ect...
-public abstract class Item {
+public abstract class Item extends DynamicObject {
 	private static World world;
 	private String name;
 	private int id;
@@ -9,7 +9,8 @@ public abstract class Item {
 	private int quantityMax;
     private int range; // range to enable interactions with other objects
 
-	public Item(String n, int id, int range, int q, int qMax) {
+	public Item(int x, int y, String n, int id, int range, int q, int qMax) {
+		super(x, y, MathDataBuilder.ITEMSIZE, MathDataBuilder.ITEMSIZE);
 		this.name = n;
 		this.id = id;
 		this.range = range;

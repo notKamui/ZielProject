@@ -8,7 +8,7 @@ public class Shovel extends ItemUsable {
 	private int efficiency;
 	
 	public Shovel(int efficiency) {
-		super("Shovel", 2, (int) (MathDataBuilder.TILESIZE*2.5), 1, 1);
+		super(0, 0, "Shovel", 2, (int) (MathDataBuilder.TILESIZE*2.5), 1, 1);
 		this.efficiency = efficiency;
 	}
 
@@ -17,9 +17,12 @@ public class Shovel extends ItemUsable {
 		int i = MathDataBuilder.coordsToIndex(x, y);
 		if(this.isInRange(x, y)) {
 			Tile target = this.getWorld().getMap().getTileAt(i);
-			target.setState(target.getState()- efficiency);
-			if(target.getState()<0) {
-				this.getWorld().getMap().updateMap(i, 's');
+			if(target.getDurability()>0) {
+				target.setState(target.getState()- efficiency);
+				if(target.getState()<0) {
+					this.getWorld().getMap().updateMap(i, 's');
+					target.dropBloc();
+				}
 			}
 		}
 	}

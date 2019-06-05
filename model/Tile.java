@@ -1,5 +1,7 @@
 package model;
 
+import model.ItemPlaceableType.BlockGround;
+
 public abstract class Tile extends GameObject {
     private final static int TILESIZE = MathDataBuilder.TILESIZE;
     private final static int LINELENGTH = MathDataBuilder.LINELENGTH;
@@ -28,5 +30,15 @@ public abstract class Tile extends GameObject {
 
     public void setState(int newState) {
         state = newState;
+    }
+    
+    public void dropBloc() {
+    	Item drop = null;
+    	switch(charCode) {
+    	case 'g':
+    		drop = new BlockGround(this.coordXProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2,this.coordYProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2);
+    	}
+    	System.out.println(drop);
+    	this.getWorld().getDynamicObjects().add(drop);
     }
 }

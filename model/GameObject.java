@@ -19,8 +19,7 @@ public abstract class GameObject {
         this.coordYProperty = new SimpleIntegerProperty(y);
         this.width = width;
         this.height = height;
-        this.hitbox = new Hitbox(this.coordXProperty, this.coordYProperty, width, height);
-        hitboxList.add(this.hitbox);
+        this.setHitbox();
     }
 
     public void setCoordXProperty(int x) {
@@ -62,7 +61,12 @@ public abstract class GameObject {
     public World getWorld() {
         return world;
     }
-
+    
+    
+    public void setHitbox() {
+    	this.hitbox = new Hitbox(this.coordXProperty, this.coordYProperty, width, height);
+        hitboxList.add(this.hitbox);
+    }
     public static void setWorld(World w) {
         world = w;
     }
