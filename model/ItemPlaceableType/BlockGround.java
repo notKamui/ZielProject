@@ -1,7 +1,7 @@
 package model.ItemPlaceableType;
 
 import model.ItemPlaceable;
-import model.TileType.Ground;
+import model.MathDataBuilder;
 
 public class BlockGround extends ItemPlaceable{
 	public BlockGround(int x, int y) {
@@ -10,7 +10,7 @@ public class BlockGround extends ItemPlaceable{
 
 	@Override
 	public void placeBlock(int i) {
-		this.getWorld().getMap().updateMap(i, 'g');
+        MathDataBuilder.getWorld().getMap().updateMap(i, 'g');
 		
 	}
 

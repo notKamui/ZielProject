@@ -106,5 +106,9 @@ public class MathDataBuilder {
     public static void setWorld(World w) {
         world = w;
     }
+
+    public static World getWorld() {
+        return world;
+    }
 }
 

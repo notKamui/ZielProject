@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public abstract class GameObject {
     private static ArrayList<Hitbox> hitboxList = new ArrayList<>();
-    private static World world;
     private IntegerProperty coordXProperty;
     private IntegerProperty coordYProperty;
     private int width;
@@ -61,7 +60,6 @@ public abstract class GameObject {
     public World getWorld() {
         return world;
     }
-    
     
     public void setHitbox() {
     	this.hitbox = new Hitbox(this.coordXProperty, this.coordYProperty, width, height);
