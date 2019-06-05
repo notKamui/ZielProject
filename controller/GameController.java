@@ -23,8 +23,9 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import model.ItemPlaceableType.BlockGround;
+import model.ItemPlaceableType.BlockDirt;
 import model.ItemUsableType.Shovel;
+import model.MathDataBuilder;
 import model.Tile;
 import model.World;
 
@@ -88,8 +89,14 @@ public class GameController implements Initializable {
     private Image getImage(int i) {
         String url = "src/resources/tiles/";
         switch (this.world.getMap().getTileAt(i).getCharCode()) {
-            case 'g':
-                url += "ground/groundTop.png";
+            case 'D':
+                url += "dirt.png";
+                break;
+            case 'd':
+                url += "dirtBG.png";
+                break;
+            case 'B':
+                url += "brick.png";
                 break;
             case 's':
                 url += "sky.png";
@@ -129,8 +136,8 @@ public class GameController implements Initializable {
 
         this.playerBox = Factory.initPlayerView(this.world.getPlayer().coordXProperty(), this.world.getPlayer().coordYProperty());
         paneOverworld.getChildren().add(playerBox);
-        paneMap.setPrefWidth(80 * this.world.getMap().getWidth());
-        paneMap.setPrefHeight(80 * this.world.getMap().getHeight());
+        paneMap.setPrefWidth(MathDataBuilder.TILESIZE * this.world.getMap().getWidth());
+        paneMap.setPrefHeight(MathDataBuilder.TILESIZE * this.world.getMap().getHeight());
         int i;
         for (i = 0; i < this.world.getMap().getTileMap().size(); i++) {
             ImageView tile = new ImageView(this.getImage(i));
@@ -217,7 +224,7 @@ public class GameController implements Initializable {
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
 
         this.world.getPlayer().getInventory().addItem(new Shovel(1));
-        this.world.getPlayer().getInventory().addItem(new BlockGround());
+        this.world.getPlayer().getInventory().addItem(new BlockDirt());
         startGame();
         gameLoop.play();
     }

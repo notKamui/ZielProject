@@ -1,9 +1,8 @@
 package model;
 
 import javafx.collections.ObservableList;
-import model.TileType.Ground;
-import model.TileType.Sky;
 import model.TileType.Void;
+import model.TileType.*;
 
 import java.io.File;
 import java.io.FileReader;
@@ -12,7 +11,7 @@ import java.io.IOException;
 
 public class MathDataBuilder {
 
-    public static final int TILESIZE = 80;
+    public static final int TILESIZE = 64;
     public static final int LINELENGTH = getLineLength();
     private static World world;
 
@@ -89,8 +88,14 @@ public class MathDataBuilder {
     static Tile makeTile(int i, char c) {
         Tile tile;
         switch (c) {
-            case 'g':
-                tile = new Ground(i);
+            case 'D':
+                tile = new Dirt(i);
+                break;
+            case 'd':
+                tile = new DirtBG(i);
+                break;
+            case 'B':
+                tile = new Brick(i);
                 break;
             case 's':
                 tile = new Sky(i);

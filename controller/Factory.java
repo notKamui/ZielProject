@@ -11,14 +11,14 @@ import model.World;
 class Factory {
 
     static World initWorld() {
+        Player player = new Player(MathDataBuilder.TILESIZE * 65, MathDataBuilder.TILESIZE * 4);
+        Map map = new Map();
+
         World world = new World();
-
-        Player player = new Player(80 * 2, 80 * 3);
-        Map map = new Map(world);
-
         world.setPlayer(player);
         world.setMap(map);
         MathDataBuilder.setWorld(world);
+
         return world;
     }
 

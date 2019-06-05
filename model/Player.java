@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import model.ItemPlaceableType.BlockGround;
-
 public class Player extends Charac {
 
     private Inventory inventory;

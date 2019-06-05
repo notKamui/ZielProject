@@ -4,12 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Map {
-    private World world;
     private ObservableList<Tile> map;
 
-    public Map(World world) {
-        this.world = world;
-
+    public Map() {
         this.map = FXCollections.observableArrayList();
         String content = MathDataBuilder.readFile("src/view/map.txt");
         content = content.replaceAll("\\s+", "");
