@@ -3,6 +3,7 @@ package controller;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
+import model.Ennemy;
 import javafx.scene.layout.Pane;
 import model.Map;
 import model.MathDataBuilder;
@@ -12,12 +13,16 @@ import model.World;
 class Factory {
 
     static World initWorld() {
+        World world = new World();
+
+        Ennemy n = new Ennemy(80*6, 80*3, world);
         Player player = new Player(MathDataBuilder.TILESIZE * 65, MathDataBuilder.TILESIZE * 4);
         Map map = new Map();
 
         World world = new World();
         world.setPlayer(player);
         world.setMap(map);
+        world.setEnnemy(n);
         MathDataBuilder.setWorld(world);
 
         return world;
@@ -40,5 +45,14 @@ class Factory {
 
 
         return playerBox;
+    }
+    
+    static ImageView initEnnemyView(IntegerProperty coordXproperty, IntegerProperty coordYProperty) {
+    	ImageView ennemyBox = new ImageView("file:src/resources/sprites/mario.png");
+    	ennemyBox.setRotationAxis(new Point3D(0, 1, 0));
+    	ennemyBox.translateXProperty().bind(coordXproperty);
+    	ennemyBox.translateYProperty().bind(coordYProperty);
+    	
+    	return ennemyBox;
     }
 }

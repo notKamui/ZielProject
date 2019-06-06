@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 public class World {
 	private Map map;
 	private Player player;
+	private Ennemy ennemy;
 	private ObservableList<DynamicObject> dynamicObjects;
 	
 	public World() {
@@ -31,6 +32,14 @@ public class World {
 		return this.player;
 	}
 	
+	public void setEnnemy(Ennemy n) {
+		this.ennemy = n;
+	}
+	
+	public Ennemy getEnnemy() {
+		return this.ennemy;
+  }
+
 	public ObservableList<DynamicObject> getDynamicObjects(){
 		return this.dynamicObjects;
 	}
