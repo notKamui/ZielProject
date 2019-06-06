@@ -1,6 +1,6 @@
 package model;
 
-import model.ItemPlaceableType.BlockGround;
+import model.ItemPlaceableType.BlockDirt;
 
 public abstract class Tile extends GameObject {
     private final static int TILESIZE = MathDataBuilder.TILESIZE;
@@ -46,9 +46,9 @@ public abstract class Tile extends GameObject {
     public void dropBloc() {
     	Item drop = null;
     	switch(charCode) {
-    	case 'g':
-    		drop = new BlockGround(this.coordXProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2,this.coordYProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2);
+    	case 'D':
+    		drop = new BlockDirt(this.coordXProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2,this.coordYProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2);
     	}
-    	MathDataBuilder.getWorld().getDynamicObjects().add(drop);
+    	MathDataBuilder.world().getDynamicObjects().add(drop);
     }
 }

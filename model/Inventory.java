@@ -34,12 +34,12 @@ public class Inventory {
 		if(s != -1) {
 			System.out.println(i.getQuantity());
 			i.removeHitbox();
-			MathDataBuilder.getWorld().getDynamicObjects().remove(i);
+			MathDataBuilder.world().getDynamicObjects().remove(i);
 			this.inventory.set(s, i);
 		}
 		else if(!this.isfull()) {
 			i.removeHitbox();
-			MathDataBuilder.getWorld().getDynamicObjects().remove(i);
+			MathDataBuilder.world().getDynamicObjects().remove(i);
 			int slot = inventory.indexOf(VOID);
 			this.inventory.set(slot, i);
 		}

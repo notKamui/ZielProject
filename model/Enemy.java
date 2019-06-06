@@ -1,18 +1,15 @@
 package model;
 
-public class Ennemy extends Charac{
-
-	private World w;
+public class Enemy extends Charac{
 	
-	public Ennemy(int x, int y, World w) {
+	public Enemy(int x, int y) {
 		super(x, y, 80, 80);
-		this.w = w;
 		this.setSpeed(5);
 	}
 	
 	public void followPlayer() {
 		
-		int xPlayer = this.w.getPlayer().coordXProperty().getValue();
+		int xPlayer = MathDataBuilder.world().getPlayer().coordXProperty().getValue();
 		if(xPlayer < this.coordXProperty().getValue()) {
 			this.setVectX(-this.getSpeed());
 		}

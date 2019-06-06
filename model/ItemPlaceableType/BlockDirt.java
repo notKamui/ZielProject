@@ -4,8 +4,8 @@ import model.ItemPlaceable;
 import model.MathDataBuilder;
 
 public class BlockDirt extends ItemPlaceable{
-	public BlockDirt() {
-		super("Dirt", 1, 1, 64);
+	public BlockDirt(int x, int y) {
+		super(x, y, "Dirt", 1, 1, 64);
 	}
 
 	@Override
