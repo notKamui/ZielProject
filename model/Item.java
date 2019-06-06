@@ -7,7 +7,7 @@ public abstract class Item extends DynamicObject {
 	private int id;
 	private int quantity;
 	private int quantityMax;
-    private int range; // range to enable interactions with other objects
+  private int range; // range to enable interactions with other objects
 
 	public Item(int x, int y, String n, int id, int range, int q, int qMax) {
 		super(x, y, MathDataBuilder.ITEMSIZE, MathDataBuilder.ITEMSIZE);
@@ -40,15 +40,15 @@ public abstract class Item extends DynamicObject {
 		world = w;
 	}
 	
-
 	public boolean isInRange(int x, int y) {
-		  int playerX = world.getPlayer().coordXProperty().get() + 40;
-		  int playerY = world.getPlayer().coordYProperty().get() + 40;
+		  int playerX = MathDataBuilder.world().getPlayer().coordXProperty().get() + 40;
+		  int playerY = MathDataBuilder.world().getPlayer().coordYProperty().get() + 40;
 		  if (	playerX - this.range <= x && x <= playerX + this.range
 			&&	playerY - this.range <= y && y <= playerY + this.range) {
 	            return true;
 	        }
 	        return false;
 	}
+  
 	abstract public void action(int x, int y);
 }

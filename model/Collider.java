@@ -20,8 +20,8 @@ public class Collider {
         return collisionManager(1);
     }
 
-    //default : collides()
-    //1 : isOnFloor()
+    // default : collides()
+    // 1 : isOnFloor()
     private boolean collisionManager(int type) {
         for (Hitbox hitbox : hitboxesArround()) {
             Hitbox selfHB;

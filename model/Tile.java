@@ -10,7 +10,7 @@ public abstract class Tile extends GameObject {
     private int durability;// durability/framerate = digging time in seconds, non diggable if negative
 
     public Tile(char c, int i, int durability) {
-        super((i % LINELENGTH) * 80, (i / LINELENGTH) * 80, TILESIZE, TILESIZE);
+        super((i % LINELENGTH) * TILESIZE, (i / LINELENGTH) * TILESIZE, TILESIZE, TILESIZE);
         this.charCode = c;
         this.durability = durability;
         this.state = durability;
