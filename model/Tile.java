@@ -1,5 +1,6 @@
 package model;
 
+import model.ItemOtherType.VoidItem;
 import model.ItemPlaceableType.BlockDirt;
 
 public abstract class Tile extends GameObject {
@@ -48,7 +49,10 @@ public abstract class Tile extends GameObject {
     	switch(charCode) {
     	case 'D':
     		drop = new BlockDirt(this.coordXProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2,this.coordYProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2);
+    		break;
+
     	}
+    	if(drop!=null)
     	MathDataBuilder.world().getDynamicObjects().add(drop);
     }
 }

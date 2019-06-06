@@ -1,18 +1,23 @@
 package model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public abstract class DynamicObject extends GameObject {
 
     final private int GRAVITY = 30;
     private int speed = 10;
     private int vectX;
     private int vectY;
+    private IntegerProperty directionProperty; // 0 = facing left // 180 = facing right
     private Collider collMan;
 
     public DynamicObject(int x, int y, int width, int height) {
         super(x, y, width, height);
+        this.directionProperty = new SimpleIntegerProperty(0);
         this.collMan = new Collider(this);
     }
-
+    abstract public void act();
     public void setPosition() {
         this.vectY += GRAVITY; // add gravity to vectY
 
@@ -90,5 +95,17 @@ public abstract class DynamicObject extends GameObject {
 
     public void setVectY(int vectY) {
         this.vectY = vectY;
+    }
+    
+    public final IntegerProperty directionProperty() {
+        return directionProperty;
+    }
+
+    public void setDirection(boolean flipped) {
+        if (flipped) {
+            this.directionProperty.set(180);
+        } else {
+            this.directionProperty.set(0);
+        }
     }
 }
