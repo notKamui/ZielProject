@@ -16,7 +16,7 @@ public class Shovel extends ItemUsable {
 	public void action(int x, int y) {
 		int i = MathDataBuilder.coordsToIndex(x, y);
 		if(this.isInRange(x, y)) {
-			Tile target = MathDataBuilder.getWorld().getMap().getTileAt(i);
+			Tile target = MathDataBuilder.world().getMap().getTileAt(i);
 			if(target.getDurability()>0) {
 				target.setState(target.getState()- efficiency);
 				if(target.getState()<0) {

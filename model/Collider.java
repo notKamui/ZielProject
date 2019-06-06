@@ -27,7 +27,6 @@ public class Collider {
     //default : collides()
     //1 : isOnFloor()
     
-    
     //4 : itemsAround()
     private boolean collisionManager(int type) {
         for (Hitbox hitbox : hitboxesAround(type)) {

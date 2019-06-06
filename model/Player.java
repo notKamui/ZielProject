@@ -2,14 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
-import model.ItemPlaceableType.BlockGround;
-
 public class Player extends Charac {
 
     private Inventory inventory;
 
     public Player(int x, int y) {
-        super(x, y, 80, 80);
+        super(x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1]);
         this.inventory = new Inventory();
     }
 
@@ -19,12 +17,12 @@ public class Player extends Charac {
                 case "RIGHT":
                 case "D":
                     this.setVectX(this.getSpeed());
-                    this.setDirection(false);
+                    this.setDirection(true);
                     break;
                 case "LEFT":
                 case "Q":
                     this.setVectX(-this.getSpeed());
-                    this.setDirection(true);
+                    this.setDirection(false);
                     break;
                 case "DOWN":
                 case "S":
