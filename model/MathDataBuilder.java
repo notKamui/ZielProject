@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class MathDataBuilder {
-
     public static final int TILESIZE = 64;
     public static final int[] PLAYERDIM = {64, 89}; // {width, height}
     public static final int LINELENGTH = getLineLength();

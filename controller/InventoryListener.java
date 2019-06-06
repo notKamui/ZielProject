@@ -31,6 +31,7 @@ public class InventoryListener implements ListChangeListener<Item> {
                     Pane pane = (Pane) quickInventory.getChildren().get(change.getFrom());
                     ImageView img = (ImageView) pane.getChildren().get(1);
                     img.setImage(null);
+                    change.getFrom();
                 }
             }
 

@@ -26,6 +26,7 @@ import javafx.util.Duration;
 import model.ItemPlaceableType.BlockDirt;
 import model.ItemUsableType.Shovel;
 import model.MathDataBuilder;
+import model.DynamicObject;
 import model.Tile;
 import model.World;
 
@@ -121,11 +122,14 @@ public class GameController implements Initializable {
         KeyFrame kf = new KeyFrame(Duration.seconds(0.033), (ev -> {
             scrollPaneMap.requestFocus();
             if (lastEvent != null && lastEvent.isPrimaryButtonDown()) {
+            	System.out.println("test");
                 ImageView test = (ImageView) lastEvent.getSource();
                 Point2D coords = test.localToParent(lastEvent.getX(), lastEvent.getY());
                 this.world.getPlayer().getInventory().getInventoryContent().get(this.world.getPlayer().getInventory().getIndex()).action((int) coords.getX(), (int) coords.getY());
             }
-
+            for(DynamicObject object : this.world.getDynamicObjects()) {
+            	object.setPosition();
+            }
             this.world.getPlayer().readInput(input);
             this.world.getPlayer().setPosition();
             this.world.getPlayer().jumpAnim();
@@ -229,9 +233,9 @@ public class GameController implements Initializable {
 
         // inventory listener
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
-
         this.world.getPlayer().getInventory().addItem(new Shovel(1));
         this.world.getPlayer().getInventory().addItem(new BlockDirt());
+
         startGame();
         gameLoop.play();
     }
