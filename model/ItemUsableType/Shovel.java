@@ -20,7 +20,7 @@ public class Shovel extends ItemUsable {
 			if(target.getDurability()>0) {
 				target.setState(target.getState()- efficiency);
 				if(target.getState()<0) {
-					MathDataBuilder.getWorld().getMap().updateMap(i, 's');
+					MathDataBuilder.world().getMap().updateMap(i, 's');
 					target.dropBloc();
 				}
 			}

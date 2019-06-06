@@ -3,26 +3,21 @@ package controller;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
-import model.Ennemy;
 import javafx.scene.layout.Pane;
-import model.Map;
-import model.MathDataBuilder;
-import model.Player;
-import model.World;
+import model.*;
 
 class Factory {
 
     static World initWorld() {
         World world = new World();
 
-        Ennemy n = new Ennemy(80*6, 80*3, world);
+        Enemy n = new Enemy(MathDataBuilder.TILESIZE*61, MathDataBuilder.TILESIZE*4);
         Player player = new Player(MathDataBuilder.TILESIZE * 65, MathDataBuilder.TILESIZE * 4);
         Map map = new Map();
 
-        World world = new World();
         world.setPlayer(player);
         world.setMap(map);
-        world.setEnnemy(n);
+        world.setEnemy(n);
         MathDataBuilder.setWorld(world);
 
         return world;
@@ -38,9 +33,6 @@ class Factory {
         Pane playerBox = new Pane();
         playerBox.translateXProperty().bind(coordXProperty);
         playerBox.translateYProperty().bind(coordYProperty);
-        /*playerBox.setPrefSize(MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1]);
-        playerBox.setMinSize(MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1]);
-        playerBox.setMaxSize(MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1]);*/
         playerBox.getChildren().add(sprite);
 
 

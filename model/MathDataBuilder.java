@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class MathDataBuilder {
     public static final int TILESIZE = 64;
+    public static final int ITEMSIZE = 20;
     public static final int[] PLAYERDIM = {64, 89}; // {width, height}
     public static final int LINELENGTH = getLineLength();
     private static World world;

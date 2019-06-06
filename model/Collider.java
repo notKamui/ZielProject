@@ -25,15 +25,15 @@ public class Collider {
     }
 
     public boolean isInFrontRight() {
-    	return collisionManager(2);
+        return collisionManager(2);
     }
-    
+
     public boolean isInFrontLeft() {
-    	return collisionManager(3);
+        return collisionManager(3);
     }
     //default : collides()
     //1 : isOnFloor()
-    
+
     //4 : itemsAround()
     private boolean collisionManager(int type) {
         for (Hitbox hitbox : hitboxesAround(type)) {
@@ -47,15 +47,23 @@ public class Collider {
                             this.self.getHeight(),
                             self);
                     break;
-                    
-                case 2 : 
-                	selfHB = new Hitbox(new SimpleIntegerProperty(this.self.coordXProperty().get() + 1), this.self.coordYProperty(), this.self.getWidth(), this.self.getHeight());
-                	break;
-                	
-                case 3 : 
-                	selfHB = new Hitbox(new SimpleIntegerProperty(this.self.coordXProperty().get() - 1), this.self.coordYProperty(), this.self.getWidth(), this.self.getHeight());
-                	break;
-                	
+
+                case 2:
+                    selfHB = new Hitbox(new SimpleIntegerProperty(this.self.coordXProperty().get() + 1),
+                            this.self.coordYProperty(),
+                            this.self.getWidth(),
+                            this.self.getHeight(),
+                            this.self);
+                    break;
+
+                case 3:
+                    selfHB = new Hitbox(new SimpleIntegerProperty(this.self.coordXProperty().get() - 1),
+                            this.self.coordYProperty(),
+                            this.self.getWidth(),
+                            this.self.getHeight(),
+                            this.self);
+                    break;
+
                 default:
                     selfHB = this.self.getHitbox();
                     break;
@@ -68,26 +76,27 @@ public class Collider {
         return false;
     }
 
-    public ArrayList<Item> itemsAround(){
+    public ArrayList<Item> itemsAround() {
         ArrayList<Item> itemsAround = new ArrayList<>();
-        for(Hitbox hitbox : hitboxesAround(4)) {
-        	itemsAround.add((Item)hitbox.getSelf());
+        for (Hitbox hitbox : hitboxesAround(4)) {
+            itemsAround.add((Item) hitbox.getSelf());
         }
         return itemsAround;
     }
+
     private ArrayList<Hitbox> hitboxesAround(int type) {
         ArrayList<Hitbox> hitboxesAround = new ArrayList<>();
         double radius;
         ArrayList<Hitbox> usedHitboxList;
-        
-        switch(type) {
-        case 4:
-        	radius = 100;
-        	usedHitboxList = itemHitboxList;
-        	break;
-        default:
-        	radius = Math.max(this.self.getHeight(), this.self.getWidth()) + this.self.getSpeed() + MathDataBuilder.TILESIZE / 2;
-        	usedHitboxList = tileHitboxList;
+
+        switch (type) {
+            case 4:
+                radius = 100;
+                usedHitboxList = itemHitboxList;
+                break;
+            default:
+                radius = Math.max(this.self.getHeight(), this.self.getWidth()) + this.self.getSpeed() + MathDataBuilder.TILESIZE / 2;
+                usedHitboxList = tileHitboxList;
 
         }
         // gets the center of the DynamicObject
@@ -95,7 +104,7 @@ public class Collider {
         int y = this.self.coordYProperty().get() + this.self.getHeight() / 2;
 
         // gets the radius around the DynamicObject
-        
+
 
         // gets the hitboxes between the object and the radius
         for (Hitbox hitbox : usedHitboxList) {
@@ -109,6 +118,6 @@ public class Collider {
         }
         return hitboxesAround;
     }
-    
+
 
 }
