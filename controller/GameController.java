@@ -61,7 +61,7 @@ public class GameController implements Initializable {
     private Pane pane;
 
     @FXML
-    private ImageView playerBox;
+    private Pane playerBox;
 
     @FXML
     private Pane paneOverworld;
@@ -84,6 +84,13 @@ public class GameController implements Initializable {
 
         paneOverworld.setTranslateX(width / 2 - this.world.getPlayer().coordXProperty().get() - 40);
         paneOverworld.setTranslateY(height / 2 - this.world.getPlayer().coordYProperty().get() - 40);
+    }
+
+    private void updateFlipPlayer() {
+        if(this.world.getPlayer().directionProperty().get() == 0)
+            playerBox.getChildren().get(0).setTranslateX(0);
+        else
+            playerBox.getChildren().get(0).setTranslateX(-16);
     }
 
     private Image getImage(int i) {
@@ -122,7 +129,7 @@ public class GameController implements Initializable {
             this.world.getPlayer().readInput(input);
             this.world.getPlayer().setPosition();
             this.world.getPlayer().jumpAnim();
-            playerBox.setRotate(this.world.getPlayer().getDirection());
+            this.updateFlipPlayer();
             this.cameraUpdate();
         }));
         gameLoop.getKeyFrames().add(kf);

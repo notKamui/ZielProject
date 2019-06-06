@@ -10,7 +10,7 @@ public class BlockDirt extends ItemPlaceable{
 
 	@Override
 	public void placeBlock(int i) {
-        MathDataBuilder.getWorld().getMap().updateMap(i, 'D');
+        MathDataBuilder.world().getMap().updateMap(i, 'D');
 		
 	}
 

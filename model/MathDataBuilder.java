@@ -12,6 +12,7 @@ import java.io.IOException;
 public class MathDataBuilder {
 
     public static final int TILESIZE = 64;
+    public static final int[] PLAYERDIM = {64, 89}; // {width, height}
     public static final int LINELENGTH = getLineLength();
     private static World world;
 
@@ -25,7 +26,6 @@ public class MathDataBuilder {
             return false;
     }
 
-
     public static int coordsToIndex(int x, int y) {
         return (int) (Math.floor(y / TILESIZE) * LINELENGTH + Math.floor(x / TILESIZE));
     }
@@ -35,7 +35,7 @@ public class MathDataBuilder {
     }
 
     private static int getLineLength() {
-        String content = readFile("src/view/map.txt");
+        String content = readFile("src/resources/other/map.txt");
         if (content.contains("\r"))
             return content.indexOf('\r');
         else
@@ -111,7 +111,7 @@ public class MathDataBuilder {
         world = w;
     }
 
-    public static World getWorld() {
+    public static World world() {
         return world;
     }
 }

@@ -33,8 +33,8 @@ public abstract class Item {
     }
 
     public boolean isInRange(int x, int y) {
-        int playerX = MathDataBuilder.getWorld().getPlayer().coordXProperty().get() + 40;
-        int playerY = MathDataBuilder.getWorld().getPlayer().coordYProperty().get() + 40;
+        int playerX = MathDataBuilder.world().getPlayer().coordXProperty().get() + 40;
+        int playerY = MathDataBuilder.world().getPlayer().coordYProperty().get() + 40;
         if (playerX - this.range <= x && x <= playerX + this.range
                 && playerY - this.range <= y && y <= playerY + this.range) {
             return true;
