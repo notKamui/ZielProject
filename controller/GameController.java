@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,6 +26,8 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import model.ItemPlaceableType.BlockGround;
 import model.ItemUsableType.Shovel;
+import model.Ennemy;
+import model.MathDataBuilder;
 import model.Tile;
 import model.World;
 
@@ -38,7 +41,6 @@ public class GameController implements Initializable {
     private Timeline gameLoop;
     private boolean gameLoopIsPause = false;
     private World world;
-
     private MouseEvent lastEvent = null;
 
     @FXML
@@ -111,6 +113,10 @@ public class GameController implements Initializable {
                 Point2D coords = test.localToParent(lastEvent.getX(), lastEvent.getY());
                 this.world.getPlayer().getInventory().getInventoryContent().get(this.world.getPlayer().getInventory().getIndex()).action((int) coords.getX(), (int) coords.getY());
             }
+            
+            this.world.getEnnemy().followPlayer();
+            this.world.getEnnemy().setPosition();
+            this.world.getEnnemy().jumpAnim();
 
             this.world.getPlayer().readInput(input);
             this.world.getPlayer().setPosition();
@@ -126,6 +132,10 @@ public class GameController implements Initializable {
     	pauseMenu.setVisible(false);
 
         this.world = Factory.initWorld();
+        
+        ImageView ennemyBox;
+        ennemyBox = Factory.initEnnemyView(this.world.getEnnemy().coordXProperty(), this.world.getEnnemy().coordYProperty());
+        paneOverworld.getChildren().add(ennemyBox);
 
         this.playerBox = Factory.initPlayerView(this.world.getPlayer().coordXProperty(), this.world.getPlayer().coordYProperty());
         paneOverworld.getChildren().add(playerBox);
@@ -212,7 +222,7 @@ public class GameController implements Initializable {
                 c.setFill(RadialGradient.valueOf("focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 50%, 0xffffffff 0.0%, 0x322e2e 100.0%"));
             }
         });
-
+        
         // inventory listener
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
 

@@ -20,6 +20,13 @@ public class Collider {
         return collisionManager(1);
     }
 
+    public boolean isInFrontRight() {
+    	return collisionManager(2);
+    }
+    
+    public boolean isInFrontLeft() {
+    	return collisionManager(3);
+    }
     //default : collides()
     //1 : isOnFloor()
     private boolean collisionManager(int type) {
@@ -33,6 +40,15 @@ public class Collider {
                             this.self.getWidth(),
                             this.self.getHeight());
                     break;
+                    
+                case 2 : 
+                	selfHB = new Hitbox(new SimpleIntegerProperty(this.self.coordXProperty().get() + 1), this.self.coordYProperty(), this.self.getWidth(), this.self.getHeight());
+                	break;
+                	
+                case 3 : 
+                	selfHB = new Hitbox(new SimpleIntegerProperty(this.self.coordXProperty().get() - 1), this.self.coordYProperty(), this.self.getWidth(), this.self.getHeight());
+                	break;
+                	
                 default:
                     selfHB = this.self.getHitbox();
                     break;

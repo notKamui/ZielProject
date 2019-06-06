@@ -67,6 +67,10 @@ public abstract class DynamicObject extends GameObject {
     public int getSpeed() {
         return this.speed;
     }
+    
+    public void setSpeed(int s) {
+    	this.speed = s;
+    }
 
     public final int GRAVITY() {
         return GRAVITY;

@@ -3,6 +3,7 @@ package model;
 public class World {
 	private Map map;
 	private Player player;
+	private Ennemy ennemy;
 	
 	public World() {
 		this.map = null;
@@ -21,6 +22,14 @@ public class World {
 	}
 	public Player getPlayer() {
 		return this.player;
+	}
+	
+	public void setEnnemy(Ennemy n) {
+		this.ennemy = n;
+	}
+	
+	public Ennemy getEnnemy() {
+		return this.ennemy;
 	}
 }
 
