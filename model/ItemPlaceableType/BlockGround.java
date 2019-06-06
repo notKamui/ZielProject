@@ -14,8 +14,4 @@ public class BlockGround extends ItemPlaceable{
 		
 	}
 
-	
-	
-	
-
 }

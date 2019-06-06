@@ -15,6 +15,11 @@ public void action(int x, int y) {
 	if(MathDataBuilder.isNextToSolid(id) && this.isInRange(x, y) && MathDataBuilder.getWorld().getMap().getTileAt(id).getHitbox().getBounds()==null){//add a collision detector
 		placeBlock(id);
 		this.setQuantity(this.getQuantity()-1);
+		System.out.println(this.getQuantity());
+		if(this.getQuantity()<=0) {
+			System.out.println("test");
+			
+		}
 	}
 }
 }

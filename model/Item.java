@@ -2,7 +2,6 @@ package model;
 
 //Peut devenir une superclasse par rapport aux outils, armes, ect...
 public abstract class Item extends DynamicObject {
-	private static World world;
 	private String name;
 	private int id;
 	private int quantity;
@@ -16,6 +15,7 @@ public abstract class Item extends DynamicObject {
 		this.range = range;
 		this.quantity = q;
 		this.quantityMax = qMax;
+		this.changeHitbox();
 	}
 	
 	public int getId() {
@@ -33,17 +33,21 @@ public abstract class Item extends DynamicObject {
 		this.quantity =quantity;
 	}
 	
-	public World getWorld() {
-		return world;
-	}
-	public static void setWorld(World w) {
-		world = w;
-	}
+
+    public void removeHitbox() {
+      Collider.itemHitboxList.remove(this.getHitbox());
+    }
+
+    public void changeHitbox() {
+    	this.setHitbox();
+        Collider.itemHitboxList.add(this.getHitbox());
+    }
+
 	
 
 	public boolean isInRange(int x, int y) {
-		  int playerX = world.getPlayer().coordXProperty().get() + 40;
-		  int playerY = world.getPlayer().coordYProperty().get() + 40;
+		  int playerX = MathDataBuilder.getWorld().getPlayer().coordXProperty().get() + 40;
+		  int playerY = MathDataBuilder.getWorld().getPlayer().coordYProperty().get() + 40;
 		  if (	playerX - this.range <= x && x <= playerX + this.range
 			&&	playerY - this.range <= y && y <= playerY + this.range) {
 	            return true;
