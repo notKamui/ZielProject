@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 public class Collider {
     private DynamicObject self;
+    public static ArrayList<Hitbox> itemHitboxList = new ArrayList<>();
+    public static ArrayList<Hitbox> characHitboxList = new ArrayList<>();
+    public static ArrayList<Hitbox> tileHitboxList = new ArrayList<>();
+
 
     public Collider(DynamicObject self) {
         this.self = self;
@@ -29,8 +33,10 @@ public class Collider {
     }
     //default : collides()
     //1 : isOnFloor()
+    
+    //4 : itemsAround()
     private boolean collisionManager(int type) {
-        for (Hitbox hitbox : hitboxesArround()) {
+        for (Hitbox hitbox : hitboxesAround(type)) {
             Hitbox selfHB;
             switch (type) {
                 case 1:
@@ -38,7 +44,8 @@ public class Collider {
                             this.self.coordXProperty(),
                             new SimpleIntegerProperty(this.self.coordYProperty().get() + 1),
                             this.self.getWidth(),
-                            this.self.getHeight());
+                            this.self.getHeight(),
+                            self);
                     break;
                     
                 case 2 : 
@@ -61,18 +68,37 @@ public class Collider {
         return false;
     }
 
-    private ArrayList<Hitbox> hitboxesArround() {
+    public ArrayList<Item> itemsAround(){
+        ArrayList<Item> itemsAround = new ArrayList<>();
+        for(Hitbox hitbox : hitboxesAround(4)) {
+        	itemsAround.add((Item)hitbox.getSelf());
+        }
+        return itemsAround;
+    }
+    private ArrayList<Hitbox> hitboxesAround(int type) {
         ArrayList<Hitbox> hitboxesAround = new ArrayList<>();
+        double radius;
+        ArrayList<Hitbox> usedHitboxList;
+        
+        switch(type) {
+        case 4:
+        	radius = 100;
+        	usedHitboxList = itemHitboxList;
+        	break;
+        default:
+        	radius = Math.max(this.self.getHeight(), this.self.getWidth()) + this.self.getSpeed() + MathDataBuilder.TILESIZE / 2;
+        	usedHitboxList = tileHitboxList;
 
+        }
         // gets the center of the DynamicObject
         int x = this.self.coordXProperty().get() + this.self.getWidth() / 2;
         int y = this.self.coordYProperty().get() + this.self.getHeight() / 2;
 
         // gets the radius around the DynamicObject
-        double radius = Math.max(this.self.getHeight(), this.self.getWidth()) + this.self.getSpeed() + MathDataBuilder.TILESIZE / 2;
+        
 
         // gets the hitboxes between the object and the radius
-        for (Hitbox hitbox : this.self.getBoundsList()) {
+        for (Hitbox hitbox : usedHitboxList) {
             if (hitbox.getBounds() != null && hitbox != this.self.getHitbox()) {
                 int xb = (int) hitbox.getBounds().getX() + MathDataBuilder.TILESIZE / 2;
                 int yb = (int) hitbox.getBounds().getY() + MathDataBuilder.TILESIZE / 2;
@@ -83,4 +109,6 @@ public class Collider {
         }
         return hitboxesAround;
     }
+    
+
 }

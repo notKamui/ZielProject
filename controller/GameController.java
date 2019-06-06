@@ -24,9 +24,11 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import model.ItemPlaceableType.BlockGround;
+import model.ItemPlaceableType.BlockDirt;
 import model.ItemUsableType.Shovel;
 import model.Ennemy;
+import model.MathDataBuilder;
+import model.DynamicObject;
 import model.MathDataBuilder;
 import model.Tile;
 import model.World;
@@ -62,7 +64,7 @@ public class GameController implements Initializable {
     private Pane pane;
 
     @FXML
-    private ImageView playerBox;
+    private Pane playerBox;
 
     @FXML
     private Pane paneOverworld;
@@ -87,11 +89,24 @@ public class GameController implements Initializable {
         paneOverworld.setTranslateY(height / 2 - this.world.getPlayer().coordYProperty().get() - 40);
     }
 
+    private void updateFlipPlayer() {
+        if(this.world.getPlayer().directionProperty().get() == 0)
+            playerBox.getChildren().get(0).setTranslateX(0);
+        else
+            playerBox.getChildren().get(0).setTranslateX(-16);
+    }
+
     private Image getImage(int i) {
         String url = "src/resources/tiles/";
         switch (this.world.getMap().getTileAt(i).getCharCode()) {
-            case 'g':
-                url += "ground/groundTop.png";
+            case 'D':
+                url += "dirt.png";
+                break;
+            case 'd':
+                url += "dirtBG.png";
+                break;
+            case 'B':
+                url += "brick.png";
                 break;
             case 's':
                 url += "sky.png";
@@ -113,15 +128,19 @@ public class GameController implements Initializable {
                 Point2D coords = test.localToParent(lastEvent.getX(), lastEvent.getY());
                 this.world.getPlayer().getInventory().getInventoryContent().get(this.world.getPlayer().getInventory().getIndex()).action((int) coords.getX(), (int) coords.getY());
             }
-            
-            this.world.getEnnemy().followPlayer();
+
+            for(DynamicObject object : this.world.getDynamicObjects()) {
+            	object.setPosition();
+            }
+
+  this.world.getEnnemy().followPlayer();
             this.world.getEnnemy().setPosition();
             this.world.getEnnemy().jumpAnim();
-
             this.world.getPlayer().readInput(input);
             this.world.getPlayer().setPosition();
             this.world.getPlayer().jumpAnim();
-            playerBox.setRotate(this.world.getPlayer().getDirection());
+            this.world.getPlayer().getItems();
+            this.updateFlipPlayer();
             this.cameraUpdate();
         }));
         gameLoop.getKeyFrames().add(kf);
@@ -139,8 +158,8 @@ public class GameController implements Initializable {
 
         this.playerBox = Factory.initPlayerView(this.world.getPlayer().coordXProperty(), this.world.getPlayer().coordYProperty());
         paneOverworld.getChildren().add(playerBox);
-        paneMap.setPrefWidth(80 * this.world.getMap().getWidth());
-        paneMap.setPrefHeight(80 * this.world.getMap().getHeight());
+        paneMap.setPrefWidth(MathDataBuilder.TILESIZE * this.world.getMap().getWidth());
+        paneMap.setPrefHeight(MathDataBuilder.TILESIZE * this.world.getMap().getHeight());
         int i;
         for (i = 0; i < this.world.getMap().getTileMap().size(); i++) {
             ImageView tile = new ImageView(this.getImage(i));
@@ -222,12 +241,13 @@ public class GameController implements Initializable {
                 c.setFill(RadialGradient.valueOf("focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 50%, 0xffffffff 0.0%, 0x322e2e 100.0%"));
             }
         });
-        
+        this.world.getDynamicObjects().addListener(new DynamicListener(paneOverworld));
+
         // inventory listener
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
-
         this.world.getPlayer().getInventory().addItem(new Shovel(1));
-        this.world.getPlayer().getInventory().addItem(new BlockGround());
+        this.world.getPlayer().getInventory().addItem(new BlockDirt());
+
         startGame();
         gameLoop.play();
     }

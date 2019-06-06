@@ -1,16 +1,20 @@
 package model;
 
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public abstract class Charac extends DynamicObject {
-    private int direction; // 0 = facing left // 180 = facing right
+    private IntegerProperty directionProperty; // 0 = facing left // 180 = facing right
     private int jumpForce;
     private boolean isJumping;
 
     public Charac(int x, int y, int width, int height) {
         super(x, y, width, height);
-        this.direction = 0;
+        this.directionProperty = new SimpleIntegerProperty(0);
         this.jumpForce = 0;
         this.setIsJumping(false);
+        this.changeHitbox();
     }
 
     // Jump functions--------
@@ -40,15 +44,25 @@ public abstract class Charac extends DynamicObject {
 
     //-------------------------
 
-    public int getDirection() {
-        return direction;
+    public final IntegerProperty directionProperty() {
+        return directionProperty;
     }
 
     public void setDirection(boolean flipped) {
-        if (flipped)
-            this.direction = 180;
-        else
-            this.direction = 0;
+        if (flipped) {
+            this.directionProperty.set(180);
+        } else {
+            this.directionProperty.set(0);
+        }
     }
+    
+    public void removeHitbox() {
+        Collider.characHitboxList.remove(this.getHitbox());
+      }
+
+    public void changeHitbox() {
+      	this.setHitbox();
+      	Collider.characHitboxList.add(this.getHitbox());
+      }
 
 }
