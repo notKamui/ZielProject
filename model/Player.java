@@ -42,5 +42,10 @@ public class Player extends Charac {
     public Inventory getInventory() {
         return this.inventory;
     }
-
+    
+    public void getItems() {
+    	for(Item item :this.getCollMan().itemsAround()) {
+    		this.inventory.addItem(item);
+    	}
+    }
 }

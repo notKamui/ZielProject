@@ -14,6 +14,7 @@ public abstract class Tile extends GameObject {
         this.charCode = c;
         this.durability = durability;
         this.state = durability;
+        this.changeHitbox();
     }
 
     public char getCharCode() {
@@ -32,13 +33,22 @@ public abstract class Tile extends GameObject {
         state = newState;
     }
     
+    public void removeHitbox() {
+        Collider.tileHitboxList.remove(this.getHitbox());
+      }
+
+      public void changeHitbox() {
+      	this.setHitbox();
+        Collider.tileHitboxList.add(this.getHitbox());
+      }
+
+    
     public void dropBloc() {
     	Item drop = null;
     	switch(charCode) {
     	case 'g':
     		drop = new BlockGround(this.coordXProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2,this.coordYProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2);
     	}
-    	System.out.println(drop);
-    	this.getWorld().getDynamicObjects().add(drop);
+    	MathDataBuilder.getWorld().getDynamicObjects().add(drop);
     }
 }

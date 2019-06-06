@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import java.util.ArrayList;
 
 public abstract class GameObject {
-    private static ArrayList<Hitbox> hitboxList = new ArrayList<>();
     private IntegerProperty coordXProperty;
     private IntegerProperty coordYProperty;
     private int width;
@@ -18,7 +17,6 @@ public abstract class GameObject {
         this.coordYProperty = new SimpleIntegerProperty(y);
         this.width = width;
         this.height = height;
-        this.setHitbox();
     }
 
     public void setCoordXProperty(int x) {
@@ -45,29 +43,17 @@ public abstract class GameObject {
         return this.height;
     }
 
-    public ArrayList<Hitbox> getBoundsList() {
-        return hitboxList;
-    }
-
-    public void removeHitbox() {
-        hitboxList.remove(this.hitbox);
-    }
-
     public Hitbox getHitbox() {
         return this.hitbox;
     }
-
-    public World getWorld() {
-        return world;
-    }
     
-    public void setHitbox() {
-    	this.hitbox = new Hitbox(this.coordXProperty, this.coordYProperty, width, height);
-        hitboxList.add(this.hitbox);
-    }
-    public static void setWorld(World w) {
-        world = w;
-    }
+    abstract public void removeHitbox();
 
+
+    abstract public void changeHitbox();
+      
+    public void setHitbox() {
+    	this.hitbox = new Hitbox(this.coordXProperty, this.coordYProperty, width, height, this);
+    }
 
 }

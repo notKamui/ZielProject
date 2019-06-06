@@ -14,6 +14,7 @@ public abstract class Charac extends DynamicObject {
         this.directionProperty = new SimpleIntegerProperty(0);
         this.jumpForce = 0;
         this.setIsJumping(false);
+        this.changeHitbox();
     }
 
     // Jump functions--------
@@ -54,5 +55,14 @@ public abstract class Charac extends DynamicObject {
             this.directionProperty.set(0);
         }
     }
+    
+    public void removeHitbox() {
+        Collider.characHitboxList.remove(this.getHitbox());
+      }
+
+    public void changeHitbox() {
+      	this.setHitbox();
+      	Collider.characHitboxList.add(this.getHitbox());
+      }
 
 }
