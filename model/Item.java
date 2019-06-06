@@ -17,7 +17,9 @@ public abstract class Item extends DynamicObject {
 		this.quantityMax = qMax;
 		this.changeHitbox();
 	}
-	
+	public void act() {
+		this.setPosition();
+	}
 	public int getId() {
 		return id;
 	}

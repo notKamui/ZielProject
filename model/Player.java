@@ -5,12 +5,18 @@ import java.util.ArrayList;
 public class Player extends Charac {
 
     private Inventory inventory;
-
+    private ArrayList<String> input;
     public Player(int x, int y) {
         super(x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1]);
         this.inventory = new Inventory();
     }
-
+    public void act() {
+    	this.readInput(input);
+    	this.setPosition();
+    	this.jumpAnim();
+    	this.getItems();
+    }
+    
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
@@ -39,6 +45,9 @@ public class Player extends Charac {
             }
     }
 
+    public void setInput(ArrayList<String> input) {
+    	this.input = input;
+    }
     public Inventory getInventory() {
         return this.inventory;
     }
