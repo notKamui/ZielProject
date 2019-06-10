@@ -4,7 +4,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import model.*;
+import model.Map;
+import model.MathDataBuilder;
+import model.Player;
+import model.World;
 
 class Factory {
 
@@ -36,13 +39,13 @@ class Factory {
 
         return playerBox;
     }
-    
+
     static ImageView initEnemyView(IntegerProperty coordXproperty, IntegerProperty coordYProperty) {
-    	ImageView enemyBox = new ImageView("file:src/resources/sprites/mario.png");
-    	enemyBox.setRotationAxis(new Point3D(0, 1, 0));
-    	enemyBox.translateXProperty().bind(coordXproperty);
-    	enemyBox.translateYProperty().bind(coordYProperty);
-    	
-    	return enemyBox;
+        ImageView enemyBox = new ImageView("file:src/resources/sprites/mario.png");
+        enemyBox.setRotationAxis(new Point3D(0, 1, 0));
+        enemyBox.translateXProperty().bind(coordXproperty);
+        enemyBox.translateYProperty().bind(coordYProperty);
+
+        return enemyBox;
     }
 }

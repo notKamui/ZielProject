@@ -34,6 +34,14 @@ public class MathDataBuilder {
         return new int[]{(i % LINELENGTH) * TILESIZE, (i / LINELENGTH) * TILESIZE};
     }
 
+    public static int coordToIndexTile(int x, int y) {
+        return y * LINELENGTH + x;
+    }
+
+    public static int[] indexToCoordTile(int i) {
+        return new int[]{i % LINELENGTH, i / LINELENGTH};
+    }
+
     private static int getLineLength() {
         String content = readFile("src/resources/other/map.txt");
         if (content.contains("\r"))

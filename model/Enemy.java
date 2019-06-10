@@ -1,31 +1,15 @@
 package model;
 
-public class Enemy extends Charac{
+public abstract class Enemy extends Charac{
 	
 	public Enemy(int x, int y) {
 		super(x, y, 80, 80);
 		this.setSpeed(5);
 	}
+
+	@Override
+	public abstract void act();
 	
-	public void act() {
-		this.followPlayer();
-		this.setPosition();
-		this.jumpAnim();
-	}
-	public void followPlayer() {
-		
-		int xPlayer = MathDataBuilder.world().getPlayer().coordXProperty().getValue();
-		if(xPlayer < this.coordXProperty().getValue()) {
-			this.setVectX(-this.getSpeed());
-		}
-		else {
-			this.setVectX(this.getSpeed());
-		}
-		
-		if(this.getCollMan().isInFrontRight() || this.getCollMan().isInFrontLeft()) {
-			 if (this.getCollMan().isOnFloor())
-                 this.setIsJumping(true);
-		}
-	}
+	public abstract void followPlayer();
 
 }

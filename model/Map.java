@@ -40,7 +40,11 @@ public class Map {
     }
 
     public Tile getTileAt(int index) {
-        return this.map.get(index);
+        try {
+            return this.map.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public int getWidth() {

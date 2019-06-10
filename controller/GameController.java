@@ -24,7 +24,8 @@ import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import model.DynamicObject;
-import model.Enemy;
+import model.EnemyType.Gargoyle;
+import model.EnemyType.Skeleton;
 import model.ItemPlaceableType.BlockDirt;
 import model.ItemUsableType.Shovel;
 import model.MathDataBuilder;
@@ -87,7 +88,6 @@ public class GameController implements Initializable {
         paneOverworld.setTranslateY(height / 2 - this.world.getPlayer().coordYProperty().get() - 40);
     }
 
-       
 
     private Image getImage(int i) {
         String url = "src/resources/tiles/";
@@ -125,6 +125,7 @@ public class GameController implements Initializable {
             for (DynamicObject object : this.world.getDynamicObjects()) {
                 object.act();
             }
+
             this.world.getPlayer().setInput(input);
             this.world.getPlayer().act();
             this.cameraUpdate();
@@ -141,11 +142,12 @@ public class GameController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue,
                                 Number newValue) {
-            	 if ((int)newValue == 0)
-                     playerBox.getChildren().get(0).setTranslateX(0);
-                 else
-                     playerBox.getChildren().get(0).setTranslateX(-16);
-        }});
+                if ((int) newValue == 0)
+                    playerBox.getChildren().get(0).setTranslateX(0);
+                else
+                    playerBox.getChildren().get(0).setTranslateX(-16);
+            }
+        });
         this.playerBox = Factory.initPlayerView(this.world.getPlayer().coordXProperty(), this.world.getPlayer().coordYProperty());
         this.playerBox.setMouseTransparent(true);
         paneOverworld.getChildren().add(playerBox);
@@ -237,8 +239,10 @@ public class GameController implements Initializable {
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
         this.world.getPlayer().getInventory().addItem(new Shovel(1));
         this.world.getPlayer().getInventory().addItem(new BlockDirt(0, 0));
-        world.getDynamicObjects().add(new Enemy(MathDataBuilder.TILESIZE*61, MathDataBuilder.TILESIZE*4));
-
+        
+        world.getDynamicObjects().add(new Gargoyle(MathDataBuilder.TILESIZE*61, MathDataBuilder.TILESIZE*0));
+        world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE*66, MathDataBuilder.TILESIZE*4));
+        
         startGame();
         gameLoop.play();
     }
