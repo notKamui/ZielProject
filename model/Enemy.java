@@ -6,7 +6,8 @@ public abstract class Enemy extends Charac{
 		super(x, y, 80, 80);
 		this.setSpeed(5);
 	}
-	
+
+	@Override
 	public abstract void act();
 	
 	public abstract void followPlayer();
