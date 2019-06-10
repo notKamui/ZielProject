@@ -34,9 +34,9 @@ public class Dijkstra {
             this.current = this.removeFromFrontier();
             reachedDistance = this.current.getDistance();
             int i = 0;
-            for (Tile next : this.getNeighbours()) {
-                // if next is a tile AND is not solid AND is not in distanceField THEN DO
-                if (next != null && next.getHitbox().getBounds() == null && !distanceField.contains(next)) {
+            for (Tile next : this.getNeighbors()) {
+                // if next is a tile AND is not solid AND is accessible AND is not in distanceField THEN DO
+                if (next != null && !distanceField.contains(next)) {
                     this.addToFrontier(next);
                     double cost;
                     if (i <= 3)     // CARDINALS
@@ -69,7 +69,7 @@ public class Dijkstra {
     }
 
     /**
-     * Gets neighbour tiles of the current tile (ordered by cost of movement) (null if OutOfBounds)
+     * Gets neighbour tiles of the current tile (ordered by cost of movement) (null if OutOfBounds or blocked or a solid)
      * CARDINALS (cost = 10)
      * 0 up
      * 1 down
@@ -83,20 +83,36 @@ public class Dijkstra {
      *
      * @return neighbours
      */
-    private Tile[] getNeighbours() {
+    private Tile[] getNeighbors() {
         Map map = MathDataBuilder.world().getMap();
         int index = this.current.getIndex();
-        return new Tile[]{
+        Tile[] neighbors = new Tile[] {
                 map.getTileAt(index - MathDataBuilder.LINELENGTH),
                 map.getTileAt(index + MathDataBuilder.LINELENGTH),
                 map.getTileAt(index - 1),
                 map.getTileAt(index + 1),
-
-                map.getTileAt(index - MathDataBuilder.LINELENGTH - 1),
-                map.getTileAt(index - MathDataBuilder.LINELENGTH + 1),
-                map.getTileAt(index + MathDataBuilder.LINELENGTH - 1),
-                map.getTileAt(index + MathDataBuilder.LINELENGTH + 1)
+                null,
+                null,
+                null,
+                null
         };
+
+        // checks if walls
+        for (int i = 0; i <= 3; i++)
+            if (neighbors[i] != null && neighbors[i].getHitbox().getBounds() != null)
+                neighbors[i] = null;
+
+        //checks if accessible
+        if (neighbors[0] != null || neighbors[2] != null)
+            neighbors[4] = map.getTileAt(index - MathDataBuilder.LINELENGTH - 1);
+        if (neighbors[0] != null || neighbors[3] != null)
+            neighbors[5] = map.getTileAt(index - MathDataBuilder.LINELENGTH + 1);
+        if (neighbors[1] != null || neighbors[2] != null)
+            neighbors[6] = map.getTileAt(index + MathDataBuilder.LINELENGTH - 1);
+        if (neighbors[1] != null || neighbors[3] != null)
+            neighbors[7] = map.getTileAt(index + MathDataBuilder.LINELENGTH + 1);
+
+        return neighbors;
     }
 
 
