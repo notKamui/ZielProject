@@ -146,8 +146,8 @@ public class GameController implements Initializable {
                  else
                      playerBox.getChildren().get(0).setTranslateX(-16);
         }});
-        
         this.playerBox = Factory.initPlayerView(this.world.getPlayer().coordXProperty(), this.world.getPlayer().coordYProperty());
+        this.playerBox.setMouseTransparent(true);
         paneOverworld.getChildren().add(playerBox);
         paneMap.setPrefWidth(MathDataBuilder.TILESIZE * this.world.getMap().getWidth());
         paneMap.setPrefHeight(MathDataBuilder.TILESIZE * this.world.getMap().getHeight());
