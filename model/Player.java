@@ -6,13 +6,20 @@ public class Player extends Charac {
 
     private Inventory inventory;
     private Dijkstra distanceField;
+    private ArrayList<String> input;
 
     public Player(int x, int y) {
         super(x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1]);
         this.inventory = new Inventory();
         this.distanceField = new Dijkstra();
     }
-
+    public void act() {
+    	this.readInput(input);
+    	this.setPosition();
+    	this.jumpAnim();
+    	this.getItems();
+    }
+    
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
@@ -39,6 +46,13 @@ public class Player extends Charac {
                 default:
                     break;
             }
+    }
+
+    public void setInput(ArrayList<String> input) {
+    	this.input = input;
+    }
+    public Inventory getInventory() {
+        return this.inventory;
     }
     
     public void pickUpItems() {

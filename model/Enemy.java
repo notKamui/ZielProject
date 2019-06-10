@@ -7,6 +7,11 @@ public class Enemy extends Charac{
 		this.setSpeed(5);
 	}
 	
+	public void act() {
+		this.followPlayer();
+		this.setPosition();
+		this.jumpAnim();
+	}
 	public void followPlayer() {
 		
 		int xPlayer = MathDataBuilder.world().getPlayer().coordXProperty().getValue();

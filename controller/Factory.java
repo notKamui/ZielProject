@@ -11,13 +11,11 @@ class Factory {
     static World initWorld() {
         World world = new World();
 
-        Enemy n = new Enemy(MathDataBuilder.TILESIZE*61, MathDataBuilder.TILESIZE*4);
         Player player = new Player(MathDataBuilder.TILESIZE * 65, MathDataBuilder.TILESIZE * 4);
         Map map = new Map();
 
         world.setPlayer(player);
         world.setMap(map);
-        world.setEnemy(n);
         MathDataBuilder.setWorld(world);
 
         return world;
@@ -39,12 +37,12 @@ class Factory {
         return playerBox;
     }
     
-    static ImageView initEnnemyView(IntegerProperty coordXproperty, IntegerProperty coordYProperty) {
-    	ImageView ennemyBox = new ImageView("file:src/resources/sprites/mario.png");
-    	ennemyBox.setRotationAxis(new Point3D(0, 1, 0));
-    	ennemyBox.translateXProperty().bind(coordXproperty);
-    	ennemyBox.translateYProperty().bind(coordYProperty);
+    static ImageView initEnemyView(IntegerProperty coordXproperty, IntegerProperty coordYProperty) {
+    	ImageView enemyBox = new ImageView("file:src/resources/sprites/mario.png");
+    	enemyBox.setRotationAxis(new Point3D(0, 1, 0));
+    	enemyBox.translateXProperty().bind(coordXproperty);
+    	enemyBox.translateYProperty().bind(coordYProperty);
     	
-    	return ennemyBox;
+    	return enemyBox;
     }
 }

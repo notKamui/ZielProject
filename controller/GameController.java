@@ -24,6 +24,7 @@ import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import model.DynamicObject;
+import model.Enemy;
 import model.ItemPlaceableType.BlockDirt;
 import model.ItemUsableType.Shovel;
 import model.MathDataBuilder;
@@ -38,7 +39,7 @@ import java.util.ResourceBundle;
 public class GameController implements Initializable {
     ArrayList<String> input = new ArrayList<>();
     private Timeline gameLoop;
-    private boolean gameLoopIsPause = false;
+    private boolean gameLoopIsPaused = false;
     private World world;
     private MouseEvent lastEvent = null;
 
@@ -86,12 +87,7 @@ public class GameController implements Initializable {
         paneOverworld.setTranslateY(height / 2 - this.world.getPlayer().coordYProperty().get() - 40);
     }
 
-    private void updateFlipPlayer() {
-        if (this.world.getPlayer().directionProperty().get() == 0)
-            playerBox.getChildren().get(0).setTranslateX(0);
-        else
-            playerBox.getChildren().get(0).setTranslateX(-16);
-    }
+       
 
     private Image getImage(int i) {
         String url = "src/resources/tiles/";
@@ -127,18 +123,12 @@ public class GameController implements Initializable {
             }
 
             for (DynamicObject object : this.world.getDynamicObjects()) {
-                object.setPosition();
+                object.act();
             }
 
-            this.world.getEnemy().followPlayer();
-            this.world.getEnemy().setPosition();
-            this.world.getEnemy().jumpAnim();
-            this.world.getPlayer().readInput(input);
-            this.world.getPlayer().setPosition();
-            this.world.getPlayer().getDistanceField().applyDistanceField();
-            this.world.getPlayer().jumpAnim();
-            this.world.getPlayer().pickUpItems();
-            this.updateFlipPlayer();
+            this.world.getPlayer().setInput(input);
+            this.world.getPlayer().act();
+          this.world.getPlayer().getDistanceField().applyDistanceField();
             this.cameraUpdate();
         }));
         gameLoop.getKeyFrames().add(kf);
@@ -149,11 +139,16 @@ public class GameController implements Initializable {
         pauseMenu.setVisible(false);
 
         this.world = Factory.initWorld();
-
-        ImageView ennemyBox;
-        ennemyBox = Factory.initEnnemyView(this.world.getEnemy().coordXProperty(), this.world.getEnemy().coordYProperty());
-        paneOverworld.getChildren().add(ennemyBox);
-
+        this.world.getPlayer().directionProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+                                Number newValue) {
+            	 if ((int)newValue == 0)
+                     playerBox.getChildren().get(0).setTranslateX(0);
+                 else
+                     playerBox.getChildren().get(0).setTranslateX(-16);
+        }});
+        
         this.playerBox = Factory.initPlayerView(this.world.getPlayer().coordXProperty(), this.world.getPlayer().coordYProperty());
         paneOverworld.getChildren().add(playerBox);
         paneMap.setPrefWidth(MathDataBuilder.TILESIZE * this.world.getMap().getWidth());
@@ -180,14 +175,14 @@ public class GameController implements Initializable {
             if (!input.contains(code))
                 input.add(code);
             if (code.equals("ESCAPE")) {
-                if (!gameLoopIsPause) {
+                if (!gameLoopIsPaused) {
                     gameLoop.pause();
-                    gameLoopIsPause = true;
+                    gameLoopIsPaused = true;
                     quickInventory.setVisible(false);
                     pauseMenu.setVisible(true);
                 } else {
                     gameLoop.play();
-                    gameLoopIsPause = false;
+                    gameLoopIsPaused = false;
                     quickInventory.setVisible(true);
                     pauseMenu.setVisible(false);
                 }
@@ -244,6 +239,7 @@ public class GameController implements Initializable {
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
         this.world.getPlayer().getInventory().addItem(new Shovel(1));
         this.world.getPlayer().getInventory().addItem(new BlockDirt(0, 0));
+        world.getDynamicObjects().add(new Enemy(MathDataBuilder.TILESIZE*61, MathDataBuilder.TILESIZE*4));
 
         startGame();
         gameLoop.play();
