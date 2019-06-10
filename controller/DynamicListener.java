@@ -28,6 +28,7 @@ public class DynamicListener implements ListChangeListener<DynamicObject> {
             	itemBox.translateYProperty().bind(i.coordYProperty());
             	itemBox.setRotationAxis(new Point3D(0, 1, 0));
                 itemBox.rotateProperty().bind(i.directionProperty());
+                itemBox.setMouseTransparent(true);
             	paneOverworld.getChildren().add(itemBox);
             	test.put(i, itemBox);
             }

@@ -11,6 +11,7 @@ public class Player extends Charac {
     public Player(int x, int y) {
         super(x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1]);
         this.inventory = new Inventory();
+        this.getCollMan().playerHitbox = this.getHitbox();
         this.distanceField = new Dijkstra();
     }
 

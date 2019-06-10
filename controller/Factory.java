@@ -29,7 +29,7 @@ class Factory {
         ImageView sprite = new ImageView("file:src/resources/sprites/player.png");
         sprite.setRotationAxis(new Point3D(0, 1, 0));
         sprite.rotateProperty().bind(MathDataBuilder.world().getPlayer().directionProperty());
-
+        sprite.setMouseTransparent(true);
 
         Pane playerBox = new Pane();
         playerBox.translateXProperty().bind(coordXProperty);
