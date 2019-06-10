@@ -128,6 +128,7 @@ public class GameController implements Initializable {
 
             this.world.getPlayer().setInput(input);
             this.world.getPlayer().act();
+            System.out.println(this.world.getMap().getTileAt(MathDataBuilder.coordToIndexTile(65, 5)).getDistance());
             this.cameraUpdate();
         }));
         gameLoop.getKeyFrames().add(kf);

@@ -36,7 +36,7 @@ public class Dijkstra {
             int i = 0;
             for (Tile next : this.getNeighbors()) {
                 // if next is a tile AND is not solid AND is accessible AND is not in distanceField THEN DO
-                if (next != null && !distanceField.contains(next)) {
+                if (next != null && next.getHitbox().getBounds() == null && !distanceField.contains(next)) {
                     this.addToFrontier(next);
                     double cost;
                     if (i <= 3)     // CARDINALS
