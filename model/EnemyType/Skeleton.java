@@ -1,20 +1,24 @@
-package model;
+package model.EnemyType;
 
-public class Gargoyle extends Enemy{
+import model.Enemy;
+import model.MathDataBuilder;
 
-	public Gargoyle(int x, int y) {
+public class Skeleton extends Enemy {
+
+	public Skeleton(int x, int y) {
 		super(x, y);
 	}
-
+	
 	@Override
 	public void act() {
 		this.followPlayer();
 		this.setPosition();
+		this.jumpAnim();
 	}
 
 	@Override
 	public void followPlayer() {
-		
+
 		int xPlayer = MathDataBuilder.world().getPlayer().coordXProperty().getValue();
 		
 		if(xPlayer < this.coordXProperty().getValue()) {
@@ -26,22 +30,9 @@ public class Gargoyle extends Enemy{
 			this.directionProperty().set(0);
 		}
 		
-		int yPlayer = MathDataBuilder.world().getPlayer().coordYProperty().getValue();
-		
-		if(yPlayer < this.coordYProperty().getValue()) {
-			this.setVectY(Math.max(yPlayer-this.coordYProperty().get(), -this.getSpeed())-30);
-		}
-		else if(yPlayer > this.coordYProperty().getValue()) {
-			this.setVectY(Math.min(yPlayer-this.coordYProperty().get(), this.getSpeed())-30);
-		}
-		else {
-			this.setVectY(-30);
-		}
-		
 		if(this.getCollMan().isInFrontRight() || this.getCollMan().isInFrontLeft()) {
-			this.setVectY(-this.getSpeed()-30);
+			 if (this.getCollMan().isOnFloor())
+                 this.setIsJumping(true);
 		}
-		
 	}
-
 }

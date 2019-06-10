@@ -24,16 +24,13 @@ import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import model.DynamicObject;
-import model.Enemy;
-import model.Gargoyle;
+import model.EnemyType.Gargoyle;
+import model.EnemyType.Skeleton;
 import model.ItemPlaceableType.BlockDirt;
 import model.ItemUsableType.Shovel;
 import model.MathDataBuilder;
-import model.Skeleton;
 import model.Tile;
 import model.World;
-import model.ItemPlaceableType.BlockDirt;
-import model.ItemUsableType.Shovel;
 
 import java.net.URL;
 import java.util.ArrayList;
