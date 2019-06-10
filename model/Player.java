@@ -13,13 +13,15 @@ public class Player extends Charac {
         this.inventory = new Inventory();
         this.distanceField = new Dijkstra();
     }
+
     public void act() {
-    	this.readInput(input);
-    	this.setPosition();
-    	this.jumpAnim();
-    	this.getItems();
+        this.readInput(input);
+        this.setPosition();
+        this.jumpAnim();
+        this.pickUpItems();
+        this.distanceField.applyDistanceField();
     }
-    
+
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
@@ -49,20 +51,17 @@ public class Player extends Charac {
     }
 
     public void setInput(ArrayList<String> input) {
-    	this.input = input;
-    }
-    public Inventory getInventory() {
-        return this.inventory;
-    }
-    
-    public void pickUpItems() {
-    	for(Item item :this.getCollMan().itemsAround()) {
-    		this.inventory.addItem(item);
-    	}
+        this.input = input;
     }
 
     public Inventory getInventory() {
         return this.inventory;
+    }
+
+    public void pickUpItems() {
+        for (Item item : this.getCollMan().itemsAround()) {
+            this.inventory.addItem(item);
+        }
     }
 
     public Dijkstra getDistanceField() {
