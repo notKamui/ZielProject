@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class Player extends Charac {
 
     private Inventory inventory;
+    private Dijkstra distanceField;
 
     public Player(int x, int y) {
         super(x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1]);
         this.inventory = new Inventory();
+        this.distanceField = new Dijkstra();
     }
 
     public void readInput(ArrayList<String> input) {
@@ -38,14 +40,18 @@ public class Player extends Charac {
                     break;
             }
     }
+    
+    public void pickUpItems() {
+    	for(Item item :this.getCollMan().itemsAround()) {
+    		this.inventory.addItem(item);
+    	}
+    }
 
     public Inventory getInventory() {
         return this.inventory;
     }
-    
-    public void getItems() {
-    	for(Item item :this.getCollMan().itemsAround()) {
-    		this.inventory.addItem(item);
-    	}
+
+    public Dijkstra getDistanceField() {
+        return this.distanceField;
     }
 }

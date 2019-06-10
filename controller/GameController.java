@@ -135,8 +135,9 @@ public class GameController implements Initializable {
             this.world.getEnemy().jumpAnim();
             this.world.getPlayer().readInput(input);
             this.world.getPlayer().setPosition();
+            this.world.getPlayer().getDistanceField().applyDistanceField();
             this.world.getPlayer().jumpAnim();
-            this.world.getPlayer().getItems();
+            this.world.getPlayer().pickUpItems();
             this.updateFlipPlayer();
             this.cameraUpdate();
         }));
