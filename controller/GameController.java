@@ -125,8 +125,10 @@ public class GameController implements Initializable {
             for (DynamicObject object : this.world.getDynamicObjects()) {
                 object.act();
             }
+
             this.world.getPlayer().setInput(input);
             this.world.getPlayer().act();
+          this.world.getPlayer().getDistanceField().applyDistanceField();
             this.cameraUpdate();
         }));
         gameLoop.getKeyFrames().add(kf);
