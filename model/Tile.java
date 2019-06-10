@@ -1,6 +1,5 @@
 package model;
 
-import model.ItemOtherType.VoidItem;
 import model.ItemPlaceableType.BlockDirt;
 
 public abstract class Tile extends GameObject {
@@ -10,7 +9,7 @@ public abstract class Tile extends GameObject {
     private char charCode;
     private int state;
     private int durability; // durability/framerate = digging time in seconds, non diggable if negative
-    
+
 
     public char getCharCode() {
         return this.charCode;
@@ -48,25 +47,27 @@ public abstract class Tile extends GameObject {
         Collider.tileHitboxList.add(this.getHitbox());
     }
 
-    public void dropBloc() {
-        Item drop = null;
-    	switch(charCode) {
-    	case 'D':
-    		drop = new BlockDirt(this.coordXProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2,this.coordYProperty().get()+TILESIZE/2-MathDataBuilder.ITEMSIZE/2);
-    		break;
-
-    	}
-    	if(drop!=null)
-    	MathDataBuilder.world().getDynamicObjects().add(drop);
-    }
+    //-------------Dijsktra Data------------------
+    private double distance; // distance from the start node (used for the Dijkstra/BFS algorithm)
 
     public int getIndex() {
         return this.index;
     }
 
-  //-------------Dijsktra Data------------------
-    private double distance; // distance from the start node (used for the Dijkstra/BFS algorithm)
-  
+    public void dropBloc() {
+        Item drop;
+        switch (charCode) {
+            case 'D':
+                drop = new BlockDirt(this.coordXProperty().get() + TILESIZE / 2 - MathDataBuilder.ITEMSIZE / 2, this.coordYProperty().get() + TILESIZE / 2 - MathDataBuilder.ITEMSIZE / 2);
+                break;
+            default:
+                drop = null;
+                break;
+        }
+        if (drop != null)
+            MathDataBuilder.world().getDynamicObjects().add(drop);
+    }
+
     public void resetDistance() {
         this.setDistance(Double.MAX_VALUE);
     }
