@@ -42,7 +42,7 @@ public class InventoryListener implements ListChangeListener<Item> {
                         Pane pane = (Pane) quickInventory.getChildren().get(slot);
                         ImageView img = (ImageView) pane.getChildren().get(1);
                         if (null == img.getImage()) {
-                            img.setImage(new Image("file:src/resources/tiles/ground/groundTop.png"));
+                            img.setImage(new Image("file:src/resources/sprites/shovel_sprite.png"));
                             //img.setImage(new Image("file:src/resources/item/"+id+".png"));
                             isAdded = true;
                         }
