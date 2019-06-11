@@ -11,11 +11,6 @@ public class Gargoyle extends Enemy {
 		super(x, y, true);
 	}
 
-	@Override
-	public void act() {
-		this.followPlayer();
-		this.setPosition();
-	}
 
 	@Override
 	public void followPlayer() {

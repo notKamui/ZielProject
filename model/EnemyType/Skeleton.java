@@ -11,8 +11,7 @@ public class Skeleton extends Enemy {
 	
 	@Override
 	public void act() {
-		this.followPlayer();
-		this.setPosition();
+		super.act();
 		this.jumpAnim();
 	}
 

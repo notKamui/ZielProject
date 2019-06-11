@@ -7,10 +7,12 @@ public abstract class Enemy extends Charac{
 		super(x, y, 64, 64, isFlying);
 		this.setSpeed(5);
 	}
-
-	@Override
-	public abstract void act();
 	
+	@Override
+	public void act() {
+		this.followPlayer();
+		this.setPosition();
+	}
 	public abstract void followPlayer();
 
 }
