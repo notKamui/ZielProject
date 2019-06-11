@@ -41,7 +41,7 @@ class Factory {
     }
 
     static ImageView initEnemyView(IntegerProperty coordXproperty, IntegerProperty coordYProperty) {
-        ImageView enemyBox = new ImageView("file:src/resources/sprites/mario.png");
+        ImageView enemyBox = new ImageView("file:src/resources/sprites/gargoyle.png");
         enemyBox.setRotationAxis(new Point3D(0, 1, 0));
         enemyBox.translateXProperty().bind(coordXproperty);
         enemyBox.translateYProperty().bind(coordYProperty);
