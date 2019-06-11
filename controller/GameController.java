@@ -122,13 +122,14 @@ public class GameController implements Initializable {
                 this.world.getPlayer().getInventory().getInventoryContent().get(this.world.getPlayer().getInventory().getIndex()).action((int) coords.getX(), (int) coords.getY());
             }
 
+            this.world.getPlayer().setInput(input);
+            this.world.getPlayer().act();
+            
             for (DynamicObject object : this.world.getDynamicObjects()) {
                 object.act();
             }
 
-            this.world.getPlayer().setInput(input);
-            this.world.getPlayer().act();
-            System.out.println(this.world.getMap().getTileAt(MathDataBuilder.coordToIndexTile(65, 5)).getDistance());
+            //System.out.println(this.world.getMap().getTileAt(MathDataBuilder.coordToIndexTile(65, 5)).getDistance());
             this.cameraUpdate();
         }));
         gameLoop.getKeyFrames().add(kf);
@@ -242,7 +243,7 @@ public class GameController implements Initializable {
         this.world.getPlayer().getInventory().addItem(new BlockDirt(0, 0));
         
         world.getDynamicObjects().add(new Gargoyle(MathDataBuilder.TILESIZE*61, MathDataBuilder.TILESIZE*0));
-        world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE*66, MathDataBuilder.TILESIZE*4));
+        //world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE*66, MathDataBuilder.TILESIZE*4));
         
         startGame();
         gameLoop.play();
