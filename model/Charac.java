@@ -8,8 +8,8 @@ public abstract class Charac extends DynamicObject {
     private int jumpForce;
     private boolean isJumping;
 
-    public Charac(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public Charac(int x, int y, int width, int height, boolean isFlying) {
+        super(x, y, width, height, isFlying);
         this.jumpForce = 0;
         this.setIsJumping(false);
         this.changeHitbox();

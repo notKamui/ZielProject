@@ -6,20 +6,24 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class DynamicObject extends GameObject {
 
     final private int GRAVITY = 30;
+    private boolean isFlying;
     private int speed = 10;
     private int vectX;
     private int vectY;
     private IntegerProperty directionProperty; // 0 = facing left // 180 = facing right
     private Collider collMan;
 
-    public DynamicObject(int x, int y, int width, int height) {
+    public DynamicObject(int x, int y, int width, int height, boolean isFlying) {
         super(x, y, width, height);
         this.directionProperty = new SimpleIntegerProperty(0);
         this.collMan = new Collider(this);
+        this.isFlying = isFlying;
     }
     abstract public void act();
+    
     public void setPosition() {
-        this.vectY += GRAVITY; // add gravity to vectY
+    	if(!isFlying)
+    		this.vectY += GRAVITY; // add gravity to vectY
 
         boolean collides;
         int pixel;

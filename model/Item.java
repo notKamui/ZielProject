@@ -9,7 +9,7 @@ public abstract class Item extends DynamicObject {
   private int range; // range to enable interactions with other objects
 
 	public Item(int x, int y, String n, int id, int range, int q, int qMax) {
-		super(x, y, MathDataBuilder.ITEMSIZE, MathDataBuilder.ITEMSIZE);
+		super(x, y, MathDataBuilder.ITEMSIZE, MathDataBuilder.ITEMSIZE, false);
 		this.name = n;
 		this.id = id;
 		this.range = range;
