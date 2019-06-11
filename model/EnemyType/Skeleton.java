@@ -23,11 +23,9 @@ public class Skeleton extends Enemy {
 		
 		if(xPlayer < this.coordXProperty().getValue()) {
 			this.setVectX(Math.max(xPlayer-this.coordXProperty().get(), -this.getSpeed()));
-			this.directionProperty().set(180);
 		}
 		else if(xPlayer > this.coordXProperty().getValue()) {
 			this.setVectX(Math.min(xPlayer-this.coordXProperty().get(), this.getSpeed()));
-			this.directionProperty().set(0);
 		}
 		
 		if(this.getCollMan().isInFrontRight() || this.getCollMan().isInFrontLeft()) {

@@ -29,12 +29,10 @@ public class Player extends Charac {
                 case "RIGHT":
                 case "D":
                     this.setVectX(this.getSpeed());
-                    this.setDirection(true);
                     break;
                 case "LEFT":
                 case "Q":
                     this.setVectX(-this.getSpeed());
-                    this.setDirection(false);
                     break;
                 case "DOWN":
                 case "S":

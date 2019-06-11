@@ -61,10 +61,8 @@ public class Gargoyle extends Enemy {
 				System.out.println(destMiddleY+", "+ coordMiddleY);
 				if (destMiddleX < coordMiddleX) {
 					this.setVectX(Math.max(destMiddleX - coordMiddleX, -this.getSpeed()));
-					this.directionProperty().set(180);
 				} else if (destMiddleX > coordMiddleX) {
 					this.setVectX(Math.min(destMiddleX - coordMiddleX, this.getSpeed()));
-					this.directionProperty().set(0);
 				}
 
 				if (destMiddleY < coordMiddleY) {

@@ -22,6 +22,10 @@ public abstract class DynamicObject extends GameObject {
     abstract public void act();
     
     public void setPosition() {
+        if (this.vectX < 0)
+            this.setDirection(false);
+        if (this.vectX > 0)
+            this.setDirection(true);
     	if(!isFlying)
     		this.vectY += GRAVITY; // add gravity to vectY
 
@@ -105,7 +109,7 @@ public abstract class DynamicObject extends GameObject {
         return directionProperty;
     }
 
-    public void setDirection(boolean flipped) {
+    private void setDirection(boolean flipped) {
         if (flipped) {
             this.directionProperty.set(180);
         } else {
