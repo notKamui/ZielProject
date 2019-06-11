@@ -1,14 +1,13 @@
 package controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import model.DynamicObject;
-import model.MathDataBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DynamicListener implements ListChangeListener<DynamicObject> {
 	Pane paneOverworld;
@@ -23,7 +22,7 @@ public class DynamicListener implements ListChangeListener<DynamicObject> {
         DynamicObject i;  
             if (change.wasAdded()) {
             	i = change.getAddedSubList().get(0);
-            	ImageView itemBox = new ImageView("file:src/resources/sprites/mario.png");
+            	ImageView itemBox = new ImageView("file:src/resources/sprites/gargoyle.png");
             	itemBox.translateXProperty().bind(i.coordXProperty());
             	itemBox.translateYProperty().bind(i.coordYProperty());
             	itemBox.setRotationAxis(new Point3D(0, 1, 0));
@@ -38,4 +37,4 @@ public class DynamicListener implements ListChangeListener<DynamicObject> {
             }
         }
     }
-};
+}
