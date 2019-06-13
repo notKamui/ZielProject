@@ -20,8 +20,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Craft;
 import model.DynamicObject;
@@ -44,6 +47,7 @@ public class GameController implements Initializable {
     private boolean gameLoopIsPaused = false;
     private World world;
     private MouseEvent lastEvent = null;
+    private Craft craft;
 
     @FXML
     private BorderPane root;
@@ -75,6 +79,10 @@ public class GameController implements Initializable {
 
     @FXML
     private Pane pauseMenu;
+    
+    @FXML
+    private Pane craftMenu;
+
 
     @FXML
     void quitPauseMenu(ActionEvent event) {
@@ -139,7 +147,9 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pauseMenu.setVisible(false);
-
+        craftMenu.setVisible(false);
+        craft = new Craft();
+        
         this.world = Factory.initWorld();
         this.world.getPlayer().directionProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -188,6 +198,18 @@ public class GameController implements Initializable {
                     gameLoopIsPaused = false;
                     quickInventory.setVisible(true);
                     pauseMenu.setVisible(false);
+                }
+            }
+            if (code.equals("I")) {
+                if (!gameLoopIsPaused) {
+                    gameLoop.pause();
+                    gameLoopIsPaused = true;
+                    craftMenu.setVisible(true);
+                    fillTheCraft();
+                } else {
+                    gameLoop.play();
+                    gameLoopIsPaused = false;
+                    craftMenu.setVisible(false);
                 }
             }
             event.consume();
@@ -252,6 +274,50 @@ public class GameController implements Initializable {
 
     public void handlePressed(MouseEvent e) {
         lastEvent = e;
+    }
+    
+    private void fillTheCraft() {
+    	ArrayList<Integer> nbOfItemCraftable = craft.getIdRecipeCraftable();
+    	
+    	int recipeSup = 0;
+    	for(int recipe = 0; recipe < nbOfItemCraftable.size(); recipe++) {
+    		Pane p = new Pane();
+    		Rectangle r = new Rectangle(80, 80);
+    		if(craft.isCraftable(nbOfItemCraftable.get(recipe))) {
+    			r.setFill(Color.YELLOW);
+    			p.setOnMousePressed(new EventHandler<MouseEvent>() {
+        			public void handle(MouseEvent e) {
+        				Pane pane = (Pane)e.getSource();
+        				Rectangle t = (Rectangle)pane.getChildren().get(0);
+        				t.setFill(Color.BLACK);
+        				Text txt = (Text)pane.getChildren().get(1);
+        				craft.craft(Integer.parseInt(txt.getText()));
+        				fillTheCraft();
+        			}
+    			});
+    		}
+    		else {
+    			r.setFill(Color.GRAY);
+    		}
+    		Text t = new Text(Integer.toString(nbOfItemCraftable.get(recipe)));
+    		p.getChildren().add(r);
+    		p.getChildren().add(t);
+    		craftMenu.getChildren().add(p);
+    		p.toFront();
+    		if(recipe == 0) {
+    			p.setLayoutY(1*100);
+    		}
+    		p.setLayoutY((recipe+1)*100);
+    		if(recipe > 4) {
+    			p.setLayoutX(200);
+    			p.setLayoutY((recipeSup+1)*100);
+    			recipeSup++;
+    		}
+    		else {
+    			p.setLayoutX(100);
+    		}
+    	}
+    	
     }
 
 

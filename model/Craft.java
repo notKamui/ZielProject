@@ -16,14 +16,16 @@ public class Craft {
 
 	public boolean isCraftable(int id) {
 		ArrayList<Boolean> boolOfRecipe = new ArrayList<>();
-
+		int lineRecipe = 0;
 		for(int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES)+1; recipe++){
 
 			//Take the line of the recipe
 			String line="";
-			loop : for(int c = recipe; c < recipes.length(); c++) {
+			loop : for(int c = lineRecipe; c < recipes.length(); c++) {
 				line=line+recipes.charAt(c);
+				lineRecipe++;
 				if(recipes.charAt(c) == '.') {
+					lineRecipe++;
 					break loop;
 				}
 			}
@@ -92,13 +94,16 @@ public class Craft {
 			String idItemCraft = "";
 			ArrayList<String> idItemNeeded = new ArrayList<>();
 			ArrayList<String> quantityItemNeeded = new ArrayList<>();
+			int lineRecipe = 0;
 			loopRecipe : for(int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES)+1; recipe++){
-
+			
 				//Take the line of the recipe
 				String line="";
-				loop : for(int c = recipe; c < recipes.length(); c++) {
+				loop : for(int c = lineRecipe; c < recipes.length(); c++) {
 					line=line+recipes.charAt(c);
+					lineRecipe++;
 					if(recipes.charAt(c) == '.') {
+						lineRecipe++;
 						break loop;
 					}
 				}
@@ -150,6 +155,34 @@ public class Craft {
 				MathDataBuilder.world().getPlayer().getInventory().addItem(idToItem(id));
 			}
 		}
+	}
+	
+	public ArrayList<Integer> getIdRecipeCraftable() {
+		ArrayList<Integer> idRecipes = new ArrayList<>();
+		
+		int lineRecipe = 0;
+		for(int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES)+1; recipe++){
+			String line="";
+			loop : for(int c = lineRecipe; c < recipes.length(); c++) {
+				line=line+recipes.charAt(c);
+				lineRecipe++;
+				if(recipes.charAt(c) == '.') {
+					lineRecipe++;
+					break loop;
+				}
+			}
+			String idItemCraft = "";
+			loop : for(int c = 0; c < line.length(); c++) {
+				idItemCraft=idItemCraft+line.charAt(c);
+				if(line.charAt(c+1) == ';') {
+					break loop;
+				}
+			}
+			
+			idRecipes.add(Integer.parseInt(idItemCraft));
+		}
+		
+		return idRecipes;
 	}
 
 	private Item idToItem(int id) {

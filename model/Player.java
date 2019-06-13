@@ -1,5 +1,6 @@
 package model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player extends Charac {
@@ -29,7 +30,6 @@ public class Player extends Charac {
             
             	case "R" :
             		Craft c = new Craft();
-            		c.craft(2);
             		break;
                 case "RIGHT":
                 case "D":

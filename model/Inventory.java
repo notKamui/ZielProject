@@ -65,13 +65,9 @@ public class Inventory {
 	public void removeQuantity(Item item, int quantity) {
 		for(Item i : inventory) {
 			if (i == item) {
-				if(i.getQuantity()-quantity <= 0) {
-					this.removeItem(this.inventory.indexOf(i));
-				}else {
 					i.setQuantity(i.getQuantity()-quantity);
 				}
 			}
-		}
 	}
 	
 	public Item getItemByIndex(int i) {
