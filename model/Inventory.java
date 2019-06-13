@@ -9,7 +9,7 @@ import model.ItemOtherType.VoidItem;
 // la capacite max de l'inventaire
 public class Inventory {
 
-    final private static Item VOID = new VoidItem();
+    final private static Item VOID = new VoidItem(0,0);
 	private ObservableList<Item> inventory;
 	private int capacity;
 	private IntegerProperty indexProperty;
@@ -36,12 +36,14 @@ public class Inventory {
 			i.removeHitbox();
 			MathDataBuilder.world().getDynamicObjects().remove(i);
 			this.inventory.set(s, i);
+			i.setSlot(s);
 		}
 		else if(!this.isfull()) {
 			i.removeHitbox();
 			MathDataBuilder.world().getDynamicObjects().remove(i);
 			int slot = inventory.indexOf(VOID);
 			this.inventory.set(slot, i);
+			i.setSlot(slot);
 		}
 	}
 	

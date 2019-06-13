@@ -6,7 +6,7 @@ import model.MathDataBuilder;
 public class Skeleton extends Enemy {
 
 	public Skeleton(int x, int y) {
-		super(x, y, false);
+		super(x, y, false, 50, 10);
 	}
 	
 	@Override
@@ -34,4 +34,6 @@ public class Skeleton extends Enemy {
                  this.setIsJumping(true);
 		}
 	}
+
+
 }

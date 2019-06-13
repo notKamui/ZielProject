@@ -8,7 +8,7 @@ import model.Tile;
 public class Gargoyle extends Enemy {
 
 	public Gargoyle(int x, int y) {
-		super(x, y, true);
+		super(x, y, true, 30, 15);
 	}
 
 
@@ -53,7 +53,6 @@ public class Gargoyle extends Enemy {
 				int destMiddleX = destination.coordXProperty().getValue()+destination.getWidth()/2;
 				int destMiddleY = destination.coordYProperty().getValue()+destination.getHeight()/2;
 
-				System.out.println(destMiddleY+", "+ coordMiddleY);
 				if (destMiddleX < coordMiddleX) {
 					this.setVectX(Math.max(destMiddleX - coordMiddleX, -this.getSpeed()));
 					this.directionProperty().set(180);
@@ -68,37 +67,12 @@ public class Gargoyle extends Enemy {
 					this.setVectY(Math.min(destMiddleY - coordMiddleY, this.getSpeed()));
 				}
 
-				// C'EST MOOOOOOOOOOOOOCHE
-				//	    		if (this.getCollMan().isInFrontRight() || this.getCollMan().isInFrontLeft()) {
-				//	              this.setVectY(-this.getSpeed() - 30);
-				//	          }
 		
 			}
 		}
 
-		//        int xPlayer = MathDataBuilder.world().getPlayer().coordXProperty().getValue();
-		//
-		//        if (xPlayer < this.coordXProperty().getValue()) {
-		//            this.setVectX(Math.max(xPlayer - this.coordXProperty().get(), -this.getSpeed()));
-		//            this.directionProperty().set(180);
-		//        } else if (xPlayer > this.coordXProperty().getValue()) {
-		//            this.setVectX(Math.min(xPlayer - this.coordXProperty().get(), this.getSpeed()));
-		//            this.directionProperty().set(0);
-		//        }
-		//
-		//        int yPlayer = MathDataBuilder.world().getPlayer().coordYProperty().getValue();
-		//
-		//        if (yPlayer < this.coordYProperty().getValue()) {
-		//            this.setVectY(Math.max(yPlayer - this.coordYProperty().get(), -this.getSpeed()) - 30);
-		//        } else if (yPlayer > this.coordYProperty().getValue()) {
-		//            this.setVectY(Math.min(yPlayer - this.coordYProperty().get(), this.getSpeed()) - 30);
-		//        } else {
-		//            this.setVectY(-30);
-		//        }
-		//
-		//        if (this.getCollMan().isInFrontRight() || this.getCollMan().isInFrontLeft()) {
-		//            this.setVectY(-this.getSpeed() - 30);
-		//        }
-
 	}
+
+
+
 }

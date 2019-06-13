@@ -2,6 +2,7 @@ package model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.shape.Shape;
+import model.EnemyType.Skeleton;
 
 import java.util.ArrayList;
 
@@ -35,11 +36,14 @@ public class Collider {
     public boolean isNotEmpty() {
         return collisionManager(5);
     }
+    
     //default : collides()
     //1 : isOnFloor()
 
     //4 : itemsAround()
     //5 : isEmpty()
+    //6 : enemyTouching()
+    //7 : enemiesHurt()
     private boolean collisionManager(int type) {
     	Hitbox selfHB;
         switch (type) {
@@ -97,6 +101,26 @@ public class Collider {
         }
         return itemsAround;
     }
+    
+    public boolean playerHurt() {
+    	return Shape.intersect(this.self.getHitbox().getBounds(), playerHitbox.getBounds()).getBoundsInParent().getWidth()!=-1;
+    }
+    public ArrayList<Enemy> enemiesHurt(){
+    	ArrayList<Enemy> enemies = new ArrayList<>();
+    	Hitbox selfHB = new Hitbox(this.self.coordXProperty(),
+    			this.self.coordYProperty(),
+    			60,
+    			80,
+    			this.self
+    			);
+    	for(Hitbox hitbox : hitboxesAround(7)) {
+    		 Shape intersect = Shape.intersect(selfHB.getBounds(), hitbox.getBounds());
+             if (intersect.getBoundsInParent().getWidth() != -1) {
+            	 enemies.add((Enemy)hitbox.getSelf());
+             }
+    	}
+    	return enemies;
+    }
 
     private ArrayList<Hitbox> hitboxesAround(int type) {
         ArrayList<Hitbox> hitboxesAround = new ArrayList<>();
@@ -111,9 +135,13 @@ public class Collider {
             case 5:
             	radius = 2*MathDataBuilder.TILESIZE;
             	usedHitboxList.addAll(itemHitboxList);
-            	usedHitboxList.addAll(characHitboxList);
             	usedHitboxList.add(playerHitbox);
             	break;
+            case 6:
+            case 7:
+                radius = MathDataBuilder.TILESIZE*3;
+                usedHitboxList = characHitboxList;
+                break;
             default:
                 radius = Math.max(this.self.getHeight(), this.self.getWidth()) + this.self.getSpeed() + MathDataBuilder.TILESIZE / 2;
                 usedHitboxList = tileHitboxList;

@@ -38,6 +38,7 @@ import java.util.ResourceBundle;
 
 
 public class GameController implements Initializable {
+	private int timer;
     ArrayList<String> input = new ArrayList<>();
     private Timeline gameLoop;
     private boolean gameLoopIsPaused = false;
@@ -131,6 +132,7 @@ public class GameController implements Initializable {
 
             //System.out.println(this.world.getMap().getTileAt(MathDataBuilder.coordToIndexTile(65, 5)).getDistance());
             this.cameraUpdate();
+
         }));
         gameLoop.getKeyFrames().add(kf);
     }

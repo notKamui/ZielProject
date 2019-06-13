@@ -2,25 +2,33 @@ package model;
 
 import java.util.ArrayList;
 
-public class Player extends Charac {
+import model.ItemOtherType.VoidItem;
 
+public class Player extends Charac {
+	private int attackState;
     private Inventory inventory;
     private Dijkstra distanceField;
     private ArrayList<String> input;
 
     public Player(int x, int y) {
-        super(x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1], false);
+        super(x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1], false, 100, 10);
         this.inventory = new Inventory();
-        this.getCollMan().playerHitbox = this.getHitbox();
+        this.setHitbox();
         this.distanceField = new Dijkstra();
+        attackState =0;
     }
 
     public void act() {
         this.readInput(input);
+        if(80>attackState&&attackState>30) {
+        	this.attack();
+        }
         this.setPosition();
         this.jumpAnim();
         this.pickUpItems();
         this.distanceField.applyDistanceField();
+        this.setInvFrame(Math.max(0,this.getInvFrame()-1));
+        this.attackState= Math.max(0, attackState-1);
     }
 
     public void readInput(ArrayList<String> input) {
@@ -46,11 +54,29 @@ public class Player extends Charac {
                     if (this.getCollMan().isOnFloor())
                         this.setIsJumping(true);
                     break;
+                case "SPACE":
+                	if(attackState==0)
+                	attackState = 90;
                 default:
                     break;
             }
     }
+    
 
+    public void attack() {
+    	Item fakeHitbox = null;
+    	if(this.directionProperty().doubleValue()==0) {
+    		fakeHitbox = new VoidItem(this.coordXProperty().get()-65, this.coordYProperty().get());
+    	}
+    	else {
+        	fakeHitbox = new VoidItem(this.coordXProperty().get()+5, this.coordYProperty().get());
+
+    	}
+    	ArrayList<Enemy> enemies = fakeHitbox.getCollMan().enemiesHurt();
+    	for(Enemy enemy : enemies ) {
+    		enemy.getHurt(this.getDamage());
+    	}
+    }
     public void setInput(ArrayList<String> input) {
         this.input = input;
     }
@@ -68,4 +94,18 @@ public class Player extends Charac {
     public Dijkstra getDistanceField() {
         return this.distanceField;
     }
+    
+    public void removeHitbox() {
+        Collider.playerHitbox = null;
+      }
+    
+    public void changeHitbox() {
+      	this.setHitbox();
+      	Collider.playerHitbox= this.getHitbox();
+      }
+    
+    public void setAttackState() {
+    	
+    }
+
 }
