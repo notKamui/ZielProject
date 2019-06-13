@@ -58,7 +58,6 @@ public class Gargoyle extends Enemy {
 				int destMiddleX = destination.coordXProperty().getValue()+destination.getWidth()/2;
 				int destMiddleY = destination.coordYProperty().getValue()+destination.getHeight()/2;
 
-				System.out.println(destMiddleY+", "+ coordMiddleY);
 				if (destMiddleX < coordMiddleX) {
 					this.setVectX(Math.max(destMiddleX - coordMiddleX, -this.getSpeed()));
 					this.directionProperty().set(180);

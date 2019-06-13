@@ -62,8 +62,38 @@ public class Inventory {
 			return slot;
 	}
 	
+	public void removeQuantity(Item item, int quantity) {
+		for(Item i : inventory) {
+			if (i == item) {
+				if(i.getQuantity()-quantity <= 0) {
+					this.removeItem(this.inventory.indexOf(i));
+				}else {
+					i.setQuantity(i.getQuantity()-quantity);
+				}
+			}
+		}
+	}
+	
 	public Item getItemByIndex(int i) {
 		return this.inventory.get(i);
+	}
+	
+	public boolean isInventoryContainsItem(int id) {
+		for(Item i : inventory) {
+			if (i.getId()== id) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Item getItembyId(int id) {
+		for(Item i : inventory) {
+			if (i.getId() == id) {
+				return i;
+			}
+		}
+		return null;
 	}
 	
 	public void setCapacity(int c) {

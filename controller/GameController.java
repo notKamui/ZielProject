@@ -23,6 +23,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import model.Craft;
 import model.DynamicObject;
 import model.EnemyType.Gargoyle;
 import model.EnemyType.Skeleton;

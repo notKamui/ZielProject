@@ -26,6 +26,11 @@ public class Player extends Charac {
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
+            
+            	case "R" :
+            		Craft c = new Craft();
+            		c.craft(2);
+            		break;
                 case "RIGHT":
                 case "D":
                     this.setVectX(this.getSpeed());
