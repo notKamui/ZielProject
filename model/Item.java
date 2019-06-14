@@ -74,5 +74,7 @@ public abstract class Item extends DynamicObject {
 	public void setSlot(int slot) {
 		this.slot = slot;
 	}
-
+    public String getName() {
+        return this.name;
+    }
 }

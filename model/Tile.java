@@ -65,6 +65,7 @@ public abstract class Tile extends GameObject {
                 break;
             case 'W':
                 drop = new BlockWood(x, y);
+                break;
             default:
                 drop = null;
                 break;
