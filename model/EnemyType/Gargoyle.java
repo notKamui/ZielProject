@@ -7,7 +7,7 @@ import model.Tile;
 
 public class Gargoyle extends Enemy {
   public Gargoyle(int x, int y) {
-        super(901, x, y, 64, 64, true, 30, 15);
+        super(901, x, y, 64, 64, true, 30, 10);
   }
 
 
