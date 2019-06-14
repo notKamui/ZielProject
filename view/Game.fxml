@@ -52,9 +52,6 @@
          </Pane>
         </Pane>
     </center>
-    <top>
-        <HBox prefHeight="100.0" prefWidth="1300.0" BorderPane.alignment="CENTER" />
-    </top>
     <right>
         <VBox prefHeight="640.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
     </right>
@@ -190,4 +187,15 @@
             </Pane>
         </HBox>
     </bottom>
+   <top>
+      <Pane prefHeight="100.0" prefWidth="1300.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane layoutX="215.0" layoutY="30.0" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: white;">
+               <children>
+                  <Rectangle fx:id="healthBar" arcHeight="5.0" arcWidth="5.0" fill="#c60d0d" height="40.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </top>
 </BorderPane>

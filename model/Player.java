@@ -3,10 +3,12 @@ package model;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import model.ItemOtherType.VoidItem;
 
 public class Player extends Charac {
-	private int attackState;
+	private IntegerProperty attackState;
     private Inventory inventory;
     private Dijkstra distanceField;
     private ArrayList<String> input;
@@ -14,14 +16,14 @@ public class Player extends Charac {
     public Player(int x, int y) {
         super(700, x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1], false, 100, 10);
         this.inventory = new Inventory();
-        this.setHitbox();
+        this.changeHitbox();
         this.distanceField = new Dijkstra();
-        attackState =0;
+        this.attackState = new SimpleIntegerProperty(0);
     }
 
     public void act() {
         this.readInput(input);
-        if(80>attackState&&attackState>30) {
+        if(35>attackState.get()&&attackState.get()>10) {
         	this.attack();
         }
         this.setPosition();
@@ -29,16 +31,12 @@ public class Player extends Charac {
         this.pickUpItems();
         this.distanceField.applyDistanceField();
         this.setInvFrame(Math.max(0,this.getInvFrame()-1));
-        this.attackState= Math.max(0, attackState-1);
+        this.attackState.set(Math.max(0, attackState.get()));
     }
 
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
-            
-            	case "R" :
-            		Craft c = new Craft();
-            		break;
                 case "RIGHT":
                 case "D":
                     this.setVectX(this.getSpeed());
@@ -58,8 +56,8 @@ public class Player extends Charac {
                         this.setIsJumping(true);
                     break;
                 case "SPACE":
-                	if(attackState==0)
-                	attackState = 90;
+                	if(attackState.get()==0)
+                		attackState.set(45);
                 default:
                     break;
             }
@@ -107,8 +105,11 @@ public class Player extends Charac {
       	Collider.playerHitbox= this.getHitbox();
       }
     
-    public void setAttackState() {
-    	
+    public int getAttackState() {
+    	return attackState.get();
+    }
+    public IntegerProperty getAttackStateProperty() {
+    	return attackState;
     }
 
 }
