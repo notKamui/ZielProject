@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+/* MathDataBuilder
+ * This class contains some Method and variable useful in all the project and permit to avoid redundancy
+ */
 public abstract class MathDataBuilder {
     public static final int TILESIZE = 64;
     public static final int ITEMSIZE = 20;

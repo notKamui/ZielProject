@@ -1,5 +1,14 @@
 package model;
 
+
+import java.util.ArrayList;
+
+import model.ItemOtherType.VoidItem;
+/* Player
+ * This class contains all the methods that permit to control and manage the player
+ * (Spawn player, take Input, Attack...)
+ */
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.ItemOtherType.VoidItem;

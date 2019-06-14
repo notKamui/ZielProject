@@ -5,7 +5,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-//Peut devenir une superclasse par rapport aux outils, armes, ect...
+/* Item
+ * This Class contains all the method to create and manage Item
+ */
 public abstract class Item extends DynamicObject {
     private String name;
     private IntegerProperty quantity;

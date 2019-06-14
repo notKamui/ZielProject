@@ -4,6 +4,9 @@ package model;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.shape.Rectangle;
 
+/* HitBox
+ * This class create Hitbox for every GameObject in the game
+ */
 public class Hitbox {
 	private Rectangle bounds;
 	private GameObject self;

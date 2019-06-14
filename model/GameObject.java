@@ -2,7 +2,10 @@ package model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-
+/* GameObject
+ * This class represent all of the object present in the scene
+ * (Tiles, Player, Enemy, Item Drop)
+ */
 public abstract class GameObject {
     private int id;
     private IntegerProperty coordXProperty;

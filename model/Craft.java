@@ -6,7 +6,11 @@ import model.ItemUsableType.Pickaxe;
 import model.ItemUsableType.Shovel;
 
 import java.util.ArrayList;
-
+/** Craft
+ * This class permit to craft during the game, it uses the file "Recipe.txt" that can be updated without touching that class. 
+ * The major function are isCraftable and Craft.
+ * @author Damien
+ */
 public class Craft {
 
     private final String RECIPES = "src/resources/other/recipes.txt";
@@ -24,6 +28,7 @@ public class Craft {
         this.quantityItemNeeded = new ArrayList<>();
     }
 
+    //Check if the player can craft a given item
     public boolean isCraftable(int id) {
         ArrayList<Boolean> boolOfRecipe = new ArrayList<>();
         int lineRecipePos = 0;
@@ -54,6 +59,7 @@ public class Craft {
         return isAllIngredientOk(boolOfRecipe);
     }
 
+    //Craft the given Item
     public void craft(int id) {
         if (isCraftable(id)) {
             int lineRecipe = 0;
@@ -78,6 +84,7 @@ public class Craft {
         }
     }
 
+    //Method that return an ArrayList of Integer of Id of item in recipe
     public ArrayList<Integer> getIdRecipeCraftable() {
         ArrayList<Integer> idRecipes = new ArrayList<>();
 
@@ -100,6 +107,7 @@ public class Craft {
         return idRecipes;
     }
 
+    //Return a String of Item and quantity needed for a given Item (It's for the view)
     public String itemNeedToString(int id) {
         int lineRecipe = 0;
         boolean isFinished = false;
@@ -170,7 +178,8 @@ public class Craft {
         }
         return i;
     }
-
+    
+    //Cut the line of the given recipe
     private int getRecipeLine(int lineRecipePos) {
         String line = "";
         boolean isFinished = false;
@@ -184,6 +193,7 @@ public class Craft {
         return lineRecipePos;
     }
 
+    //Cut the line of the recipe in different part ID/IdOfItemNeeded/QuantityNeededForItem
     private void getEachElementOfTheLine() {
         int nbOfComa = 0;
         String idItemCraft = "";
@@ -228,6 +238,7 @@ public class Craft {
         this.quantityItemNeeded = quantityItemNeeded;
     }
 
+    //Check the ArrayList of boolean to know if all ingredient are present to craft
     private boolean isAllIngredientOk(ArrayList<Boolean> listOfBool) {
         if (listOfBool.isEmpty() || listOfBool.contains(false))
             return false;
