@@ -116,8 +116,6 @@ public class GameController implements Initializable {
             for (DynamicObject object : this.world.getDynamicObjects()) {
                 object.act();
             }
-
-            //System.out.println(this.world.getMap().getTileAt(MathDataBuilder.coordToIndexTile(65, 5)).getDistance());
             this.cameraUpdate();
 
         }));
@@ -265,9 +263,11 @@ public class GameController implements Initializable {
 
         // inventory listener
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
-        this.world.getPlayer().getInventory().addItem(new BlockStone(0, 0));
-        this.world.getPlayer().getInventory().addItem(new BlockWood(0, 0));
-        this.world.getPlayer().getInventory().addItem(new BlockWood(0, 0));
+
+        for (int j = 0; j < 30; j++) { // test
+            this.world.getPlayer().getInventory().addItem(new BlockStone(0, 0));
+            this.world.getPlayer().getInventory().addItem(new BlockWood(0, 0));
+        }
 
         world.getDynamicObjects().add(new Gargoyle(MathDataBuilder.TILESIZE * 61, MathDataBuilder.TILESIZE * 0));
         world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE * 66, MathDataBuilder.TILESIZE * 4));

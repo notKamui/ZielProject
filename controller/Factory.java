@@ -25,6 +25,7 @@ class Factory {
         idToUrl.put(5, rootUrl + "tiles/sky.png");
 
         idToUrl.put(100, rootUrl + "sprites/shovel.png");
+        idToUrl.put(101, rootUrl + "sprites/pickaxe.png");
 
         idToUrl.put(700, rootUrl + "sprites/player/player_idle.gif");
 
