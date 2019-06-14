@@ -117,7 +117,6 @@ public class GameController implements Initializable {
 
             this.world.getPlayer().setInput(input);
             this.world.getPlayer().act();
-
             for (DynamicObject object : this.world.getDynamicObjects()) {
                 object.act();
             }

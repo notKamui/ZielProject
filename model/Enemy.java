@@ -1,8 +1,16 @@
 package model;
+
+
 /* Enemy
  * This Class allow the creation of enemy
  * A enemy can follow the player, attack it  by "act"
  */
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
+
+
+
 public abstract class Enemy extends Charac {
 
 	public Enemy(int id, int x, int y, int width, int height, boolean isFlying, double hp, double damage) {
@@ -18,9 +26,14 @@ public abstract class Enemy extends Charac {
 		this.setPosition();
 		this.attack();
         this.setInvFrame(Math.max(0,this.getInvFrame()-1));
-
 	}
 	
+
+	public void die() {
+		this.removeHitbox();
+		MathDataBuilder.world().getDynamicObjects().remove(this);
+	}
+
 	//Method that allow the enemy to attack the player
 	public void attack() {
 		
