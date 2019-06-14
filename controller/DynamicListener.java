@@ -26,8 +26,10 @@ public class DynamicListener implements ListChangeListener<DynamicObject> {
             if (change.wasAdded()) {
                 dynamicObject = change.getAddedSubList().get(0);
                 ImageView dynamicBox = new ImageView(Factory.idToUrl.get(dynamicObject.getId()));
-                dynamicBox.setFitWidth(MathDataBuilder.ITEMSIZE);
-                dynamicBox.setFitHeight(MathDataBuilder.ITEMSIZE);
+                if (dynamicObject.getId() >= 0 && dynamicObject.getId() <= 100) {
+                    dynamicBox.setFitWidth(MathDataBuilder.ITEMSIZE);
+                    dynamicBox.setFitHeight(MathDataBuilder.ITEMSIZE);
+                }
                 dynamicBox.translateXProperty().bind(dynamicObject.coordXProperty());
                 dynamicBox.translateYProperty().bind(dynamicObject.coordYProperty());
                 dynamicBox.setRotationAxis(new Point3D(0, 1, 0));
