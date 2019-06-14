@@ -2,6 +2,8 @@ package model;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public abstract class Charac extends DynamicObject {
     private int jumpForce;
@@ -18,6 +20,13 @@ public abstract class Charac extends DynamicObject {
         this.maxHp = maxHp;
         this.hp = new SimpleDoubleProperty(maxHp);
         this.damage = damage;
+        this.getHpProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+                Number newValue) {
+				if((double)newValue<=0) {
+				die();
+				}
+}});
     }
 
     // Jump functions--------
@@ -54,7 +63,7 @@ public abstract class Charac extends DynamicObject {
     }    
     
 
-
+    public abstract void die();
     
     public DoubleProperty getHpProperty() {
     	return hp;

@@ -31,7 +31,7 @@ public class Player extends Charac {
         this.pickUpItems();
         this.distanceField.applyDistanceField();
         this.setInvFrame(Math.max(0,this.getInvFrame()-1));
-        this.attackState.set(Math.max(0, attackState.get()));
+        this.attackState.set(Math.max(0, attackState.get()-1));
     }
 
     public void readInput(ArrayList<String> input) {
@@ -77,6 +77,9 @@ public class Player extends Charac {
     	for(Enemy enemy : enemies ) {
     		enemy.getHurt(this.getDamage());
     	}
+    }
+    public void die() {
+    	System.exit(0);
     }
     public void setInput(ArrayList<String> input) {
         this.input = input;

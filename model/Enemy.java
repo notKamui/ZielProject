@@ -1,5 +1,8 @@
 package model;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 public abstract class Enemy extends Charac {
 
 	public Enemy(int id, int x, int y, int width, int height, boolean isFlying, double hp, double damage) {
@@ -15,9 +18,12 @@ public abstract class Enemy extends Charac {
 		this.setPosition();
 		this.attack();
         this.setInvFrame(Math.max(0,this.getInvFrame()-1));
-
 	}
 	
+	public void die() {
+		this.removeHitbox();
+		MathDataBuilder.world().getDynamicObjects().remove(this);
+	}
 	public void attack() {
 		
 		if(this.getCollMan().playerHurt()) {
