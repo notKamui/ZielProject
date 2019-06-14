@@ -34,9 +34,6 @@ public abstract class Item extends DynamicObject {
 	public void act() {
 		this.setPosition();
 	}
-	public int getId() {
-		return id;
-	}
 	
 	public int getQuantity() {
 		return this.quantity.get();

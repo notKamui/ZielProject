@@ -8,7 +8,7 @@ public abstract class Charac extends DynamicObject {
     private double hp;
     private double damage;
 
-    public Charac(int id, int x, int y, int width, int height, boolean isFlying) {
+    public Charac(int id, int x, int y, int width, int height, boolean isFlying, double hp, double damage) {
         super(id, x, y, width, height, isFlying);
         this.jumpForce = 0;
         this.setIsJumping(false);

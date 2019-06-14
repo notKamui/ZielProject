@@ -149,7 +149,7 @@ public class Craft {
             case 3:
                 break;
             default:
-                i = new VoidItem();
+                i = new VoidItem(0, 0);
                 break;
         }
         return i;
