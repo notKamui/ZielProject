@@ -5,6 +5,7 @@ import javafx.geometry.Point3D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import model.DynamicObject;
+import model.MathDataBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,9 @@ public class DynamicListener implements ListChangeListener<DynamicObject> {
             DynamicObject dynamicObject;
             if (change.wasAdded()) {
                 dynamicObject = change.getAddedSubList().get(0);
-                ImageView dynamicBox = new ImageView("file:src/resources/sprites/gargoyle.png");
+                ImageView dynamicBox = new ImageView(Factory.idToUrl.get(dynamicObject.getId()));
+                dynamicBox.setFitWidth(MathDataBuilder.ITEMSIZE);
+                dynamicBox.setFitHeight(MathDataBuilder.ITEMSIZE);
                 dynamicBox.translateXProperty().bind(dynamicObject.coordXProperty());
                 dynamicBox.translateYProperty().bind(dynamicObject.coordYProperty());
                 dynamicBox.setRotationAxis(new Point3D(0, 1, 0));

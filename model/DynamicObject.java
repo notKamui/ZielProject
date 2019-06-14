@@ -12,22 +12,27 @@ public abstract class DynamicObject extends GameObject {
     private int vectY;
     private IntegerProperty directionProperty; // 0 = facing left // 180 = facing right
     private Collider collMan;
+    private IntegerProperty animState; // default idle ; 1 run ; 2 rising ; 3 falling ;
 
-    public DynamicObject(int x, int y, int width, int height, boolean isFlying) {
-        super(x, y, width, height);
+    public DynamicObject(int id, int x, int y, int width, int height, boolean isFlying) {
+        super(id, x, y, width, height);
         this.directionProperty = new SimpleIntegerProperty(0);
         this.collMan = new Collider(this);
         this.isFlying = isFlying;
+        this.animState = new SimpleIntegerProperty(0);
     }
+
     abstract public void act();
-    
+
     public void setPosition() {
         if (this.vectX < 0)
             this.setDirection(false);
         if (this.vectX > 0)
             this.setDirection(true);
-    	if(!isFlying)
-    		this.vectY += GRAVITY; // add gravity to vectY
+        if (!isFlying)
+            this.vectY += GRAVITY; // add gravity to vectY
+
+        this.setAnimState();
 
         boolean collides;
         int pixel;
@@ -80,9 +85,9 @@ public abstract class DynamicObject extends GameObject {
     public int getSpeed() {
         return this.speed;
     }
-    
+
     public void setSpeed(int s) {
-    	this.speed = s;
+        this.speed = s;
     }
 
     public final int GRAVITY() {
@@ -104,7 +109,7 @@ public abstract class DynamicObject extends GameObject {
     public void setVectY(int vectY) {
         this.vectY = vectY;
     }
-    
+
     public final IntegerProperty directionProperty() {
         return directionProperty;
     }
@@ -115,5 +120,26 @@ public abstract class DynamicObject extends GameObject {
         } else {
             this.directionProperty.set(0);
         }
+    }
+
+    public void setAnimState() {
+        if (!this.getCollMan().isOnFloor()) {
+            if (vectY <= 0)
+                this.animState.set(2);
+            if (vectY > 0)
+                this.animState.set(3);
+        }
+        else if (vectX != 0)
+            this.animState.set(1);
+        else
+            this.animState.set(0);
+    }
+
+    public int getAnimState() {
+        return this.animState.get();
+    }
+
+    final public IntegerProperty animStateProperty() {
+        return this.animState;
     }
 }

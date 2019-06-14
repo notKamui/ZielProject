@@ -2,8 +2,8 @@ package model;
 
 public abstract class ItemUsable extends Item{
 
-	public ItemUsable(int x, int y, String n, int id, int range, int q, int qMax) {
-		super(x, y, n, id, range, q, qMax);
+	public ItemUsable(int id, int x, int y, String n, int range, int q, int qMax) {
+		super(id, x, y, n, range, q, qMax);
 	}
 	
 

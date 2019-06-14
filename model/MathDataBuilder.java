@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class MathDataBuilder {
+public abstract class MathDataBuilder {
     public static final int TILESIZE = 64;
     public static final int ITEMSIZE = 20;
     public static final int[] PLAYERDIM = {64, 89}; // {width, height}
@@ -107,6 +107,12 @@ public class MathDataBuilder {
                 break;
             case 's':
                 tile = new Sky(i);
+                break;
+            case 'S':
+                tile = new Stone(i);
+                break;
+            case 'W':
+                tile = new Wood(i);
                 break;
             default:
                 tile = new Void(i);

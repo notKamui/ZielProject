@@ -1,0 +1,14 @@
+0 void
+1 dirt
+15 dirtBG
+2 stone
+3 wood
+4 brick
+5 sky
+
+100 shovel
+
+700 player
+
+900 skeleton
+901 gargoyle

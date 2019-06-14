@@ -1,9 +1,9 @@
 package model;
 
-public abstract class ItemOther extends Item{
+public abstract class ItemOther extends Item {
 
-	public ItemOther(int x, int y, String n, int id, int q, int qMax) {
-		super(x,y,n, id, 0, q, qMax);
-	}
+    public ItemOther(int id, int x, int y, String n, int q, int qMax) {
+        super(id, x, y, n, 0, q, qMax);
+    }
 
 }

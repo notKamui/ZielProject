@@ -9,9 +9,31 @@ import model.MathDataBuilder;
 import model.Player;
 import model.World;
 
+import java.util.HashMap;
+
 class Factory {
+    public static java.util.Map<Integer, String> idToUrl = new HashMap<>();
+    public static void initIDToURL() {
+        idToUrl.clear();
+        String rootUrl = "file:src/resources/";
+        idToUrl.put(0, rootUrl + "tiles/void.png");
+        idToUrl.put(1, rootUrl + "tiles/dirt.png");
+        idToUrl.put(15, rootUrl + "tiles/dirtBG.png");
+        idToUrl.put(2, rootUrl + "tiles/stone.png");
+        idToUrl.put(3, rootUrl + "tiles/wood.png");
+        idToUrl.put(4, rootUrl + "tiles/brick.png");
+        idToUrl.put(5, rootUrl + "tiles/sky.png");
+
+        idToUrl.put(100, rootUrl + "sprites/shovel.png");
+
+        idToUrl.put(700, rootUrl + "sprites/player/player_idle.gif");
+
+        idToUrl.put(900, rootUrl + "sprites/skeleton.png");
+        idToUrl.put(901, rootUrl + "sprites/gargoyle.gif");
+    }
 
     static World initWorld() {
+        initIDToURL();
         World world = new World();
 
         Player player = new Player(MathDataBuilder.TILESIZE * 65, MathDataBuilder.TILESIZE * 4);
@@ -26,7 +48,7 @@ class Factory {
 
     static Pane initPlayerView(IntegerProperty coordXProperty, IntegerProperty coordYProperty) {
 
-        ImageView sprite = new ImageView("file:src/resources/sprites/player.png");
+        ImageView sprite = new ImageView("file:src/resources/sprites/player_idle.gif");
         sprite.setRotationAxis(new Point3D(0, 1, 0));
         sprite.rotateProperty().bind(MathDataBuilder.world().getPlayer().directionProperty());
         sprite.setMouseTransparent(true);
