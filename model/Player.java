@@ -2,10 +2,11 @@ package model;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.ItemOtherType.VoidItem;
+
+import java.util.ArrayList;
 
 public class Player extends Charac {
 	private IntegerProperty attackState;
@@ -19,6 +20,7 @@ public class Player extends Charac {
         this.changeHitbox();
         this.distanceField = new Dijkstra();
         this.attackState = new SimpleIntegerProperty(0);
+
     }
 
     public void act() {
@@ -62,22 +64,22 @@ public class Player extends Charac {
                     break;
             }
     }
-    
+
 
     public void attack() {
-    	Item fakeHitbox = null;
-    	if(this.directionProperty().doubleValue()==0) {
-    		fakeHitbox = new VoidItem(this.coordXProperty().get()-65, this.coordYProperty().get());
-    	}
-    	else {
-        	fakeHitbox = new VoidItem(this.coordXProperty().get()+5, this.coordYProperty().get());
+        Item fakeHitbox = null;
+        if (this.directionProperty().doubleValue() == 0) {
+            fakeHitbox = new VoidItem(this.coordXProperty().get() - 65, this.coordYProperty().get());
+        } else {
+            fakeHitbox = new VoidItem(this.coordXProperty().get() + 5, this.coordYProperty().get());
 
-    	}
-    	ArrayList<Enemy> enemies = fakeHitbox.getCollMan().enemiesHurt();
-    	for(Enemy enemy : enemies ) {
-    		enemy.getHurt(this.getDamage());
-    	}
+        }
+        ArrayList<Enemy> enemies = fakeHitbox.getCollMan().enemiesHurt();
+        for (Enemy enemy : enemies) {
+            enemy.getHurt(this.getDamage());
+        }
     }
+
     public void setInput(ArrayList<String> input) {
         this.input = input;
     }
@@ -95,19 +97,20 @@ public class Player extends Charac {
     public Dijkstra getDistanceField() {
         return this.distanceField;
     }
-    
+
     public void removeHitbox() {
         Collider.playerHitbox = null;
-      }
-    
+    }
+
     public void changeHitbox() {
-      	this.setHitbox();
-      	Collider.playerHitbox= this.getHitbox();
-      }
-    
+        this.setHitbox();
+        Collider.playerHitbox = this.getHitbox();
+    }
+   
     public int getAttackState() {
     	return attackState.get();
     }
+      
     public IntegerProperty getAttackStateProperty() {
     	return attackState;
     }
