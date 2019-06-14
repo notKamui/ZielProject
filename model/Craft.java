@@ -9,9 +9,16 @@ public class Craft {
 
 	private final String RECIPES = "src/resources/other/Recipes.txt";
 	private String recipes;
-
+	private String line;
+	private String idItemCraft;
+	private ArrayList<String> idItemNeeded;
+	private ArrayList<String> quantityItemNeeded;
 	public Craft() {
 		this.recipes = getRecipes();
+		this.line = "";
+		this.idItemCraft = "";
+		this.idItemNeeded = new ArrayList<>();
+		this.quantityItemNeeded = new ArrayList<>();
 	}
 
 	public boolean isCraftable(int id) {
@@ -20,54 +27,12 @@ public class Craft {
 		for(int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES)+1; recipe++){
 
 			//Take the line of the recipe
-			String line="";
-			loop : for(int c = lineRecipe; c < recipes.length(); c++) {
-				line=line+recipes.charAt(c);
-				lineRecipe++;
-				if(recipes.charAt(c) == '.') {
-					lineRecipe++;
-					break loop;
-				}
-			}
+			lineRecipe = getRecipeLine(lineRecipe);
 
 			//Take the id from the line
-			String idItemCraft = "";
-			ArrayList<String> idItemNeeded = new ArrayList<>();
-			ArrayList<String> quantityItemNeeded = new ArrayList<>();
-			int nbOfComa = 0;
-			loop : for(int c = 0; c < line.length(); c++) {				
-				switch (nbOfComa) {
+			getEachElementOfTheLine();
 
-				case 2: 
-					quantityItemNeeded.add(new String(""+line.charAt(c)));
-					if(line.charAt(c+1) == '.') {
-						break loop;
-					}
-					else if(line.charAt(c+1) == ';') {
-						nbOfComa = 1;
-						c++;
-					}
-					break;
-
-				case 1:
-					idItemNeeded.add(new String(""+line.charAt(c)));
-					nbOfComa++;
-					c++;
-					break;
-
-				case 0:
-					idItemCraft=idItemCraft+line.charAt(c);
-					if(line.charAt(c+1) == ';') {
-						nbOfComa++;
-						c++;
-					}
-					break;
-
-				default:
-					break;
-				}
-			}
-
+			//Test is its craftable
 			if(Integer.parseInt(idItemCraft) == id) {
 				for(int item = 0; item < idItemNeeded.size(); item++) {
 					if(MathDataBuilder.world().getPlayer().getInventory().isInventoryContainsItem(Integer.parseInt(idItemNeeded.get(item)))) {
@@ -91,69 +56,24 @@ public class Craft {
 	public void craft(int id) {
 		if(isCraftable(id)) {
 			
-			String idItemCraft = "";
-			ArrayList<String> idItemNeeded = new ArrayList<>();
-			ArrayList<String> quantityItemNeeded = new ArrayList<>();
 			int lineRecipe = 0;
 			loopRecipe : for(int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES)+1; recipe++){
 			
 				//Take the line of the recipe
-				String line="";
-				loop : for(int c = lineRecipe; c < recipes.length(); c++) {
-					line=line+recipes.charAt(c);
-					lineRecipe++;
-					if(recipes.charAt(c) == '.') {
-						lineRecipe++;
-						break loop;
-					}
-				}
+				lineRecipe = getRecipeLine(lineRecipe);
 
 				//Take the id from the line
-				int nbOfComa = 0;
-				loop : for(int c = 0; c < line.length(); c++) {				
-					switch (nbOfComa) {
-
-					case 2: 
-						quantityItemNeeded.add(new String(""+line.charAt(c)));
-						if(line.charAt(c+1) == '.') {
-							break loop;
-						}
-						else if(line.charAt(c+1) == ';') {
-							nbOfComa = 1;
-							c++;
-						}
-						break;
-
-					case 1:
-						idItemNeeded.add(new String(""+line.charAt(c)));
-						nbOfComa++;
-						c++;
-						break;
-
-					case 0:
-						idItemCraft=idItemCraft+line.charAt(c);
-						if(line.charAt(c+1) == ';') {
-							nbOfComa++;
-							c++;
-						}
-						break;
-
-					default:
-						break;
-					}
-				}
+				getEachElementOfTheLine();
 				
 				if(Integer.parseInt(idItemCraft) == id) {
 					break loopRecipe;
 				}
 			}
-			
-			if(Integer.parseInt(idItemCraft) == id) {
+				//Craft
 				for(int item = 0; item < idItemNeeded.size(); item++) {
 					MathDataBuilder.world().getPlayer().getInventory().removeQuantity(MathDataBuilder.world().getPlayer().getInventory().getItembyId(Integer.parseInt(idItemNeeded.get(item))), Integer.parseInt(quantityItemNeeded.get(item)));
 				}
 				MathDataBuilder.world().getPlayer().getInventory().addItem(idToItem(id));
-			}
 		}
 	}
 	
@@ -162,15 +82,9 @@ public class Craft {
 		
 		int lineRecipe = 0;
 		for(int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES)+1; recipe++){
-			String line="";
-			loop : for(int c = lineRecipe; c < recipes.length(); c++) {
-				line=line+recipes.charAt(c);
-				lineRecipe++;
-				if(recipes.charAt(c) == '.') {
-					lineRecipe++;
-					break loop;
-				}
-			}
+			
+			lineRecipe = getRecipeLine(lineRecipe);
+			
 			String idItemCraft = "";
 			loop : for(int c = 0; c < line.length(); c++) {
 				idItemCraft=idItemCraft+line.charAt(c);
@@ -184,7 +98,46 @@ public class Craft {
 		
 		return idRecipes;
 	}
+	
+	public String ItemNeedToString(int id) {
+		int lineRecipe = 0;
+		loopRecipe : for(int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES)+1; recipe++){
+		
+			//Take the line of the recipe
+			lineRecipe = getRecipeLine(lineRecipe);
 
+			//Take the id from the line
+			getEachElementOfTheLine();
+			
+			if(Integer.parseInt(idItemCraft) == id) {
+				break loopRecipe;
+			}
+		}
+		String itemNeed = "";
+		for(int item = 0; item < idItemNeeded.size(); item++) {
+			if(item > 0) {
+				itemNeed+=", ";
+			}
+			switch (Integer.parseInt(idItemNeeded.get(item))) {
+			case 1:
+				itemNeed+="Dirt: ";
+				break;
+			case 2:
+				itemNeed+="Shovel: ";
+				break;
+			default:
+				return itemNeed;
+			}
+			
+			itemNeed+=MathDataBuilder.world().getPlayer().getInventory().getItembyId(Integer.parseInt(idItemNeeded.get(item))).getQuantity()+"/"+quantityItemNeeded.get(item);
+		}
+		return itemNeed;
+	}
+	
+	private void setLine(String line) {
+		this.line = line;
+	}
+	
 	private Item idToItem(int id) {
 		Item i = null;
 		switch (id) {
@@ -199,6 +152,64 @@ public class Craft {
 			break;
 		}
 		return i;
+	}
+	
+	private int getRecipeLine(int lineRecipe) {
+		String line="";
+		loop : for(int c = lineRecipe; c < recipes.length(); c++) {
+			line=line+recipes.charAt(c);
+			lineRecipe++;
+			if(recipes.charAt(c) == '.') {
+				lineRecipe++;
+				break loop;
+			}
+		}
+		setLine(line);
+		return lineRecipe;
+	}
+	
+	private void getEachElementOfTheLine() {
+		int nbOfComa = 0;
+		String idItemCraft = "";
+		ArrayList<String> idItemNeeded = new ArrayList<>();
+		ArrayList<String> quantityItemNeeded = new ArrayList<>();
+		loop : for(int c = 0; c < line.length(); c++) {				
+			switch (nbOfComa) {
+
+			case 2: 
+				quantityItemNeeded.add(new String(""+line.charAt(c)));
+				if(line.charAt(c+1) == '.') {
+					break loop;
+				}
+				else if(line.charAt(c+1) == ';') {
+					nbOfComa = 1;
+					c++;
+				}
+				break;
+
+			case 1:
+				idItemNeeded.add(new String(""+line.charAt(c)));
+				if(line.charAt(c+1) == ',') {
+					nbOfComa++;
+					c++;
+				}
+				break;
+
+			case 0:
+				idItemCraft=idItemCraft+line.charAt(c);
+				if(line.charAt(c+1) == ';') {
+					nbOfComa++;
+					c++;
+				}
+				break;
+
+			default:
+				break;
+			}
+		}
+		this.idItemCraft = idItemCraft;
+		this.idItemNeeded = idItemNeeded;
+		this.quantityItemNeeded = quantityItemNeeded;
 	}
 	
 	private boolean isAllIngredientOk(ArrayList<Boolean> listOfBool) {
