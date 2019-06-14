@@ -1,5 +1,6 @@
 package model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player extends Charac {
@@ -26,6 +27,10 @@ public class Player extends Charac {
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
+            
+            	case "R" :
+            		Craft c = new Craft();
+            		break;
                 case "RIGHT":
                 case "D":
                     this.setVectX(this.getSpeed());

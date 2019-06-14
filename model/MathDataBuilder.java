@@ -73,6 +73,46 @@ public abstract class MathDataBuilder {
         }
         return content;
     }
+    
+    public static int countLinesinFiles(String filename) {
+    	File file = new File(filename);
+        FileReader reader = null;
+	        try {
+	        	reader = new FileReader(file);
+	        	char[] c = new char[(int) file.length()];
+	
+	            int readChars = reader.read(c);
+	            if (readChars == -1) {
+	                //if the file is empy
+	                return 0;
+	            }
+	
+	            int count = 0;
+	            while (readChars == 1024) {
+	                for (int i=0; i<1024;) {
+	                    if (c[i++] == '\n') {
+	                        ++count;
+	                    }
+	                }
+	                readChars = reader.read(c);
+	            }
+	
+	            // count remaining characters
+	            while (readChars != -1) {
+	                for (int i=0; i<readChars; ++i) {
+	                    if (c[i] == '\n') {
+	                        ++count;
+	                    }
+	                }
+	                readChars = reader.read(c);
+	            }
+	            reader.close();
+	            return count;
+	        } catch (IOException e) {
+	        	e.printStackTrace();
+	        }
+	        return 0;
+    }
 
     static void saveMap(ObservableList<Tile> map) {
         try {
