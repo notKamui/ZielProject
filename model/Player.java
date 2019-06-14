@@ -1,30 +1,49 @@
 package model;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
+
+import model.ItemOtherType.VoidItem;
+/* Player
+ * This class contains all the methods that permit to control and manage the player
+ * (Spawn player, take Input, Attack...)
+ */
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.ItemOtherType.VoidItem;
 
+import java.util.ArrayList;
+
 public class Player extends Charac {
-	private IntegerProperty attackState;
+    private IntegerProperty attackState;
     private Inventory inventory;
     private Dijkstra distanceField;
     private ArrayList<String> input;
 
     public Player(int x, int y) {
-        super(700, x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1], false, 100, 10);
+        super(700, x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1], false, 100, 50);
         this.inventory = new Inventory();
         this.changeHitbox();
         this.distanceField = new Dijkstra();
         this.attackState = new SimpleIntegerProperty(0);
+
     }
 
     public void act() {
         this.readInput(input);
-        if(35>attackState.get()&&attackState.get()>10) {
-        	this.attack();
+        if (attackState.get() > 0) {
+            if (attackState.get() >= 20) {
+                int direction = 1;
+                if (this.directionProperty().get() == 0)
+                    direction = -1;
+                this.setVectX(12*direction);
+            } else {
+                if (20 > attackState.get() && attackState.get() > 7) {
+                    this.attack();
+                }
+                this.setVectX(0);
+            }
         }
         this.setPosition();
         this.jumpAnim();
@@ -52,35 +71,36 @@ public class Player extends Charac {
                     break;
                 case "UP":
                 case "Z":
-                    if (this.getCollMan().isOnFloor())
+                    if (this.getCollMan().isOnFloor() && attackState.get() == 0)
                         this.setIsJumping(true);
                     break;
                 case "SPACE":
-                	if(attackState.get()==0)
-                		attackState.set(45);
+                    if (attackState.get() == 0)
+                        attackState.set(30);
                 default:
                     break;
             }
     }
-    
+
 
     public void attack() {
-    	Item fakeHitbox = null;
-    	if(this.directionProperty().doubleValue()==0) {
-    		fakeHitbox = new VoidItem(this.coordXProperty().get()-65, this.coordYProperty().get());
-    	}
-    	else {
-        	fakeHitbox = new VoidItem(this.coordXProperty().get()+5, this.coordYProperty().get());
+        Item fakeHitbox = null;
+        if (this.directionProperty().doubleValue() == 0) {
+            fakeHitbox = new VoidItem(this.coordXProperty().get() - 65, this.coordYProperty().get());
+        } else {
+            fakeHitbox = new VoidItem(this.coordXProperty().get() + 5, this.coordYProperty().get());
 
-    	}
-    	ArrayList<Enemy> enemies = fakeHitbox.getCollMan().enemiesHurt();
-    	for(Enemy enemy : enemies ) {
-    		enemy.getHurt(this.getDamage());
-    	}
+        }
+        ArrayList<Enemy> enemies = fakeHitbox.getCollMan().enemiesHurt();
+        for (Enemy enemy : enemies) {
+            enemy.getHurt(this.getDamage());
+        }
     }
+
     public void die() {
     	System.exit(0);
     }
+  
     public void setInput(ArrayList<String> input) {
         this.input = input;
     }
@@ -98,21 +118,22 @@ public class Player extends Charac {
     public Dijkstra getDistanceField() {
         return this.distanceField;
     }
-    
+
     public void removeHitbox() {
         Collider.playerHitbox = null;
-      }
-    
-    public void changeHitbox() {
-      	this.setHitbox();
-      	Collider.playerHitbox= this.getHitbox();
-      }
-    
-    public int getAttackState() {
-    	return attackState.get();
     }
-    public IntegerProperty getAttackStateProperty() {
-    	return attackState;
+
+    public void changeHitbox() {
+        this.setHitbox();
+        Collider.playerHitbox = this.getHitbox();
+    }
+
+    public int getAttackState() {
+        return attackState.get();
+    }
+
+    public final IntegerProperty attackStateProperty() {
+        return attackState;
     }
 
 }

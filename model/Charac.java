@@ -1,5 +1,8 @@
 package model;
 
+/* Charac
+ * This Class represent all the character who interact in the world
+ */
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;

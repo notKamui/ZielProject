@@ -4,6 +4,9 @@ import model.ItemPlaceableType.BlockDirt;
 import model.ItemPlaceableType.BlockStone;
 import model.ItemPlaceableType.BlockWood;
 
+/* Tile
+ * This class create and manage all the tile in the scene
+ */
 public abstract class Tile extends GameObject {
     private final static int TILESIZE = MathDataBuilder.TILESIZE;
     private final static int LINELENGTH = MathDataBuilder.LINELENGTH;

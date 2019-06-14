@@ -1,6 +1,6 @@
 /**
  * Dijkstra
- * Class wich contains a function to apply and set a distance field arround the player
+ * Class which contains a function to apply and set a distance field arround the player
  *
  * @author notKamui
  */

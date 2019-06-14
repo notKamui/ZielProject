@@ -2,7 +2,10 @@ package model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-
+/* DynamicObject
+ * This class represent all of the GameObject who can move in the scene
+ * (Player, enemy, Item drop)
+ */
 public abstract class DynamicObject extends GameObject {
 
     final private int GRAVITY = 30;
@@ -12,7 +15,7 @@ public abstract class DynamicObject extends GameObject {
     private int vectY;
     private IntegerProperty directionProperty; // 0 = facing left // 180 = facing right
     private Collider collMan;
-    private IntegerProperty animState; // default idle ; 1 run ; 2 rising ; 3 falling ;
+    private IntegerProperty animState; // default idle ; 1 run ; 2 rising ; 3 falling ; 4 atk
 
     public DynamicObject(int id, int x, int y, int width, int height, boolean isFlying) {
         super(id, x, y, width, height);
@@ -22,6 +25,7 @@ public abstract class DynamicObject extends GameObject {
         this.animState = new SimpleIntegerProperty(0);
     }
 
+    //Method that let DynamicObject act on the map(move, follow the player, jump..)
     abstract public void act();
 
     public void setPosition() {
@@ -133,6 +137,10 @@ public abstract class DynamicObject extends GameObject {
             this.animState.set(1);
         else
             this.animState.set(0);
+    }
+
+    public void setAnimState(int a) {
+        this.animState.set(a);
     }
 
     public int getAnimState() {
