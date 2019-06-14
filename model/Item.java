@@ -47,7 +47,7 @@ public abstract class Item extends DynamicObject {
         return this.quantityMax;
     }
 
-    public IntegerProperty getQuantityProperty() {
+    public IntegerProperty quantityProperty() {
         return this.quantity;
     }
 
