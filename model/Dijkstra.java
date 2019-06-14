@@ -22,7 +22,7 @@ public class Dijkstra {
 
     /**
      * Main Dijkstra function
-     * Applies a Dijkstra based distance filed around the player on the tiles, with a limited range (default : 250 units)
+     * Applies a Dijkstra based distance field around the player on the tiles, with a limited range (default : 250 units)
      * Cardinal cost : 10 units | Diagonal cost : 14 units (Pythagorean theorem)
      */
     public void applyDistanceField() {
