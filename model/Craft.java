@@ -37,6 +37,7 @@ public class Craft {
             //Test is its craftable
             if (Integer.parseInt(idItemCraft) == id) {
                 for (int item = 0; item < idItemNeeded.size(); item++) {
+                    //System.out.println(idItemNeeded.get(item));
                     if (MathDataBuilder.world().getPlayer().getInventory().isInventoryContainsItem(Integer.parseInt(idItemNeeded.get(item)))) {
                         if (MathDataBuilder.world().getPlayer().getInventory().getItembyId(Integer.parseInt(idItemNeeded.get(item))).getQuantity() >= Integer.parseInt(quantityItemNeeded.get(item))) {
                             boolOfRecipe.add(true);
@@ -92,7 +93,6 @@ public class Craft {
                     isFinished = true;
                 }
             }
-
             idRecipes.add(Integer.parseInt(idItemCraft));
         }
 
@@ -135,8 +135,11 @@ public class Craft {
                 default:
                     return itemNeed;
             }
-
-            itemNeed += MathDataBuilder.world().getPlayer().getInventory().getItembyId(Integer.parseInt(idItemNeeded.get(i))).getQuantity() + "/" + quantityItemNeeded.get(i);
+            int q = 0;
+            Item item = MathDataBuilder.world().getPlayer().getInventory().getItembyId(Integer.parseInt(idItemNeeded.get(i)));
+            if (item != null)
+                q = item.getQuantity();
+                itemNeed += q + "/" + quantityItemNeeded.get(i);
         }
         return itemNeed;
     }
