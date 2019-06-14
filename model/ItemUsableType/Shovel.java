@@ -18,7 +18,10 @@ public class Shovel extends ItemUsable {
 		if(this.isInRange(x, y)) {
 			Tile target = MathDataBuilder.world().getMap().getTileAt(i);
 			if(target.getDurability()>0) {
-				target.setState(target.getState()- efficiency);
+                int bonus = 1;
+                if ("D".contains(target.getCharCode() + ""))
+                    bonus = 3;
+				target.setState(target.getState()- efficiency*bonus);
 				if(target.getState()<0) {
 				    char charCode = 's';
 				    if (y/MathDataBuilder.TILESIZE >= 20)
