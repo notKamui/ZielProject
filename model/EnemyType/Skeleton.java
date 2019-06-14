@@ -5,7 +5,7 @@ import model.MathDataBuilder;
 
 public class Skeleton extends Enemy {
   public Skeleton(int x, int y) {
-        super(900, x, y, 32, 64, false, 50, 10);
+        super(900, x, y, 32, 64, false, 50, 5);
   }
 	
 	@Override
