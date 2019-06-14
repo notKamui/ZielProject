@@ -29,6 +29,6 @@
 
 -Menu de Craft
 
--Vie pour le Joueur et Ennemis
+-Vie pour le Joueur et Ennemis + affichage en barre de vie + mort
 
 -Attaque du joueur et des ennemis
