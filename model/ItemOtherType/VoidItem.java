@@ -4,7 +4,7 @@ import model.ItemOther;
 
 public class VoidItem extends ItemOther{
 	public VoidItem(int x, int y) {
-		super(x, y, "VoidItem", 0, 1, 1);
+		super(0, x, y, "VoidItem", 0, 1);
 	}
 
 	@Override

@@ -129,7 +129,7 @@ public class Collider {
 
         switch (type) {
             case 4:
-                radius = MathDataBuilder.TILESIZE*2;
+                radius = MathDataBuilder.TILESIZE*1.2;
                 usedHitboxList = itemHitboxList;
                 break;
             case 5:

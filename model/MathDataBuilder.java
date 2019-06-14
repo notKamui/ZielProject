@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class MathDataBuilder {
+public abstract class MathDataBuilder {
     public static final int TILESIZE = 64;
     public static final int ITEMSIZE = 20;
     public static final int[] PLAYERDIM = {64, 89}; // {width, height}
@@ -73,6 +73,46 @@ public class MathDataBuilder {
         }
         return content;
     }
+    
+    public static int countLinesinFiles(String filename) {
+    	File file = new File(filename);
+        FileReader reader = null;
+	        try {
+	        	reader = new FileReader(file);
+	        	char[] c = new char[(int) file.length()];
+	
+	            int readChars = reader.read(c);
+	            if (readChars == -1) {
+	                //if the file is empy
+	                return 0;
+	            }
+	
+	            int count = 0;
+	            while (readChars == 1024) {
+	                for (int i=0; i<1024;) {
+	                    if (c[i++] == '\n') {
+	                        ++count;
+	                    }
+	                }
+	                readChars = reader.read(c);
+	            }
+	
+	            // count remaining characters
+	            while (readChars != -1) {
+	                for (int i=0; i<readChars; ++i) {
+	                    if (c[i] == '\n') {
+	                        ++count;
+	                    }
+	                }
+	                readChars = reader.read(c);
+	            }
+	            reader.close();
+	            return count;
+	        } catch (IOException e) {
+	        	e.printStackTrace();
+	        }
+	        return 0;
+    }
 
     static void saveMap(ObservableList<Tile> map) {
         try {
@@ -107,6 +147,12 @@ public class MathDataBuilder {
                 break;
             case 's':
                 tile = new Sky(i);
+                break;
+            case 'S':
+                tile = new Stone(i);
+                break;
+            case 'W':
+                tile = new Wood(i);
                 break;
             default:
                 tile = new Void(i);

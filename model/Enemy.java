@@ -1,10 +1,9 @@
 package model;
 
-public abstract class Enemy extends Charac{
-	
+public abstract class Enemy extends Charac {
 
-	public Enemy(int x, int y, boolean isFlying, double hp, double damage) {
-		super(x, y, 64, 64, isFlying, hp, damage);
+	public Enemy(int id, int x, int y, int width, int height, boolean isFlying, double hp, double damage) {
+		super(id, x, y, width, height, isFlying, hp, damage);
 		this.setSpeed(5);
 	}
 	
@@ -34,5 +33,4 @@ public abstract class Enemy extends Charac{
       	this.setHitbox();
       	Collider.characHitboxList.add(this.getHitbox());
       }
-
 }

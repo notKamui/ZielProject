@@ -20,9 +20,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
+import model.Craft;
 import model.DynamicObject;
 import model.EnemyType.Gargoyle;
 import model.EnemyType.Skeleton;
@@ -44,6 +48,7 @@ public class GameController implements Initializable {
     private boolean gameLoopIsPaused = false;
     private World world;
     private MouseEvent lastEvent = null;
+    private Craft craft;
 
     @FXML
     private BorderPane root;
@@ -75,6 +80,10 @@ public class GameController implements Initializable {
 
     @FXML
     private Pane pauseMenu;
+    
+    @FXML
+    private Pane craftMenu;
+
 
     @FXML
     void quitPauseMenu(ActionEvent event) {
@@ -91,25 +100,7 @@ public class GameController implements Initializable {
 
 
     private Image getImage(int i) {
-        String url = "src/resources/tiles/";
-        switch (this.world.getMap().getTileAt(i).getCharCode()) {
-            case 'D':
-                url += "dirt.png";
-                break;
-            case 'd':
-                url += "dirtBG.png";
-                break;
-            case 'B':
-                url += "brick.png";
-                break;
-            case 's':
-                url += "sky.png";
-                break;
-            default:
-                url += "void.png";
-                break;
-        }
-        return new Image("file:" + url);
+        return new Image(Factory.idToUrl.get(this.world.getMap().getTileAt(i).getId()));
     }
 
     private void startGame() {
@@ -125,7 +116,7 @@ public class GameController implements Initializable {
 
             this.world.getPlayer().setInput(input);
             this.world.getPlayer().act();
-            
+
             for (DynamicObject object : this.world.getDynamicObjects()) {
                 object.act();
             }
@@ -140,8 +131,32 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pauseMenu.setVisible(false);
-
+        craftMenu.setVisible(false);
+        craft = new Craft();
+        
         this.world = Factory.initWorld();
+        this.world.getPlayer().animStateProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                ImageView imageView = (ImageView) playerBox.getChildren().get(0);
+                String url = "file:src/resources/sprites/player/player_";
+                switch ((int) newValue) {
+                    case 1:
+                        url = url + "run.gif";
+                        break;
+                    case 2:
+                        url = url + "rising.png";
+                        break;
+                    case 3:
+                        url = url + "falling.png";
+                        break;
+                    default:
+                        url = url + "idle.gif";
+                        break;
+                }
+                imageView.setImage(new Image(url));
+            }
+        });
         this.world.getPlayer().directionProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue,
@@ -183,12 +198,25 @@ public class GameController implements Initializable {
                     gameLoop.pause();
                     gameLoopIsPaused = true;
                     quickInventory.setVisible(false);
+                    craftMenu.setVisible(false);
                     pauseMenu.setVisible(true);
                 } else {
                     gameLoop.play();
                     gameLoopIsPaused = false;
                     quickInventory.setVisible(true);
                     pauseMenu.setVisible(false);
+                }
+            }
+            if (code.equals("I")) {
+                if (!gameLoopIsPaused) {
+                    gameLoop.pause();
+                    gameLoopIsPaused = true;
+                    craftMenu.setVisible(true);
+                    fillTheCraft();
+                } else {
+                    gameLoop.play();
+                    gameLoopIsPaused = false;
+                    craftMenu.setVisible(false);
                 }
             }
             event.consume();
@@ -243,10 +271,10 @@ public class GameController implements Initializable {
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
         this.world.getPlayer().getInventory().addItem(new Shovel(1));
         this.world.getPlayer().getInventory().addItem(new BlockDirt(0, 0));
-        
-        world.getDynamicObjects().add(new Gargoyle(MathDataBuilder.TILESIZE*61, MathDataBuilder.TILESIZE*0));
-        //world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE*66, MathDataBuilder.TILESIZE*4));
-        
+
+        world.getDynamicObjects().add(new Gargoyle(MathDataBuilder.TILESIZE * 61, MathDataBuilder.TILESIZE * 0));
+        world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE * 66, MathDataBuilder.TILESIZE * 4));
+
         startGame();
         gameLoop.play();
     }
@@ -254,6 +282,68 @@ public class GameController implements Initializable {
     public void handlePressed(MouseEvent e) {
         lastEvent = e;
     }
-
-
+  
+    private void fillTheCraft() {
+    	ArrayList<Integer> nbOfItemCraftable = craft.getIdRecipeCraftable();
+    	
+    	
+    	double layoutX = 100;
+    	double layoutY = 1;
+    	for(int recipe = 0; recipe < nbOfItemCraftable.size(); recipe++) {
+    		Pane p = new Pane();
+    		Rectangle r = new Rectangle(80, 80);
+    		ImageView img = new ImageView("file:src/resources/sprites/shovel_sprite.png");
+    		int idItem = nbOfItemCraftable.get(recipe);
+    		img.setFitWidth(80);
+    		img.setFitHeight(80);
+    		if(craft.isCraftable(nbOfItemCraftable.get(recipe))) {
+    			r.setFill(Color.YELLOW);
+    			p.setOnMousePressed(new EventHandler<MouseEvent>() {
+        			public void handle(MouseEvent e) {
+        				craft.craft(idItem);
+        				fillTheCraft();
+        			}
+    			});
+    		}
+    		else {
+    			r.setFill(Color.GRAY);
+    		}
+    		p.getChildren().add(r);
+    		p.getChildren().add(img);
+    		p.setOnMouseEntered(new EventHandler<MouseEvent>() {
+    			public void handle(MouseEvent e) {
+    				Pane paneInfo = new Pane();
+    				Rectangle info = new Rectangle(200, 50);
+    				Text textInfoCraft = new Text(craft.ItemNeedToString(idItem));
+    				info.setLayoutX(r.getLayoutX()+40);
+    				info.setLayoutY(r.getLayoutY()-20);
+    				textInfoCraft.setFill(Color.WHITE);
+    				textInfoCraft.setLayoutX(textInfoCraft.getLayoutX()+50);
+    				paneInfo.getChildren().add(info);
+    				paneInfo.getChildren().add(textInfoCraft);
+    				paneInfo.setOpacity(0.75);
+    				p.getChildren().add(paneInfo);
+    			}
+			});
+    		p.setOnMouseExited(new EventHandler<MouseEvent>() {
+    			public void handle(MouseEvent e) {
+    				p.getChildren().remove(2);
+    			}
+			});
+    		
+    		craftMenu.getChildren().add(p);
+    		p.toFront();
+    		if(recipe == 0) {
+    			p.setLayoutY(1*100);
+    		}
+    		else if(recipe % 4 == 0) {
+    			layoutX+=250;
+    			layoutY = 1;
+    		}
+    		p.setLayoutX(layoutX);
+    		p.setLayoutY(layoutY*125);
+    		layoutY++;
+    	}
+    	
+    }
 }

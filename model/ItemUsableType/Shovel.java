@@ -8,7 +8,7 @@ public class Shovel extends ItemUsable {
 	private int efficiency;
 	
 	public Shovel(int efficiency) {
-		super(0, 0, "Shovel", 2, (int) (MathDataBuilder.TILESIZE*2.5), 1, 1);
+		super(100, 0, 0, "Shovel", 200, (int) (MathDataBuilder.TILESIZE*2.5), 1);
 		this.efficiency = efficiency;
 	}
 

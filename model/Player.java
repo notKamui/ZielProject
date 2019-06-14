@@ -1,5 +1,6 @@
 package model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import model.ItemOtherType.VoidItem;
@@ -11,7 +12,7 @@ public class Player extends Charac {
     private ArrayList<String> input;
 
     public Player(int x, int y) {
-        super(x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1], false, 100, 10);
+        super(700, x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1], false, 100, 10);
         this.inventory = new Inventory();
         this.setHitbox();
         this.distanceField = new Dijkstra();
@@ -34,15 +35,17 @@ public class Player extends Charac {
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
+            
+            	case "R" :
+            		Craft c = new Craft();
+            		break;
                 case "RIGHT":
                 case "D":
                     this.setVectX(this.getSpeed());
-                    this.setDirection(true);
                     break;
                 case "LEFT":
                 case "Q":
                     this.setVectX(-this.getSpeed());
-                    this.setDirection(false);
                     break;
                 case "DOWN":
                 case "S":

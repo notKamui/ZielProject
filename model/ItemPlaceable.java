@@ -1,12 +1,11 @@
 package model;
 
-import model.ItemOtherType.VoidItem;
 import model.ItemPlaceableType.BlockDirt;
 
 public abstract class ItemPlaceable extends Item{
 	
-	public ItemPlaceable(int x, int y, String n, int id, int q, int qMax) {
-		super(x, y, n, id, (int) (MathDataBuilder.TILESIZE*2.5), q, qMax);
+	public ItemPlaceable(int id, int x, int y, String n, int q, int qMax) {
+		super(id, x, y, n, (int) (MathDataBuilder.TILESIZE*2.5), q, qMax);
 	}
 
 	public abstract void placeBlock(int i);

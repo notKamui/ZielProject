@@ -5,7 +5,7 @@ import model.MathDataBuilder;
 
 public class BlockDirt extends ItemPlaceable{
 	public BlockDirt(int x, int y) {
-		super(x, y, "Dirt", 1, 1, 64);
+		super(1, x, y, "Dirt", 1, 64);
 	}
 
 	@Override
@@ -13,9 +13,4 @@ public class BlockDirt extends ItemPlaceable{
         MathDataBuilder.world().getMap().updateMap(i, 'D');
 		
 	}
-
-	
-	
-	
-
 }

@@ -17,8 +17,6 @@ public class InventoryListener implements ListChangeListener<Item> {
     @Override
     public void onChanged(ListChangeListener.Change<? extends Item> change) {
         while (change.next()) {
-            // TODO optimiser tout ca oulah
-
             int id = 0;
             int id2 = 0;
             if (change.getAddedSubList().size() != 0)
@@ -42,8 +40,7 @@ public class InventoryListener implements ListChangeListener<Item> {
                         Pane pane = (Pane) quickInventory.getChildren().get(slot);
                         ImageView img = (ImageView) pane.getChildren().get(1);
                         if (null == img.getImage()) {
-                            img.setImage(new Image("file:src/resources/sprites/shovel_sprite.png"));
-                            //img.setImage(new Image("file:src/resources/item/"+id+".png"));
+                            img.setImage(new Image(Factory.idToUrl.get(id)));
                             isAdded = true;
                         }
                     }

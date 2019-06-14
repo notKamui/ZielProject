@@ -6,10 +6,9 @@ import model.MathDataBuilder;
 import model.Tile;
 
 public class Gargoyle extends Enemy {
-
-	public Gargoyle(int x, int y) {
-		super(x, y, true, 30, 15);
-	}
+  public Gargoyle(int x, int y) {
+        super(901, x, y, 64, 64, true, 30, 15);
+  }
 
 
 	@Override
@@ -72,7 +71,5 @@ public class Gargoyle extends Enemy {
 		}
 
 	}
-
-
 
 }
