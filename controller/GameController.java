@@ -79,6 +79,11 @@ public class GameController implements Initializable {
     
     @FXML
     private Pane craftMenu;
+    
+    @FXML
+    private Rectangle healthBar;
+    
+    private double barWidth; 
 
 
     @FXML
@@ -117,7 +122,6 @@ public class GameController implements Initializable {
                 object.act();
             }
 
-            //System.out.println(this.world.getMap().getTileAt(MathDataBuilder.coordToIndexTile(65, 5)).getDistance());
             this.cameraUpdate();
 
         }));
@@ -153,6 +157,14 @@ public class GameController implements Initializable {
                 imageView.setImage(new Image(url));
             }
         });
+        barWidth = healthBar.getWidth();
+        this.world.getPlayer().getHpProperty().addListener(new ChangeListener<Number>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+                            Number newValue) {
+        	healthBar.setWidth((double) newValue /MathDataBuilder.world().getPlayer().getMaxHp()*barWidth);
+        }
+    });
         this.world.getPlayer().directionProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue,

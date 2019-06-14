@@ -51,27 +51,13 @@ public abstract class Tile extends GameObject {
     public int getIndex() {
         return this.index;
     }
-
+    public abstract Item droppedBlock(int x, int y);
+    
     public void dropBloc() {
         int x = this.coordXProperty().get() + TILESIZE / 2 - MathDataBuilder.ITEMSIZE / 2;
         int y = this.coordYProperty().get() + TILESIZE / 2 - MathDataBuilder.ITEMSIZE / 2;
-        Item drop;
-        switch (charCode) {
-            case 'D':
-                drop = new BlockDirt(x, y);
-                break;
-            case 'S':
-                drop = new BlockStone(x, y);
-                break;
-            case 'W':
-                drop = new BlockWood(x, y);
-                break;
-            default:
-                drop = null;
-                break;
-        }
-        if (drop != null)
-            MathDataBuilder.world().getDynamicObjects().add(drop);
+        Item drop = this.droppedBlock(x,y);
+        MathDataBuilder.world().getDynamicObjects().add(drop);
     }
 
     //-------------Dijsktra Data------------------
