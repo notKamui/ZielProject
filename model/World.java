@@ -3,6 +3,9 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/* World
+ * This class contains method to create ad manage the world where evolve all of the GameObject
+ */
 public class World {
     private Map map;
     private Player player;

@@ -2,10 +2,11 @@ package model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.shape.Shape;
-import model.EnemyType.Skeleton;
-
 import java.util.ArrayList;
 
+/* Collider
+ * This class manage all the collision between GameObject in the scene
+ */
 public class Collider {
     private DynamicObject self;
     public static ArrayList<Hitbox> itemHitboxList = new ArrayList<>();

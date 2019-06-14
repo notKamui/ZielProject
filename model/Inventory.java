@@ -5,8 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.ItemOtherType.VoidItem;
 
-//La classe Inventory va permettre de s'occuper de l'inventaire du perso, en attribut, une liste d'Item et
-// la capacite max de l'inventaire
+/* Inventory
+ * This class contains all the method to create, initialize and manage the inventory of the game
+ */
 public class Inventory {
 
     final private static Item VOID = new VoidItem(0,0);

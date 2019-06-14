@@ -1,6 +1,8 @@
 package model;
 
-
+/* Charac
+ * This Class represent all the character who interact in the world
+ */
 public abstract class Charac extends DynamicObject {
     private int jumpForce;
     private int invFrame;

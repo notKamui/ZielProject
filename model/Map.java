@@ -2,7 +2,9 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+/* Map
+ * This class take an ObservableList of tile to create the map and manage it
+ */
 public class Map {
     private ObservableList<Tile> map;
 

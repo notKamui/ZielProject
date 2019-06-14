@@ -1,10 +1,12 @@
 package model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import model.ItemOtherType.VoidItem;
-
+/* Player
+ * This class contains all the methods that permit to control and manage the player
+ * (Spawn player, take Input, Attack...)
+ */
 public class Player extends Charac {
 	private int attackState;
     private Inventory inventory;
@@ -35,10 +37,6 @@ public class Player extends Charac {
     public void readInput(ArrayList<String> input) {
         for (String key : input)
             switch (key) {
-            
-            	case "R" :
-            		Craft c = new Craft();
-            		break;
                 case "RIGHT":
                 case "D":
                     this.setVectX(this.getSpeed());
