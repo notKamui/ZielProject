@@ -47,10 +47,7 @@ public abstract class Tile extends GameObject {
         this.setHitbox();
         Collider.tileHitboxList.add(this.getHitbox());
     }
-
-    //-------------Dijsktra Data------------------
-    private double distance; // distance from the start node (used for the Dijkstra/BFS algorithm)
-
+    
     public int getIndex() {
         return this.index;
     }
@@ -77,6 +74,10 @@ public abstract class Tile extends GameObject {
             MathDataBuilder.world().getDynamicObjects().add(drop);
     }
 
+    //-------------Dijsktra Data------------------
+    private double distance; // distance from the start node (used for the Dijkstra/BFS algorithm)
+
+    
     public void resetDistance() {
         this.setDistance(Double.MAX_VALUE);
     }

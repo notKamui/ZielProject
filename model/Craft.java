@@ -155,7 +155,7 @@ public class Craft {
                 i = new Shovel(10);
                 break;
             default:
-                i = new VoidItem();
+                i = new VoidItem(0, 0);
                 break;
         }
         return i;

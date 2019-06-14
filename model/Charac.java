@@ -3,13 +3,18 @@ package model;
 
 public abstract class Charac extends DynamicObject {
     private int jumpForce;
+    private int invFrame;
     private boolean isJumping;
+    private double hp;
+    private double damage;
 
-    public Charac(int id, int x, int y, int width, int height, boolean isFlying) {
+    public Charac(int id, int x, int y, int width, int height, boolean isFlying, double hp, double damage) {
         super(id, x, y, width, height, isFlying);
         this.jumpForce = 0;
         this.setIsJumping(false);
         this.changeHitbox();
+        this.hp = hp;
+        this.damage = damage;
     }
 
     // Jump functions--------
@@ -36,18 +41,41 @@ public abstract class Charac extends DynamicObject {
     public int getJumpForce() {
         return this.jumpForce;
     }
-
-    //-------------------------
+  //-------------------------
+    
+    public void getHurt(double damage) {
+    	if(this.getInvFrame()==0) {
+    		this.setHp(this.getHp()-damage);
+    		this.setInvFrame(90);
+    	}
+    }    
+    
 
 
     
-    public void removeHitbox() {
-        Collider.characHitboxList.remove(this.getHitbox());
-      }
 
-    public void changeHitbox() {
-      	this.setHitbox();
-      	Collider.characHitboxList.add(this.getHitbox());
-      }
+	public double getHp() {
+		return hp;
+	}
+
+	public void setHp(double hp) {
+		this.hp = hp;
+	}
+
+	public double getDamage() {
+		return damage;
+	}
+
+	public void setDamage(double damage) {
+		this.damage = damage;
+	}
+
+	public int getInvFrame() {
+		return invFrame;
+	}
+
+	public void setInvFrame(int invFrame) {
+		this.invFrame = invFrame;
+	}
 
 }
