@@ -6,7 +6,7 @@ import model.ItemPlaceableType.BlockDirt;
 
 public class Dirt extends Tile {
     public Dirt(int i) {
-        super(1, 'D', i, 15);
+        super(1, 'D', i, 1000);
     }
     
     

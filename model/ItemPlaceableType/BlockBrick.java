@@ -10,6 +10,6 @@ public class BlockBrick extends ItemPlaceable {
 
     @Override
     public void placeBlock(int i) {
-        MathDataBuilder.world().getMap().updateMap(i, 'W');
+        MathDataBuilder.world().getMap().updateMap(i, 'B');
     }
 }

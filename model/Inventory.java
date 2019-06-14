@@ -16,7 +16,7 @@ public class Inventory {
 	
 	public Inventory() {
 		this.inventory = FXCollections.observableArrayList();
-		this.capacity = 10;
+		this.capacity = 8;
 		for(int i = 0; i < capacity; i++) {
 			inventory.add(VOID);
 		}
