@@ -1,7 +1,8 @@
 # ZielProject
 ## TEILLARD Jimmy - LEDOUX Nicolas - FERNANDES Damien
 
-## Fonctionnalité du jeu :
+## Fonctionnalités du jeu :
+
 -Création d'une map par un fichier Text
 
 -Déplacement d'un personnage sur cette Map (Saut, Gauche, Droite)
@@ -28,6 +29,6 @@
 
 -Menu de Craft
 
--Vie pour le Joueur et Ennemi
+-Vie pour le Joueur et Ennemis
 
--Attaque du joueur et des ennemies
+-Attaque du joueur et des ennemis
