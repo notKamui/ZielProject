@@ -79,6 +79,11 @@ public class GameController implements Initializable {
     
     @FXML
     private Pane craftMenu;
+    
+    @FXML
+    private Rectangle healthBar;
+    
+    private double barWidth; 
 
 
     @FXML
@@ -116,8 +121,6 @@ public class GameController implements Initializable {
             for (DynamicObject object : this.world.getDynamicObjects()) {
                 object.act();
             }
-
-            //System.out.println(this.world.getMap().getTileAt(MathDataBuilder.coordToIndexTile(65, 5)).getDistance());
             this.cameraUpdate();
 
         }));
@@ -131,6 +134,43 @@ public class GameController implements Initializable {
         craft = new Craft();
         
         this.world = Factory.initWorld();
+        this.world.getPlayer().attackStateProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                ImageView imageView = (ImageView) playerBox.getChildren().get(0);
+                if ((int) newValue == 0)
+                    imageView.setImage(new Image("file:src/resources/sprites/player/player_idle.gif"));
+                else {
+                    String url = "file:src/resources/sprites/player/atk/player_atk";
+                    if ((int) newValue > 20)
+                        url += "1";
+                    else if ((int) newValue > 19)
+                        url += "2";
+                    else if ((int) newValue > 18)
+                        url += "3";
+                    else if ((int) newValue > 16)
+                        url += "4";
+                    else if ((int) newValue > 14)
+                        url += "5";
+                    else if ((int) newValue > 12)
+                        url += "6";
+                    else if ((int) newValue > 10)
+                        url += "7";
+                    else if ((int) newValue > 9)
+                        url += "8";
+                    else if ((int) newValue > 7)
+                        url += "9";
+                    else if ((int) newValue > 5)
+                        url += "10";
+                    else if ((int) newValue > 3)
+                        url += "11";
+                    else if ((int) newValue > 0)
+                        url += "12";
+
+                    imageView.setImage(new Image(url + ".png"));
+                }
+            }
+        });
         this.world.getPlayer().animStateProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -153,6 +193,14 @@ public class GameController implements Initializable {
                 imageView.setImage(new Image(url));
             }
         });
+        barWidth = healthBar.getWidth();
+        this.world.getPlayer().getHpProperty().addListener(new ChangeListener<Number>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+                            Number newValue) {
+        	healthBar.setWidth((double) newValue /MathDataBuilder.world().getPlayer().getMaxHp()*barWidth);
+        }
+    });
         this.world.getPlayer().directionProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue,
@@ -265,9 +313,11 @@ public class GameController implements Initializable {
 
         // inventory listener
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
-        this.world.getPlayer().getInventory().addItem(new BlockStone(0, 0));
-        this.world.getPlayer().getInventory().addItem(new BlockWood(0, 0));
-        this.world.getPlayer().getInventory().addItem(new BlockWood(0, 0));
+
+        for (int j = 0; j < 30; j++) { // test
+            this.world.getPlayer().getInventory().addItem(new BlockStone(0, 0));
+            this.world.getPlayer().getInventory().addItem(new BlockWood(0, 0));
+        }
 
         world.getDynamicObjects().add(new Gargoyle(MathDataBuilder.TILESIZE * 61, MathDataBuilder.TILESIZE * 0));
         world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE * 66, MathDataBuilder.TILESIZE * 4));

@@ -106,6 +106,7 @@ public class Collider {
     public boolean playerHurt() {
     	return Shape.intersect(this.self.getHitbox().getBounds(), playerHitbox.getBounds()).getBoundsInParent().getWidth()!=-1;
     }
+    
     public ArrayList<Enemy> enemiesHurt(){
     	ArrayList<Enemy> enemies = new ArrayList<>();
     	Hitbox selfHB = new Hitbox(this.self.coordXProperty(),
@@ -134,8 +135,9 @@ public class Collider {
                 usedHitboxList = itemHitboxList;
                 break;
             case 5:
-            	radius = 2*MathDataBuilder.TILESIZE;
+            	radius = 3*MathDataBuilder.TILESIZE;
             	usedHitboxList.addAll(itemHitboxList);
+            	usedHitboxList.addAll(characHitboxList);
             	usedHitboxList.add(playerHitbox);
             	break;
             case 6:

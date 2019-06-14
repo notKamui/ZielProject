@@ -1,7 +1,8 @@
 package model;
 
 import model.ItemOtherType.VoidItem;
-import model.ItemPlaceableType.BlockDirt;
+import model.ItemPlaceableType.BlockBrick;
+import model.ItemUsableType.Pickaxe;
 import model.ItemUsableType.Shovel;
 
 import java.util.ArrayList;
@@ -140,6 +141,9 @@ public class Craft {
                 case 100:
                     itemNeed += "Shovel: ";
                     break;
+                case 101:
+                    itemNeed += "Pickaxe: ";
+                    break;
                 default:
                     return itemNeed;
             }
@@ -159,11 +163,14 @@ public class Craft {
     private Item idToItem(int id) {
         Item i = null;
         switch (id) {
-            case 1:
-                i = new BlockDirt(0, 0);
+            case 4:
+                i = new BlockBrick(0, 0);
                 break;
             case 100:
                 i = new Shovel(10);
+                break;
+            case 101:
+                i = new Pickaxe(10);
                 break;
             default:
                 i = new VoidItem(0, 0);
