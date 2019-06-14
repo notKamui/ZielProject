@@ -5,7 +5,7 @@ import model.MathDataBuilder;
 
 public class BlockStone extends ItemPlaceable {
     public BlockStone(int x, int y) {
-        super(2, x, y, "Stone", 2, 64);
+        super(2, x, y, "Stone", 1, 64);
     }
 
     @Override

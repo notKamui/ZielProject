@@ -26,15 +26,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import model.Craft;
-import model.DynamicObject;
+import model.*;
 import model.EnemyType.Gargoyle;
 import model.EnemyType.Skeleton;
-import model.ItemPlaceableType.BlockDirt;
-import model.ItemUsableType.Shovel;
-import model.MathDataBuilder;
-import model.Tile;
-import model.World;
+import model.ItemPlaceableType.BlockStone;
+import model.ItemPlaceableType.BlockWood;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -210,7 +206,7 @@ public class GameController implements Initializable {
                     gameLoop.pause();
                     gameLoopIsPaused = true;
                     craftMenu.setVisible(true);
-                    fillTheCraft();
+                    updateCraftView();
                 } else {
                     gameLoop.play();
                     gameLoopIsPaused = false;
@@ -267,8 +263,9 @@ public class GameController implements Initializable {
 
         // inventory listener
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
-        this.world.getPlayer().getInventory().addItem(new Shovel(1));
-        this.world.getPlayer().getInventory().addItem(new BlockDirt(0, 0));
+        this.world.getPlayer().getInventory().addItem(new BlockStone(0, 0));
+        this.world.getPlayer().getInventory().addItem(new BlockWood(0, 0));
+        this.world.getPlayer().getInventory().addItem(new BlockWood(0, 0));
 
         world.getDynamicObjects().add(new Gargoyle(MathDataBuilder.TILESIZE * 61, MathDataBuilder.TILESIZE * 0));
         world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE * 66, MathDataBuilder.TILESIZE * 4));
@@ -281,25 +278,21 @@ public class GameController implements Initializable {
         lastEvent = e;
     }
   
-    private void fillTheCraft() {
+    private void updateCraftView() {
     	ArrayList<Integer> nbOfItemCraftable = craft.getIdRecipeCraftable();
-    	
-    	
     	double layoutX = 100;
     	double layoutY = 1;
     	for(int recipe = 0; recipe < nbOfItemCraftable.size(); recipe++) {
     		Pane p = new Pane();
     		Rectangle r = new Rectangle(80, 80);
-    		ImageView img = new ImageView("file:src/resources/sprites/shovel_sprite.png");
     		int idItem = nbOfItemCraftable.get(recipe);
-    		img.setFitWidth(80);
-    		img.setFitHeight(80);
+            ImageView img = new ImageView(Factory.idToUrl.get(idItem));
     		if(craft.isCraftable(nbOfItemCraftable.get(recipe))) {
     			r.setFill(Color.YELLOW);
     			p.setOnMousePressed(new EventHandler<MouseEvent>() {
         			public void handle(MouseEvent e) {
         				craft.craft(idItem);
-        				fillTheCraft();
+        				updateCraftView();
         			}
     			});
     		}
@@ -312,7 +305,7 @@ public class GameController implements Initializable {
     			public void handle(MouseEvent e) {
     				Pane paneInfo = new Pane();
     				Rectangle info = new Rectangle(200, 50);
-    				Text textInfoCraft = new Text(craft.ItemNeedToString(idItem));
+    				Text textInfoCraft = new Text(craft.itemNeedToString(idItem));
     				info.setLayoutX(r.getLayoutX()+40);
     				info.setLayoutY(r.getLayoutY()-20);
     				textInfoCraft.setFill(Color.WHITE);

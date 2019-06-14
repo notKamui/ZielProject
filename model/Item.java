@@ -53,4 +53,8 @@ public abstract class Item extends DynamicObject {
     }
 
     abstract public void action(int x, int y);
+
+    public String getName() {
+        return this.name;
+    }
 }

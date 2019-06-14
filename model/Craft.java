@@ -1,13 +1,14 @@
 package model;
 
 import model.ItemOtherType.VoidItem;
+import model.ItemPlaceableType.BlockDirt;
 import model.ItemUsableType.Shovel;
 
 import java.util.ArrayList;
 
 public class Craft {
 
-    private final String RECIPES = "src/resources/other/Recipes.txt";
+    private final String RECIPES = "src/resources/other/recipes.txt";
     private String recipes;
     private String line;
     private String idItemCraft;
@@ -53,10 +54,9 @@ public class Craft {
 
     public void craft(int id) {
         if (isCraftable(id)) {
-
             int lineRecipe = 0;
-            loopRecipe:
-            for (int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES) + 1; recipe++) {
+            boolean isFinished = false;
+            for (int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES) + 1 && !isFinished; recipe++) {
 
                 //Take the line of the recipe
                 lineRecipe = getRecipeLine(lineRecipe);
@@ -65,7 +65,7 @@ public class Craft {
                 getEachElementOfTheLine();
 
                 if (Integer.parseInt(idItemCraft) == id) {
-                    break loopRecipe;
+                    isFinished = true;
                 }
             }
             //Craft
@@ -99,10 +99,10 @@ public class Craft {
         return idRecipes;
     }
 
-    public String ItemNeedToString(int id) {
+    public String itemNeedToString(int id) {
         int lineRecipe = 0;
-        loopRecipe:
-        for (int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES) + 1; recipe++) {
+        boolean isFinished = false;
+        for (int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES) + 1 && !isFinished; recipe++) {
 
             //Take the line of the recipe
             lineRecipe = getRecipeLine(lineRecipe);
@@ -111,26 +111,32 @@ public class Craft {
             getEachElementOfTheLine();
 
             if (Integer.parseInt(idItemCraft) == id) {
-                break loopRecipe;
+                isFinished = true;
             }
         }
         String itemNeed = "";
-        for (int item = 0; item < idItemNeeded.size(); item++) {
-            if (item > 0) {
+        for (int i = 0; i < idItemNeeded.size(); i++) {
+            if (i > 0) {
                 itemNeed += ", ";
             }
-            switch (Integer.parseInt(idItemNeeded.get(item))) {
+            switch (Integer.parseInt(idItemNeeded.get(i))) {
                 case 1:
                     itemNeed += "Dirt: ";
                     break;
                 case 2:
+                    itemNeed += "Stone: ";
+                    break;
+                case 3:
+                    itemNeed += "Wood: ";
+                    break;
+                case 100:
                     itemNeed += "Shovel: ";
                     break;
                 default:
                     return itemNeed;
             }
 
-            itemNeed += MathDataBuilder.world().getPlayer().getInventory().getItembyId(Integer.parseInt(idItemNeeded.get(item))).getQuantity() + "/" + quantityItemNeeded.get(item);
+            itemNeed += MathDataBuilder.world().getPlayer().getInventory().getItembyId(Integer.parseInt(idItemNeeded.get(i))).getQuantity() + "/" + quantityItemNeeded.get(i);
         }
         return itemNeed;
     }
@@ -142,11 +148,11 @@ public class Craft {
     private Item idToItem(int id) {
         Item i = null;
         switch (id) {
-            case 2:
-                i = new Shovel(10);
+            case 1:
+                i = new BlockDirt(0, 0);
                 break;
-
-            case 3:
+            case 100:
+                i = new Shovel(10);
                 break;
             default:
                 i = new VoidItem();
