@@ -287,6 +287,8 @@ public class GameController implements Initializable {
     		Rectangle r = new Rectangle(80, 80);
     		int idItem = nbOfItemCraftable.get(recipe);
             ImageView img = new ImageView(Factory.idToUrl.get(idItem));
+            img.setLayoutX((80 - img.getImage().getWidth())/2);
+            img.setLayoutY((80 - img.getImage().getHeight())/2);
     		if(craft.isCraftable(nbOfItemCraftable.get(recipe))) {
     			r.setFill(Color.YELLOW);
     			p.setOnMousePressed(new EventHandler<MouseEvent>() {
