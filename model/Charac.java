@@ -1,19 +1,22 @@
 package model;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 public abstract class Charac extends DynamicObject {
     private int jumpForce;
     private int invFrame;
     private boolean isJumping;
-    private double hp;
+    private DoubleProperty hp;
+    private double maxHp;
     private double damage;
 
-    public Charac(int id, int x, int y, int width, int height, boolean isFlying, double hp, double damage) {
+    public Charac(int id, int x, int y, int width, int height, boolean isFlying, double maxHp, double damage) {
         super(id, x, y, width, height, isFlying);
         this.jumpForce = 0;
         this.setIsJumping(false);
-        this.changeHitbox();
-        this.hp = hp;
+        this.maxHp = maxHp;
+        this.hp = new SimpleDoubleProperty(maxHp);
         this.damage = damage;
     }
 
@@ -46,20 +49,25 @@ public abstract class Charac extends DynamicObject {
     public void getHurt(double damage) {
     	if(this.getInvFrame()==0) {
     		this.setHp(this.getHp()-damage);
-    		this.setInvFrame(90);
+    		this.setInvFrame(30);
     	}
     }    
     
 
 
     
-
+    public DoubleProperty getHpProperty() {
+    	return hp;
+    }
 	public double getHp() {
-		return hp;
+		return hp.get();
 	}
 
+	public double getMaxHp() {
+		return maxHp;
+	}
 	public void setHp(double hp) {
-		this.hp = hp;
+		this.hp.set(hp);
 	}
 
 	public double getDamage() {

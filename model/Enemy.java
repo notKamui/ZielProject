@@ -5,6 +5,8 @@ public abstract class Enemy extends Charac {
 	public Enemy(int id, int x, int y, int width, int height, boolean isFlying, double hp, double damage) {
 		super(id, x, y, width, height, isFlying, hp, damage);
 		this.setSpeed(5);
+        this.changeHitbox();
+
 	}
 	
 	@Override
