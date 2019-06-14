@@ -99,25 +99,7 @@ public class GameController implements Initializable {
 
 
     private Image getImage(int i) {
-        String url = "src/resources/tiles/";
-        switch (this.world.getMap().getTileAt(i).getCharCode()) {
-            case 'D':
-                url += "dirt.png";
-                break;
-            case 'd':
-                url += "dirtBG.png";
-                break;
-            case 'B':
-                url += "brick.png";
-                break;
-            case 's':
-                url += "sky.png";
-                break;
-            default:
-                url += "void.png";
-                break;
-        }
-        return new Image("file:" + url);
+        return new Image(Factory.idToUrl.get(this.world.getMap().getTileAt(i).getId()));
     }
 
     private void startGame() {
@@ -133,7 +115,7 @@ public class GameController implements Initializable {
 
             this.world.getPlayer().setInput(input);
             this.world.getPlayer().act();
-            
+
             for (DynamicObject object : this.world.getDynamicObjects()) {
                 object.act();
             }
@@ -151,6 +133,28 @@ public class GameController implements Initializable {
         craft = new Craft();
         
         this.world = Factory.initWorld();
+        this.world.getPlayer().animStateProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                ImageView imageView = (ImageView) playerBox.getChildren().get(0);
+                String url = "file:src/resources/sprites/player/player_";
+                switch ((int) newValue) {
+                    case 1:
+                        url = url + "run.gif";
+                        break;
+                    case 2:
+                        url = url + "rising.png";
+                        break;
+                    case 3:
+                        url = url + "falling.png";
+                        break;
+                    default:
+                        url = url + "idle.gif";
+                        break;
+                }
+                imageView.setImage(new Image(url));
+            }
+        });
         this.world.getPlayer().directionProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue,
@@ -265,10 +269,10 @@ public class GameController implements Initializable {
         this.world.getPlayer().getInventory().getInventoryContent().addListener(new InventoryListener(quickInventory));
         this.world.getPlayer().getInventory().addItem(new Shovel(1));
         this.world.getPlayer().getInventory().addItem(new BlockDirt(0, 0));
-        
-        world.getDynamicObjects().add(new Gargoyle(MathDataBuilder.TILESIZE*61, MathDataBuilder.TILESIZE*0));
-        //world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE*66, MathDataBuilder.TILESIZE*4));
-        
+
+        world.getDynamicObjects().add(new Gargoyle(MathDataBuilder.TILESIZE * 61, MathDataBuilder.TILESIZE * 0));
+        world.getDynamicObjects().add(new Skeleton(MathDataBuilder.TILESIZE * 66, MathDataBuilder.TILESIZE * 4));
+
         startGame();
         gameLoop.play();
     }
@@ -276,7 +280,7 @@ public class GameController implements Initializable {
     public void handlePressed(MouseEvent e) {
         lastEvent = e;
     }
-    
+  
     private void fillTheCraft() {
     	ArrayList<Integer> nbOfItemCraftable = craft.getIdRecipeCraftable();
     	
@@ -340,6 +344,4 @@ public class GameController implements Initializable {
     	}
     	
     }
-
-
 }

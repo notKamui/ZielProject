@@ -7,102 +7,67 @@ import model.Tile;
 
 public class Gargoyle extends Enemy {
 
-	public Gargoyle(int x, int y) {
-		super(x, y, true);
-	}
+    public Gargoyle(int x, int y) {
+        super(901, x, y, 64, 64, true);
+    }
 
-	@Override
-	public void act() {
-		this.followPlayer();
-		this.setPosition();
-	}
+    @Override
+    public void act() {
+        this.followPlayer();
+        this.setPosition();
+    }
 
-	@Override
-	public void followPlayer() {
-		
-		int coordMiddleX = this.coordXProperty().getValue()+this.getWidth()/2;
-		int coordMiddleY = this.coordYProperty().getValue()+this.getHeight()/2;
+    @Override
+    public void followPlayer() {
 
-		Map map = MathDataBuilder.world().getMap();
-		Tile selfTile = MathDataBuilder.world().getMap().getTileAt(MathDataBuilder.coordsToIndex(coordMiddleX, coordMiddleY));
-		int index = selfTile.getIndex();
+        int coordMiddleX = this.coordXProperty().getValue() + this.getWidth() / 2;
+        int coordMiddleY = this.coordYProperty().getValue() + this.getHeight() / 2;
 
-		if(selfTile.getDistance() < 250) {
+        Map map = MathDataBuilder.world().getMap();
+        Tile selfTile = MathDataBuilder.world().getMap().getTileAt(MathDataBuilder.coordsToIndex(coordMiddleX, coordMiddleY));
+        int index = selfTile.getIndex();
 
-			Tile[] neighbors = {
-					map.getTileAt(index),
-					map.getTileAt(index - MathDataBuilder.LINELENGTH),
-					map.getTileAt(index + MathDataBuilder.LINELENGTH),
-					map.getTileAt(index - 1),
-					map.getTileAt(index + 1),
-					map.getTileAt(index - MathDataBuilder.LINELENGTH - 1),
-					map.getTileAt(index - MathDataBuilder.LINELENGTH + 1),
-					map.getTileAt(index + MathDataBuilder.LINELENGTH - 1),
-					map.getTileAt(index + MathDataBuilder.LINELENGTH + 1),	
-			};
+        if (selfTile.getDistance() < 250) {
 
-			if(neighbors[0] != null) {
+            Tile[] neighbors = {
+                    map.getTileAt(index),
+                    map.getTileAt(index - MathDataBuilder.LINELENGTH),
+                    map.getTileAt(index + MathDataBuilder.LINELENGTH),
+                    map.getTileAt(index - 1),
+                    map.getTileAt(index + 1),
+                    map.getTileAt(index - MathDataBuilder.LINELENGTH - 1),
+                    map.getTileAt(index - MathDataBuilder.LINELENGTH + 1),
+                    map.getTileAt(index + MathDataBuilder.LINELENGTH - 1),
+                    map.getTileAt(index + MathDataBuilder.LINELENGTH + 1),
+            };
 
-				Tile destination = neighbors[0];
-				double distanceMin = neighbors[0].getDistance();
-				for(int tile = 1; tile < neighbors.length; tile++) {
+            if (neighbors[0] != null) {
 
-					if(neighbors[tile] != null && neighbors[tile].getDistance() < distanceMin) {
-						destination = neighbors[tile];
-						distanceMin = neighbors[tile].getDistance();
-					}	
-				}
+                Tile destination = neighbors[0];
+                double distanceMin = neighbors[0].getDistance();
+                for (int tile = 1; tile < neighbors.length; tile++) {
 
-				
-				
-				int destMiddleX = destination.coordXProperty().getValue()+destination.getWidth()/2;
-				int destMiddleY = destination.coordYProperty().getValue()+destination.getHeight()/2;
+                    if (neighbors[tile] != null && neighbors[tile].getDistance() < distanceMin) {
+                        destination = neighbors[tile];
+                        distanceMin = neighbors[tile].getDistance();
+                    }
+                }
 
-				if (destMiddleX < coordMiddleX) {
-					this.setVectX(Math.max(destMiddleX - coordMiddleX, -this.getSpeed()));
-					this.directionProperty().set(180);
-				} else if (destMiddleX > coordMiddleX) {
-					this.setVectX(Math.min(destMiddleX - coordMiddleX, this.getSpeed()));
-					this.directionProperty().set(0);
-				}
+                int destMiddleX = destination.coordXProperty().getValue() + destination.getWidth() / 2;
+                int destMiddleY = destination.coordYProperty().getValue() + destination.getHeight() / 2;
 
-				if (destMiddleY < coordMiddleY) {
-					this.setVectY(Math.max(destMiddleY - coordMiddleY, -this.getSpeed()));
-				} else if (destMiddleY > coordMiddleY) {
-					this.setVectY(Math.min(destMiddleY - coordMiddleY, this.getSpeed()));
-				}
+                if (destMiddleX < coordMiddleX) {
+                    this.setVectX(Math.max(destMiddleX - coordMiddleX, -this.getSpeed()));
+                } else if (destMiddleX > coordMiddleX) {
+                    this.setVectX(Math.min(destMiddleX - coordMiddleX, this.getSpeed()));
+                }
 
-				// C'EST MOOOOOOOOOOOOOCHE
-				//	    		if (this.getCollMan().isInFrontRight() || this.getCollMan().isInFrontLeft()) {
-				//	              this.setVectY(-this.getSpeed() - 30);
-				//	          }
-		
-			}
-		}
-
-		//        int xPlayer = MathDataBuilder.world().getPlayer().coordXProperty().getValue();
-		//
-		//        if (xPlayer < this.coordXProperty().getValue()) {
-		//            this.setVectX(Math.max(xPlayer - this.coordXProperty().get(), -this.getSpeed()));
-		//            this.directionProperty().set(180);
-		//        } else if (xPlayer > this.coordXProperty().getValue()) {
-		//            this.setVectX(Math.min(xPlayer - this.coordXProperty().get(), this.getSpeed()));
-		//            this.directionProperty().set(0);
-		//        }
-		//
-		//        int yPlayer = MathDataBuilder.world().getPlayer().coordYProperty().getValue();
-		//
-		//        if (yPlayer < this.coordYProperty().getValue()) {
-		//            this.setVectY(Math.max(yPlayer - this.coordYProperty().get(), -this.getSpeed()) - 30);
-		//        } else if (yPlayer > this.coordYProperty().getValue()) {
-		//            this.setVectY(Math.min(yPlayer - this.coordYProperty().get(), this.getSpeed()) - 30);
-		//        } else {
-		//            this.setVectY(-30);
-		//        }
-		//
-		//        if (this.getCollMan().isInFrontRight() || this.getCollMan().isInFrontLeft()) {
-		//            this.setVectY(-this.getSpeed() - 30);
-		//        }
-
-	}
+                if (destMiddleY < coordMiddleY) {
+                    this.setVectY(Math.max(destMiddleY - coordMiddleY, -this.getSpeed()));
+                } else if (destMiddleY > coordMiddleY) {
+                    this.setVectY(Math.min(destMiddleY - coordMiddleY, this.getSpeed()));
+                }
+            }
+        }
+    }
 }

@@ -3,16 +3,16 @@ package model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-import java.util.ArrayList;
-
 public abstract class GameObject {
+    private int id;
     private IntegerProperty coordXProperty;
     private IntegerProperty coordYProperty;
     private int width;
     private int height;
     private Hitbox hitbox;
 
-    public GameObject(int x, int y, int width, int height) {
+    public GameObject(int id, int x, int y, int width, int height) {
+        this.id = id;
         this.coordXProperty = new SimpleIntegerProperty(x);
         this.coordYProperty = new SimpleIntegerProperty(y);
         this.width = width;
@@ -54,6 +54,10 @@ public abstract class GameObject {
       
     public void setHitbox() {
     	this.hitbox = new Hitbox(this.coordXProperty, this.coordYProperty, width, height, this);
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

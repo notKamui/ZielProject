@@ -1,16 +1,16 @@
 package model;
 
-public abstract class Enemy extends Charac{
-	
+public abstract class Enemy extends Charac {
 
-	public Enemy(int x, int y, boolean isFlying) {
-		super(x, y, 64, 64, isFlying);
-		this.setSpeed(5);
-	}
 
-	@Override
-	public abstract void act();
-	
-	public abstract void followPlayer();
+    public Enemy(int id, int x, int y, int width, int height, boolean isFlying) {
+        super(id, x, y, width, height, isFlying);
+        this.setSpeed(5);
+    }
+
+    @Override
+    public abstract void act();
+
+    public abstract void followPlayer();
 
 }

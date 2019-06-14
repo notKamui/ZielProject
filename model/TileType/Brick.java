@@ -4,6 +4,6 @@ import model.Tile;
 
 public class Brick extends Tile {
     public Brick(int i) {
-        super('B', i, 1000);
+        super(4, 'B', i, 1000);
     }
 }

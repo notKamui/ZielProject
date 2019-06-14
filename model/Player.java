@@ -10,7 +10,7 @@ public class Player extends Charac {
     private ArrayList<String> input;
 
     public Player(int x, int y) {
-        super(x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1], false);
+        super(700, x, y, MathDataBuilder.PLAYERDIM[0], MathDataBuilder.PLAYERDIM[1], false);
         this.inventory = new Inventory();
         this.getCollMan().playerHitbox = this.getHitbox();
         this.distanceField = new Dijkstra();
@@ -34,12 +34,10 @@ public class Player extends Charac {
                 case "RIGHT":
                 case "D":
                     this.setVectX(this.getSpeed());
-                    this.setDirection(true);
                     break;
                 case "LEFT":
                 case "Q":
                     this.setVectX(-this.getSpeed());
-                    this.setDirection(false);
                     break;
                 case "DOWN":
                 case "S":
