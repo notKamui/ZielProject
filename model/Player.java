@@ -1,19 +1,16 @@
 package model;
 
 
-import java.util.ArrayList;
-
-import model.ItemOtherType.VoidItem;
-/* Player
- * This class contains all the methods that permit to control and manage the player
- * (Spawn player, take Input, Attack...)
- */
-
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import model.ItemOtherType.VoidItem;
 
 import java.util.ArrayList;
+
+/* Player
+ * This class contains all the methods that permit to control and manage the player
+ * (Spawn player, take Input, Attack...)
+ */
 
 public class Player extends Charac {
     private IntegerProperty attackState;
@@ -89,12 +86,12 @@ public class Player extends Charac {
             fakeHitbox = new VoidItem(this.coordXProperty().get() - 65, this.coordYProperty().get());
         } else {
             fakeHitbox = new VoidItem(this.coordXProperty().get() + 5, this.coordYProperty().get());
-
         }
         ArrayList<Enemy> enemies = fakeHitbox.getCollMan().enemiesHurt();
         for (Enemy enemy : enemies) {
             enemy.getHurt(this.getDamage());
         }
+        fakeHitbox.removeHitbox();
     }
 
     public void die() {

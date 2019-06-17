@@ -32,7 +32,7 @@ public class Craft {
     public boolean isCraftable(int id) {
         ArrayList<Boolean> boolOfRecipe = new ArrayList<>();
         int lineRecipePos = 0;
-        for (int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES) + 1; recipe++) {
+        for (int recipe = 0; recipe < MathDataBuilder.countLinesInFiles(RECIPES); recipe++) {
 
             //Take the line of the recipe
             lineRecipePos = getRecipeLine(lineRecipePos);
@@ -64,7 +64,7 @@ public class Craft {
         if (isCraftable(id)) {
             int lineRecipe = 0;
             boolean isFinished = false;
-            for (int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES) + 1 && !isFinished; recipe++) {
+            for (int recipe = 0; recipe < MathDataBuilder.countLinesInFiles(RECIPES) && !isFinished; recipe++) {
 
                 //Take the line of the recipe
                 lineRecipe = getRecipeLine(lineRecipe);
@@ -89,7 +89,7 @@ public class Craft {
         ArrayList<Integer> idRecipes = new ArrayList<>();
 
         int lineRecipe = 0;
-        for (int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES) + 1; recipe++) {
+        for (int recipe = 0; recipe < MathDataBuilder.countLinesInFiles(RECIPES); recipe++) {
 
             lineRecipe = getRecipeLine(lineRecipe);
 
@@ -111,7 +111,7 @@ public class Craft {
     public String itemNeedToString(int id) {
         int lineRecipe = 0;
         boolean isFinished = false;
-        for (int recipe = 0; recipe < MathDataBuilder.countLinesinFiles(RECIPES) + 1 && !isFinished; recipe++) {
+        for (int recipe = 0; recipe < MathDataBuilder.countLinesInFiles(RECIPES) + 1 && !isFinished; recipe++) {
 
             //Take the line of the recipe
             lineRecipe = getRecipeLine(lineRecipe);
