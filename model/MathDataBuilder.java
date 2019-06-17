@@ -44,7 +44,7 @@ public abstract class MathDataBuilder {
         return new int[]{i % LINELENGTH, i / LINELENGTH};
     }
 
-    private static int getLineLength() {
+    public static int getLineLength() {
         String content = readFile("src/resources/other/map.txt");
         if (content.contains("\r"))
             return content.indexOf('\r');
@@ -52,7 +52,7 @@ public abstract class MathDataBuilder {
             return content.indexOf('\n');
     }
 
-    static String readFile(String fname) {
+    public static String readFile(String fname) {
         String content = null;
         File file = new File(fname);
         FileReader reader = null;
@@ -76,47 +76,16 @@ public abstract class MathDataBuilder {
         return content;
     }
     
-    public static int countLinesinFiles(String filename) {
-    	File file = new File(filename);
-        FileReader reader = null;
-	        try {
-	        	reader = new FileReader(file);
-	        	char[] c = new char[(int) file.length()];
-	
-	            int readChars = reader.read(c);
-	            if (readChars == -1) {
-	                //if the file is empy
-	                return 0;
-	            }
-	
-	            int count = 0;
-	            while (readChars == 1024) {
-	                for (int i=0; i<1024;) {
-	                    if (c[i++] == '\n') {
-	                        ++count;
-	                    }
-	                }
-	                readChars = reader.read(c);
-	            }
-	
-	            // count remaining characters
-	            while (readChars != -1) {
-	                for (int i=0; i<readChars; ++i) {
-	                    if (c[i] == '\n') {
-	                        ++count;
-	                    }
-	                }
-	                readChars = reader.read(c);
-	            }
-	            reader.close();
-	            return count;
-	        } catch (IOException e) {
-	        	e.printStackTrace();
-	        }
-	        return 0;
+    public static int countLinesInFiles(String filename) {
+    	int count = 0;
+        for(char c : readFile(filename).toCharArray()) {
+            if (c == '\n')
+                count++;
+        }
+        return count;
     }
 
-    static void saveMap(ObservableList<Tile> map) {
+     public static void saveMap(ObservableList<Tile> map) {
         try {
             File file = new File("src/view/map.txt");
             FileWriter fileWriter = new FileWriter(file, false);
@@ -135,7 +104,7 @@ public abstract class MathDataBuilder {
         }
     }
 
-    static Tile makeTile(int i, char c) {
+    public static Tile makeTile(int i, char c) {
         Tile tile;
         switch (c) {
             case 'D':
